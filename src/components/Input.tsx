@@ -23,6 +23,7 @@ export default function Input (props: InputProps) {
         value = {props.valueInput}
         onChange = { e => props.onChange?.(e.target.value) }
         hidden = {props.hidden}
+        defaultValue = {props.valueInput}
         className = {`border border-gray-300 rounded-2xl focus:outline-none bg-gray-50 px-4 py-2 focus:bg-white ${props.classNameInput}`}
       />
     </div>

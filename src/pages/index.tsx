@@ -1,10 +1,15 @@
-import React from "react"
+import React, {useContext} from "react"
 import Button from "../components/Button"
 import Form from "../components/Form"
+import { RegistrationContext } from "../contexts/RegistrationContext"
 import useLeads from "../hooks/useLeads"
 
 export default function Home() {
-  const {stepOneVisible, lead, saveLead, displayStep1} = useLeads()
+  const {lead, saveLead, teste} = useLeads()
+
+  const {stepOneVisible, stepTwoVisible,} = useContext(RegistrationContext)
+  
+  console.log()
 
   return (
     <>
@@ -33,13 +38,21 @@ export default function Home() {
           </div>
         </div>
       </div>
-    ) : (
-      <div>
-        <h1>teste</h1>
-        <div className="flex flex-col mt-12">
-          <Button onClick={displayStep1}>Enviar</Button>
+    ) 
+    : 
+    (
+      stepTwoVisible ? (
+        <div>
+          <h1>Teste</h1>
+          <div className="flex flex-col mt-12">
+            <Button onClick={teste}>Enviar</Button>
+          </div>
         </div>
-      </div>
+        ) 
+        : 
+        (
+          <p>Teste 50</p>
+        )
     )}
     </>
   )

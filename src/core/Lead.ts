@@ -25,4 +25,4 @@ export default class Lead {
     return this.#phone
   }
  
-} 
+}
