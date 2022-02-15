@@ -1,14 +1,14 @@
 import { useContext, useState } from "react"
 import { RegistrationContext } from "../contexts/RegistrationContext"
-import Lead from "../core/Lead"
+import PersonalData from "../core/PersonalData"
 import { api } from "../services/api"
 
-export default function useLeads () {
-  const { displayStep2, displayStep3, formaIngresso } = useContext(RegistrationContext)
+export default function usePersonalData () {
+  const { displayStep3, displayStep4 } = useContext(RegistrationContext)
   
-  const [lead, setLead] = useState<Lead>(Lead.createVoid())
+  const [personalData, setPersonalData] = useState<PersonalData>(PersonalData.createVoid())
 
-  function saveLead (lead: Lead) {
+  function savePersonalData (personalData: PersonalData) {
     // api.post('/leads', {
     //   name: lead.name,
     //   email: lead.email,
@@ -17,17 +17,11 @@ export default function useLeads () {
     // .then (response => {
     //   console.log(response.data);
     // })
-    console.log(formaIngresso)
-    displayStep2()
-  }
-
-  function teste () {
     displayStep3()
   }
 
   return {
-    saveLead,
-    teste,
-    lead
+    savePersonalData,
+    personalData
   }
 }
