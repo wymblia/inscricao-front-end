@@ -1,18 +1,30 @@
 export default class Course {
+    #modality: string
+    #unity: string
     #entryForm: string
     #yearEnem?: string
     #nameCourse: string
   
-    constructor(entryForm: string, yearEnem: string, nameCourse: string) {
+    constructor(modality: string, unity: string, entryForm: string, yearEnem: string, nameCourse: string) {
+      this.#modality = modality
+      this.#unity = unity
       this.#entryForm = entryForm
       this.#yearEnem = yearEnem
       this.#nameCourse = nameCourse
     }
   
     static createVoid() {
-      return new Course ('', null ,'')
+      return new Course ('', '', '', null ,'')
+    }
+
+    get modality () {
+      return this.#modality
     }
   
+    get unity () {
+      return this.#unity
+    }
+
     get entryForm () {
       return this.#entryForm
     }

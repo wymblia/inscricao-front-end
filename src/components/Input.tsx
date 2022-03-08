@@ -7,7 +7,7 @@ interface InputProps {
   idInput?: string
   typeInput?: string
   valueInput?: any
-  classNameInput?: string
+  classNameInput?: any
   onChange?: (valueInput: any) => void
   onBlur?: (valueInput: any) => void
   hidden?: boolean
@@ -18,7 +18,6 @@ interface InputProps {
 }
 
 export default function Input (props: InputProps) {
-  
   return (
     <div className="flex flex-col mb-2">
       <label className={`mb-2 font-light text-sm ${props.classNameLabel}`} htmlFor={props.idInput}>

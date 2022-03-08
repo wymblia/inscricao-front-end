@@ -21,13 +21,9 @@ export default function useLeads () {
     displayStep2()
   }
 
-  function teste () {
-    displayStep3()
-  }
 
   return {
     saveLead,
-    teste,
     lead
   }
 }

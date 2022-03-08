@@ -5,9 +5,6 @@ type RegistrationContextProps = {
 }
 
 type UserContextType = {
-  //
-  //Form
-  //
   name: string
   socialName: string
   visibleSocialName: boolean
@@ -22,20 +19,16 @@ type UserContextType = {
   setphone: (newState: string) => void 
   setFormaIngresso: (newState: string) => void 
 
-  //
-  //FormPersonalData
-  //
   cpf: string
   birthDate: Date
   deficiency: string
+  invisibleErrorCpf: boolean
 
   setCpf: (newState: string) => void
   setBirthDate: (newState: Date) => void
   setDeficiency: (newState: string) => void
+  setInvisibleErrorCpf: (newState: boolean) => void
 
-  //
-  //FormAddress
-  //
   cep: string
   state: string
   city: string
@@ -50,13 +43,14 @@ type UserContextType = {
   setStreet: (newState: string) => void
   setNumber: (newState: string) => void
 
-  //
-  //FormCourse
-  //
+  modality: string
+  unity: string
   entryForm: string
   yearEnem: string
   nameCourse: string
 
+  setModality: (newState: string) => void
+  setUnity: (newState: string) => void
   setEntryForm: (newState: string) => void
   setYearEnem: (newState: string) => void
   setNameCourse: (newState: string) => void
@@ -78,10 +72,6 @@ type UserContextType = {
 }
 
 const initialValues = {
-
-  //
-  //Form
-  //
   name: "",
   socialName: "",
   visibleSocialName: false,
@@ -96,20 +86,16 @@ const initialValues = {
   setphone: () => {}, 
   setFormaIngresso: () => {},
 
-  //
-  //FormPersonalData
-  //
   cpf: "",
   birthDate: new Date('2000-01-01T12:00:00'),
   deficiency: "",
+  invisibleErrorCpf: true,
 
   setCpf: () => {},
   setBirthDate: () => {},
   setDeficiency: () => {},
+  setInvisibleErrorCpf: () => {},
 
-  //
-  //FormAddress
-  //
   cep: "",
   state: "",
   city: "",
@@ -124,13 +110,14 @@ const initialValues = {
   setStreet: () => {},
   setNumber: () => {},
 
-  //
-  //FormCourse
-  //
+  modality: "",
+  unity: "",
   entryForm: "",
   yearEnem: "",
   nameCourse: "",
 
+  setModality: () => {},
+  setUnity: () => {},
   setEntryForm: () => {},
   setYearEnem: () => {},
   setNameCourse: () => {},
@@ -165,6 +152,7 @@ export const RegistrationContextProvider = ({ children }: RegistrationContextPro
   const [cpf, setCpf] = useState(initialValues.cpf)
   const [birthDate, setBirthDate] = useState(initialValues.birthDate)
   const [deficiency, setDeficiency] = useState(initialValues.deficiency)
+  const [invisibleErrorCpf, setInvisibleErrorCpf] = useState(initialValues.invisibleErrorCpf)
 
   const [cep, setCep] = useState(initialValues.cep)
   const [state, setState] = useState(initialValues.state)
@@ -173,6 +161,8 @@ export const RegistrationContextProvider = ({ children }: RegistrationContextPro
   const [street, setStreet] = useState(initialValues.street)
   const [number, setNumber] = useState(initialValues.number)
 
+  const [modality, setModality] = useState(initialValues.modality)
+  const [unity, setUnity] = useState(initialValues.unity)
   const [entryForm, setEntryForm] = useState(initialValues.entryForm)
   const [yearEnem, setYearEnem] = useState(initialValues.yearEnem)
   const [nameCourse, setNameCourse] = useState(initialValues.nameCourse)
@@ -217,19 +207,27 @@ export const RegistrationContextProvider = ({ children }: RegistrationContextPro
       cep,
       state,
       city,
+      district,
       street,
       number,
+      invisibleErrorCpf,
 
       setCep,
       setState,
       setCity,
+      setDistrict,
       setStreet,
       setNumber,
+      setInvisibleErrorCpf,
 
+      modality,
+      unity,
       entryForm,
       yearEnem,
       nameCourse,
-
+    
+      setModality,
+      setUnity,
       setEntryForm,
       setYearEnem,
       setNameCourse,

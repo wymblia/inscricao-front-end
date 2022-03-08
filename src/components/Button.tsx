@@ -5,7 +5,7 @@ interface ButtonProps {
 
 export default function Button ( props: ButtonProps ) {
   return (
-    <button onClick={ props.onClick } className="bg-blue-500 text-white rounded-2xl p-3">
+    <button onClick={ props.onClick } className="bg-[#284fac] shadow-md shadow-gray-300 text-white font-medium rounded-2xl p-3">
       {props.children}
     </button>
   )

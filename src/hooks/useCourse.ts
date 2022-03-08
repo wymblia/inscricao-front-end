@@ -4,7 +4,7 @@ import Course from "../core/Course"
 import { api } from "../services/api"
 
 export default function useCourse () {
-  const { displayStep5, displayStep6 } = useContext(RegistrationContext)
+  const { displayStep3, displayStep5, displayStep6 } = useContext(RegistrationContext)
   
   const [course, setCourse] = useState<Course>(Course.createVoid())
 
@@ -20,8 +20,13 @@ export default function useCourse () {
     displayStep5()
   }
 
+  function backStepThree () {
+    displayStep3()
+  }
+
   return {
     saveCourse,
     course,
+    backStepThree
   }
 }

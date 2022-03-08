@@ -4,7 +4,7 @@ import PersonalData from "../core/PersonalData"
 import { api } from "../services/api"
 
 export default function usePersonalData () {
-  const { displayStep3, displayStep4 } = useContext(RegistrationContext)
+  const { displayStep1, displayStep3, displayStep4 } = useContext(RegistrationContext)
   
   const [personalData, setPersonalData] = useState<PersonalData>(PersonalData.createVoid())
 
@@ -20,8 +20,13 @@ export default function usePersonalData () {
     displayStep3()
   }
 
+  function backStepOne () {
+    displayStep1()
+  }
+
   return {
     savePersonalData,
-    personalData
+    personalData,
+    backStepOne
   }
 }

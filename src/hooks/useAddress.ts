@@ -4,7 +4,7 @@ import Address from "../core/Address"
 import { api } from "../services/api"
 
 export default function useAddress () {
-  const { displayStep4, displayStep5 } = useContext(RegistrationContext)
+  const { displayStep2, displayStep4, displayStep5 } = useContext(RegistrationContext)
   
   const [address, setAddress] = useState<Address>(Address.createVoid())
 
@@ -20,8 +20,13 @@ export default function useAddress () {
     displayStep4()
   }
 
+  function backStepTwo () {
+    displayStep2()
+  }
+
   return {
     saveAddress,
-    address
+    address,
+    backStepTwo
   }
 }
