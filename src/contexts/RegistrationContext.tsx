@@ -18,6 +18,7 @@ type UserContextType = {
   setemail: (newState: string) => void 
   setphone: (newState: string) => void 
   setFormaIngresso: (newState: string) => void 
+  
 
   cpf: string
   birthDate: Date
