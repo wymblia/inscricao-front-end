@@ -9,14 +9,21 @@ export default function useLeads () {
   const [lead, setLead] = useState<Lead>(Lead.createVoid())
 
   function saveLead (lead: Lead) {
-    // api.post('/leads', {
-    //   name: lead.name,
-    //   email: lead.email,
-    //   phone: lead.phone
-    // })
-    // .then (response => {
-    //   console.log(response.data);
-    // })
+
+    const firstName = lead.name.split(' ')[0];
+
+    const lastName = lead.name.split(' ').slice(1, 20).join(' ');
+
+    api.post('/leads', {
+      nome: firstName,
+      sobrenome: lastName,
+      email: lead.email,
+      telefone: lead.phone,
+      filial_id: 1
+    })
+    .then (response => {
+      console.log(response.data);
+    })
     console.log(formaIngresso)
     displayStep2()
   }
