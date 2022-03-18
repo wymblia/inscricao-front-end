@@ -1,0 +1,218 @@
+
+<table style="border:solid; background-color:#3A4856; color:#CDD4D7; width: 50%; padding-left:20px; padding-right:20px; font-family: Arial, Helvetica, sans-serif;">
+    <thead>
+
+    <tr>
+        <td colspan="2">&nbsp;</td>
+    </tr>
+
+    <tr>
+        <td style="font-size:30px; background-color:#F7DF00; color:#3A4856; padding-left:20px; padding-right:20px; text-align: center;" colspan="2">Parabéns {{ $inscricao->candidato->pessoaFisica->nome }}!</td>
+    </tr>
+    <tr>
+        <td style="padding-bottom: 20px; padding-top: 20px; text-align: left;" colspan="2">Você deu um importante passo para a construção do seu futuro.</td>
+    </tr>
+
+    <tr>
+        <td style="padding-bottom: 20px; text-align: left;" colspan="2">Seu pedido de inscrição no Processo Seletivo foi recebido.</td>
+    </tr>
+
+    @if($inscricao->enem)
+        {{-- TODO: Quiz nao exibe o codigo dentro do IF quando for um dos vestibulares de Quiz, que contem os codigos abaixo. --}}
+        @if(!in_array($inscricao->vestibular->id, [261, 260, 259, 258, 257, 256, 255, 254]))
+            <tr>
+                <td colspan="2" style="background-color: #DCDFE2; padding: 10px; text-align: center; color: #3A4856;">
+                    <strong>Você está dispensado da realização da prova presencial, pois optou por utilizar sua nota do ENEM ou ENCCEJA.</strong><br>
+                </td>
+            </tr>
+        @else
+            <tr>
+                <td colspan="2" style="background-color: #DCDFE2; padding: 10px; text-align: center; color: #3A4856;">
+                    <strong>Veja no <a href="https://ftecweb.ftec.com.br/_modulos/arquivo/files/3938.pdf" target="_blank">Regulamento</a> o dia e horário que você deverá realizar o Quiz para concorrer à sua bolsa!.</strong><br>
+                </td>
+            </tr>
+        @endif
+    @endif
+
+    {{-- TODO: Quiz nao exibe o codigo dentro do IF quando for um dos vestibulares de Quiz, que contem os codigos abaixo. --}}
+    @if(!in_array($inscricao->vestibular->id, [261, 260, 259, 258, 257, 256, 255, 254]))
+        <tr>
+            <td colspan="2" style="background-color: #DCDFE2; padding: 10px; text-align: center; color: #3A4856;">
+                <strong>RESULTADO: após a realização da prova, seu resultado e a classificação do vestibular estará disponível para consulta no site <a href="{{ route('ves.resultado') }}" target="_blank">{{ route('ves.resultado') }}</a>.</strong><br>
+            </td>
+        </tr>
+    @endif
+
+    <tr>
+        <td style="font-size:30px; background-color:#F7DF00; color:#3A4856; padding-left:20px; padding-right:20px; text-align: center;" colspan="2">
+            Acesse o link <a target="_blank" href="{{ route('ves.inscricao.pagamento.reimpressaoBoleto') }}?numero_inscricao={{ $inscricao->id }}&cpf={{ $inscricao->candidato->pessoaFisica->cpf }}">{{ route('ves.inscricao.pagamento.reimpressaoBoleto') }}?numero_inscricao={{ $inscricao->id }}&cpf={{ $inscricao->candidato->pessoaFisica->cpf }}</a> para ver sua inscrição.
+        </td>
+    </tr>
+
+    {{-- Link para curso EAD gratuito no MoodleTeste, Exibido somente quando a inscricao for em algum curso de EAD. --}}
+    @if($inscricao->vestibular->isEad())
+        <tr>
+            <td>&nbsp;</td>
+        </tr>
+    @endif
+
+    <tr>
+        <td>&nbsp;</td>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr style="height: 40px; text-align:center;">
+        <td colspan="2" style="font-size:20px; background-color:#F7DF00; color:#3A4856; padding-left:20px; padding-right:20px; text-align:center;">Dados da Inscrição</td>
+    </tr>
+
+    <tr>
+        <td>&nbsp;</td>
+    </tr>
+
+    <tr style="height: 35px; background-color:#DCDFE2; color:#3A4856;">
+        <td style="padding-left: 20px;">Número de inscrição:</td>
+        <td style="padding-left: 15px;">{{ $inscricao->id }}</td>
+    </tr>
+
+    <tr style="height: 35px; background-color:#DCDFE2; color:#3A4856;">
+        <td style="padding-left: 20px;">Número de inscrição:</td>
+        <td style="padding-left: 15px;">{{ $inscricao->id }}</td>
+    </tr>
+
+    <tr style="height: 35px; background-color:#DCDFE2; color:#3A4856;">
+        <td style="padding-left: 20px;">Número de inscrição:</td>
+        <td style="padding-left: 15px;">{{ $inscricao->id }}</td>
+    </tr>
+
+    <tr style="height: 40px; background-color:#F9F9F9; color:#3A4856;">
+        <td style="padding-left: 20px;">Processo Seletivo:</td>
+        <td style="padding-left: 15px;">{{ $inscricao->vestibular->descricao }}</td>
+    </tr>
+
+    <tr style="height: 40px; background-color:#DCDFE2; color:#3A4856;">
+        <td style="padding-left: 20px;">Unidade / Pólo:</td>
+        <td style="padding-left: 15px;">
+            @if($inscricao->vestibular->isEad())
+                {{ $inscricao->vestibular->locaisProva->first()->polo->nome }}
+            @else
+                {{ $inscricao->filial->pessoaJuridica->nome_fantasia }}
+            @endif            
+        </td>
+    </tr>
+
+    <tr style="height: 40px; background-color:#F9F9F9; color:#3A4856;">
+        <td style="padding-left: 20px;">Opção 1:</td>
+        <td style="padding-left: 15px;">{{ $inscricao->opcao1()->first()->curso->descricao }}</td>
+    </tr>
+
+    <tr style="height: 40px; background-color:#DCDFE2; color:#3A4856;">
+        <td style="padding-left: 20px;">Opção 2:</td>
+        <td style="padding-left: 15px;">{{ $inscricao->opcao1()->first()->curso->descricao }}</td>
+    </tr>
+
+
+    {{-- TODO: Quiz nao exibe o codigo dentro do IF quando for um dos vestibulares de Quiz, que contem os codigos abaixo. --}}
+        @if(!$inscricao->enem || in_array($inscricao->vestibular->id, [261, 260, 259, 258, 257, 256, 255, 254]))
+        <tr style="height: 40px; background-color:#F9F9F9; color:#3A4856;">
+            <td style="padding-left: 20px;">Data/horário da prova:</td>
+            @if($inscricao->vestibular->tipo_vestibular == 'D')
+                @if(str_contains(strtolower($inscricao->vestibular->descricao), 'mega'))
+                    <td  style="padding-left: 15px;">19/01/2022 das 09:00 às 21:00</td>
+                @else
+                <td style="padding-left: 15px;">48 horas a partir da inscrição para realizar a prova</td>
+                @endif
+            @else
+                @if($inscricao->vestibular->checkTipoContinuado() && $inscricao->vestibularContinuadoDatas)
+                    <td style="padding-left: 15px;">{{ $inscricao->vestibularContinuadoDatas->getDataHora()->format('d/m/Y \à\s H:i') }}</td>
+                @else
+                    <td style="padding-left: 15px;">{{ $inscricao->vestibular->data_prova->format('d/m/Y') }} às {{ date('H:i', strtotime($inscricao->vestibular->hora_prova)) }}</td>
+                @endif
+            @endif
+
+        </tr>
+
+        <tr style="height: 40px; background-color:#DCDFE2; color:#3A4856;">
+            <td style="padding-left: 20px;">Local da prova:	</td>
+            <td style="padding-left: 15px;">
+            @if($inscricao->vestibular->tipo_vestibular == 'D') 
+                Vestibular EaD
+            @else
+                @if($inscricao->localProva)
+                    {{ $inscricao->localProva->descricao }} - {{ $inscricao->localProva->getEnderecoCompleto() }}
+                @endif
+            @endif
+            </td>
+        </tr>
+    @endif
+
+    <tr style="height: 40px; background-color:#F9F9F9; color:#3A4856;">
+        <td style="padding-left: 20px;">Nome:</td>
+        <td style="padding-left: 15px;">{{ $inscricao->candidato->pessoaFisica->nome }}</td>
+    </tr>
+
+    <tr style="height: 40px; background-color:#DCDFE2; color:#3A4856;">
+        <td style="padding-left: 20px;">E-mail:</td>
+        <td style="padding-left: 15px;">{{ $inscricao->candidato->pessoaFisica->pessoa->email }}</td>
+    </tr>
+
+    <tr style="height: 40px; background-color:#F9F9F9; color:#3A4856;">
+        <td style="padding-left: 20px;">CPF:</td>
+        <td style="padding-left: 15px;">{{ $inscricao->candidato->pessoaFisica->cpf }}</td>
+    </tr>
+
+    <tr style="height: 40px; background-color:#DCDFE2; color:#3A4856;">
+        <td style="padding-left: 20px;">CEP:</td>
+        <td style="padding-left: 15px;">{{ $inscricao->candidato->pessoaFisica->pessoa->cep }}</td>
+    </tr>
+    <tr style="height: 40px; background-color:#DCDFE2; color:#3A4856;">
+        <td style="padding-left: 20px;">Usuário:</td>
+        <td style="padding-left: 15px; font-weight: bold;">{{ $inscricao->id }}</td>
+    </tr>
+    <tr style="height: 40px; background-color:#DCDFE2; color:#3A4856;">
+        <td style="padding-left: 20px;">Senha:</td>
+        <td style="padding-left: 15px; font-weight: bold;">Ftec@CEP <small>(Somente os números do CEP cadastrado)</small></td>
+    </tr>
+    </tbody>
+
+    <tfoot>
+    <tr>
+        <td>&nbsp;</td>
+    </tr>
+
+    <tr>
+        <td>&nbsp;</td>
+    </tr>
+
+    <tr>
+        <td style="background-color: #DCDFE2; padding: 10px; text-align: center; color: #3A4856;"><strong>Boa prova!</strong></td>
+    </tr>
+    <tr>
+        <td style="background-color: #DCDFE2; padding: 10px; text-align: center; color: #3A4856;"><strong>Acesse o Link <a href="https://provaonline.ftec.com.br/login/index.php">https://provaonline.ftec.com.br/login/index.php</a> para realizar a prova.</strong></td>
+    </tr>
+
+    <tr>
+        <td style="padding-top: 30px;">&nbsp;</td>
+    </tr>
+
+    <tr style="background-color: #F9F9F9; ">
+        <td style="text-align: center; "><a href="https://www.ftec.com.br" target="_blank"><img src="https://www.ftec.com.br/static/media/uploads/email_icons/logo.png" /></a></td>
+        <td style="padding-left: 15px; color:#3A4856; ">
+            Att.
+            <br />
+            Comissão do Vestibular
+            <br />
+            Faculdade de Tecnologia - Uniftec
+            <br />
+            <a href="mailto:vestibular@ftec.com.br" style="color: #3A4856;"><img src="https://www.ftec.com.br/static/media/uploads/email_icons/mail.png" /> vestibular@ftec.com.br</a>
+            <br />
+            <img src="https://www.ftec.com.br/static/media/uploads/email_icons/phone.png" /> 0800.606.0.606
+        </td>
+    </tr>
+
+    <tr>
+        <td>&nbsp;</td>
+    </tr>
+
+    </tfoot>
+</table>
