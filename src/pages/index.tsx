@@ -7,15 +7,17 @@ import useLeads from "../hooks/useLeads"
 import usePersonalData from "../hooks/usePersonalData"
 import useAddress from "../hooks/useAddress"
 import useCourse from "../hooks/useCourse"
+import useCourseResume from "../hooks/useCourseResume"
 import FormAddress from "../components/FormAddress"
-import FormResume from "../components/FormResume"
+import FormResume from "../components/FormCourseResume"
 import Stepper from "../components/Stepper"
 
 export default function Home() {
   const {lead, saveLead} = useLeads()
   const {personalData, savePersonalData, backStepOne} = usePersonalData()
   const {address, saveAddress, backStepTwo} = useAddress()
-  const {course, saveCourse, backStepThree} = useCourse()
+  const {course, getCourse, nextStepFive, backStepThree} = useCourse()
+  const {courseResume, nextStepSix, backStepFour} = useCourseResume()
 
   const {stepOneVisible, stepTwoVisible, stepThreeVisible, stepFourVisible, stepFiveVisible} = useContext(RegistrationContext)
 
@@ -26,8 +28,8 @@ export default function Home() {
 
       <div id="container" className="flex">
         <div id="main" className="flex flex-col md:flex-row flex-grow">
-          <div className="flex-grow max-w-5xl">
-            <div className="h-32 bg-[url('/img/mobile.jpg')] block md:hidden" />
+          <div className="flex-grow w-44">
+            <div className="h-32 w-screen bg-[url('/img/mobile.jpg')] block md:hidden" />
             <div className="md:h-screen bg-[url('https://www.ftec.com.br/static/media/uploads/imagens-formas-de-ingresso/transferencia.png')] hidden md:block" />
           </div>
           <div className="bg-gray-100 flex-grow">
@@ -129,7 +131,7 @@ export default function Home() {
                         </div>
                         <FormCourse
                           course={course}
-                          courseChange={saveCourse}
+                          courseChange={nextStepFive}
                           backPage={backStepThree}
                         />
                       </div>
@@ -143,23 +145,19 @@ export default function Home() {
               stepFiveVisible ? (
                 <div>
                   <div id="main" className="flex flex-col md:flex-row flex-grow">
-                    <div className="flex-grow">
+                    <div className="flex-grow w-1/3">
                       <div className="h-32 bg-[url('/img/mobile.jpg')] block md:hidden" />
                       <div className="md:h-screen bg-[url('/img/desktop.jpg')] hidden md:block" />
                     </div>
                     <div className="bg-gray-100 flex-grow align-items justify-center">
                       <div className="flex justify-center items-center md:h-screen">
                         <div className="flex-row">
-                          <button className="bg-gray-400 text-white px-28 py-4 rounded-2xl mb-4">
-                            Curso outras regras
-                          </button>
                           <div className="flex justify-center items-center">
                             <h1 className="text-2xl font-light m-10 text-cyan-900">Vestibular Uniftec</h1>
                           </div>
                           <FormResume
-                            course={course}
-                            courseChange={saveCourse}
-                            backPage={backStepThree}
+                            courseResumeChange={nextStepSix}
+                            backPage={backStepFour}
                           />
                         </div>
                       </div>

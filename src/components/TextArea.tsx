@@ -9,11 +9,11 @@ interface TextAreaProps {
 }
 
 export default function Textarea (props: TextAreaProps) {
-  
+
   return (
     <div className="flex flex-col mb-2">
       <label className={`mb-2 font-light text-sm ${props.classNameLabel}`} htmlFor={props.idTextarea}>
-        {props.textLabel}
+       
       </label>
       <textarea
         id = {props.idTextarea}

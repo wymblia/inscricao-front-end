@@ -13,7 +13,6 @@ interface CourseProps {
   course: Course
   courseChange?: (course: Course) => void
   backPage?: () => void
-
 }
 
 export default function FormCourse (props: CourseProps) {
