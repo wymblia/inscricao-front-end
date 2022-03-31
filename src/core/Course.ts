@@ -14,7 +14,7 @@ export default class Course {
     }
   
     static createVoid() {
-      return new Course ('', '', '', null ,'')
+      return new Course ('', '', '', '' ,'')
     }
 
     get modality () {

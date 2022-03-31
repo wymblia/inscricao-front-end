@@ -5,20 +5,23 @@ type RegistrationContextProps = {
 }
 
 type UserContextType = {
+  listOffer: any
+
   name: string
   socialName: string
   visibleSocialName: boolean
   email: string
   phone: string
   formaIngresso: string
-  
+
+  setListOffer: (newState: string) => void 
+
   setName: (newState: string) => void 
   setSocialName: (newState: string) => void 
   setvisibleSocialName: (newState: boolean) => void 
   setemail: (newState: string) => void 
   setphone: (newState: string) => void 
   setFormaIngresso: (newState: string) => void 
-  
 
   cpf: string
   birthDate: Date
@@ -73,6 +76,8 @@ type UserContextType = {
 }
 
 const initialValues = {
+  listOffer: "",
+
   name: "",
   socialName: "",
   visibleSocialName: false,
@@ -80,6 +85,8 @@ const initialValues = {
   phone: "",
   formaIngresso: "",
 
+  setListOffer: () => {},
+  
   setName: () => {},
   setSocialName: () => {},
   setvisibleSocialName: () => {},
@@ -143,6 +150,8 @@ export const RegistrationContext = createContext<UserContextType>(initialValues)
 
 export const RegistrationContextProvider = ({ children }: RegistrationContextProps) => {
 
+  const [listOffer, setListOffer] = useState(initialValues.listOffer)
+
   const [name, setName] = useState(initialValues.name)
   const [socialName, setSocialName] = useState(initialValues.socialName)
   const [visibleSocialName, setvisibleSocialName] = useState(initialValues.visibleSocialName)
@@ -183,6 +192,8 @@ export const RegistrationContextProvider = ({ children }: RegistrationContextPro
 
   return(
     <RegistrationContext.Provider value={{
+      listOffer,
+
       name,
       socialName,
       email,
@@ -190,6 +201,7 @@ export const RegistrationContextProvider = ({ children }: RegistrationContextPro
       visibleSocialName,
       formaIngresso,
 
+      setListOffer,
       setName,
       setSocialName,
       setemail,

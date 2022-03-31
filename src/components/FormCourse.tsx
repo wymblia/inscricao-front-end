@@ -1,7 +1,8 @@
-import React, { useContext, useState } from "react";
+import { Console } from "console";
+import React, { useContext, useEffect, useState } from "react";
 import { RegistrationContext } from "../contexts/RegistrationContext";
 import Course from "../core/Course";
-import PersonalData from "../core/PersonalData";
+import useCourse from "../hooks/useCourse";
 import Button from "./Button";
 import ButtonBack from "./ButtonBack";
 import ButtonOptions from "./ButtonOptions";
@@ -17,39 +18,14 @@ interface CourseProps {
 
 export default function FormCourse (props: CourseProps) {
   const {modality, unity, entryForm, yearEnem, nameCourse, setModality, setUnity, setEntryForm, setYearEnem, setNameCourse, cpf, birthDate, deficiency} = useContext(RegistrationContext)
-
+  const {getCourse, listOffer} = useCourse()
   const [appearanceYearEnem, setAppearanceYearEnem] = useState(true)
 
-  const unityOptions = [
-    {
-      label: "Selecione",
-      value: ""
-    },
-    {
-      label: "Caxias do Sul",
-      value: "caxiasDoSul"
-    },
-    {
-      label: "Bento Gonçalves",
-      value: "bentoGonçalves"
-    },
-    {
-      label: "Novo Hamburgo",
-      value: "novoHamburgo"
-    },
-    {
-      label: "Porto Alegre",
-      value: "portoAlegre"
-    },
-    {
-      label: "IBGEN",
-      value: "ibgen"
-    },
-    {
-      label: "Adicionar polos",
-      value: "polo"
-    }
-  ]
+  const [coursesOptions, setCoursesOptions] = useState([])
+  const [unityOptions, setUnityOptions] = useState([])
+
+  let unityOptionsArray = []
+  let coursesOptionsArray = []
 
   const entryFormsOptions = [
     {
@@ -70,26 +46,60 @@ export default function FormCourse (props: CourseProps) {
     }
   ]
 
-  const coursesOptions = [
-    {
-      label: "Selecione",
-      value: ""
-    },
-    {
-      label: "Administração",
-      value: "administração"
-    },
-    {
-      label: "Direito",
-      value: "direito"
-    }
-  ]
 
-  function ModalityFunction(e: any) {
-    setModality(e.target.value)
+  function unityForModality() {
+
+    listOffer.forEach(unity => {
+
+      if(unity.MODALIDADE === modality) {
+        unityOptionsArray.push({
+            label: unity['UNIDADE'],
+            value: unity['UNIDADE']
+        })
+        
+          // if(unityOptionsArray != (unity.UNIDADE)) {
+          //   unityOptionsArray.push({
+          //     label: unity['UNIDADE'],
+          //     value: unity['UNIDADE']
+          //   })
+
+          // }
+      }
+
+    })
+    
+    setUnityOptions(unityOptionsArray)
   }
 
-  function UnityFunction(e: any) {
+
+
+  useEffect(() => {
+    unityForModality()
+  }, [modality]);
+
+
+
+  function courseForModalityAndUnity() {
+
+   listOffer.forEach(course => {
+
+      if(course.MODALIDADE === modality && course.UNIDADE === unity) {
+        coursesOptionsArray.push({
+          label: course['CURSO'],
+          value: course['CURSO_ID']
+        })
+      }
+    })
+
+    setCoursesOptions(coursesOptionsArray)
+    
+  }
+  
+    useEffect(() => {
+      courseForModalityAndUnity()
+    }, [unity])
+
+  function UnityFunction(e) {
     setUnity(e.target.value)
   }
 
@@ -107,15 +117,8 @@ export default function FormCourse (props: CourseProps) {
   }
 
   function modalityFunction(e: any) {
-    if (e.target.value === 'presencial'){
-      setEntryForm(e.target.value)
-    }else if (e.target.value === 'semipresencial') {
-      setEntryForm(e.target.value)
-    }else if (e.target.value === 'ead'){
-      setEntryForm(e.target.value)
-    }
+    setModality(e.target.value)
   }
-
 
 
   return (
@@ -123,21 +126,16 @@ export default function FormCourse (props: CourseProps) {
       <div id="modality">
         <label className="font-light text-sm">Modalidade</label>
         <div className="flex mt-2 space-x-2 justify-center">
-          <ButtonOptions value="semipresencial" onClick={modalityFunction}>Semipresencial</ButtonOptions>
-          <ButtonOptions value="presencial" onClick={modalityFunction}>Presencial</ButtonOptions>
-          <ButtonOptions value="ead" onClick={modalityFunction}>EAD</ButtonOptions>
+          <ButtonOptions value="S" onClick={modalityFunction}>Semipresencial</ButtonOptions>
+          <ButtonOptions value="P" onClick={modalityFunction}>Presencial</ButtonOptions>
+          <ButtonOptions value="E" onClick={modalityFunction}>EAD</ButtonOptions>
         </div>
       </div>
 
       <Select textLabel="Unidade/Polo" onChange={UnityFunction}>
         {unityOptions.map((option, index) => (
           <option key={index} value={option.value}>{option.label}</option>
-        ))}Prezados Coordenadores, boa tarde!
-
-        Segue no e-mail abaixo, as orientações para que os professores possam copiar os conteúdos das suas disciplinas de semestres anteriores para este semestre. Por gentileza, repassem estas orientações aos vossos docentes. 
-        
-        Grata,
-        
+        ))}
       </Select>
 
       <Select textLabel="Curso" onChange={CoursesFunction}>

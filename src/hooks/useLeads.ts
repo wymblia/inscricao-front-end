@@ -2,10 +2,11 @@ import { useContext, useState } from "react"
 import { RegistrationContext } from "../contexts/RegistrationContext"
 import Lead from "../core/Lead"
 import { api } from "../services/api"
+import useCourse from "../hooks/useCourse";
 
 export default function useLeads () {
   const { displayStep2, displayStep3, formaIngresso } = useContext(RegistrationContext)
-  
+  const {getCourse} = useCourse()
   const [lead, setLead] = useState<Lead>(Lead.createVoid())
 
   function saveLead (lead: Lead) {
@@ -21,10 +22,7 @@ export default function useLeads () {
       telefone: lead.phone,
       filial_id: 1
     })
-    .then (response => {
-      console.log(response.data);
-    })
-    console.log(formaIngresso)
+    getCourse()
     displayStep2()
   }
 
@@ -34,3 +32,4 @@ export default function useLeads () {
     lead
   }
 }
+
