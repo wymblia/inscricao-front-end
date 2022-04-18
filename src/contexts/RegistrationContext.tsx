@@ -18,7 +18,7 @@ type UserContextType = {
 
   setName: (newState: string) => void 
   setSocialName: (newState: string) => void 
-  setvisibleSocialName: (newState: boolean) => void 
+  setVisibleSocialName: (newState: boolean) => void 
   setemail: (newState: string) => void 
   setphone: (newState: string) => void 
   setAppearanceSocialName: (newState: boolean) => void 
@@ -107,8 +107,8 @@ type UserContextType = {
   stepTwoVisible: boolean,
   stepThreeVisible: boolean,
   stepFourVisible: boolean,
-  stepFiveVisible: boolean,
-  stepSixVisible: boolean,
+  stepFiveVisible: boolean
+  stepSixVisible: boolean
 }
 
 const initialValues = {
@@ -125,7 +125,7 @@ const initialValues = {
   
   setName: () => {},
   setSocialName: () => {},
-  setvisibleSocialName: () => {},
+  setVisibleSocialName: () => {},
   setemail: () => {},
   setphone: () => {},
   setAppearanceSocialName: () => {},
@@ -194,7 +194,7 @@ const initialValues = {
   setShowModalityName: () => {},
   setShowUnityName: () => {},
   setShowCourseName: () => {},
-  setfilialCourse: () => {},
+  setFilialCourse: () => {},
   setTurnoCourse: () => {},
   setTurnoIdCourse: () => {},
   setMatrizCourse: () => {},
@@ -214,7 +214,8 @@ const initialValues = {
   stepThreeVisible: false,
   stepFourVisible: false,
   stepFiveVisible: false,
-  stepSixVisible: false,
+  stepSixVisible: false
+
 }
 
 export const RegistrationContext = createContext<UserContextType>(initialValues)
@@ -225,7 +226,7 @@ export const RegistrationContextProvider = ({ children }: RegistrationContextPro
 
   const [name, setName] = useState(initialValues.name)
   const [socialName, setSocialName] = useState(initialValues.socialName)
-  const [visibleSocialName, setvisibleSocialName] = useState(initialValues.visibleSocialName)
+  const [visibleSocialName, setVisibleSocialName] = useState(initialValues.visibleSocialName)
   const [email, setemail] = useState(initialValues.email)
   const [phone, setphone] = useState(initialValues.phone)
   const [appearanceSocialName, setAppearanceSocialName] = useState(initialValues.appearanceSocialName)
@@ -281,6 +282,7 @@ export const RegistrationContextProvider = ({ children }: RegistrationContextPro
 
       name,
       socialName,
+      visibleSocialName,
       email,
       phone,
       appearanceSocialName,
@@ -288,6 +290,7 @@ export const RegistrationContextProvider = ({ children }: RegistrationContextPro
       setListOffer,
       setName,
       setSocialName,
+      setVisibleSocialName,
       setemail,
       setphone,
       setAppearanceSocialName,
@@ -377,7 +380,7 @@ export const RegistrationContextProvider = ({ children }: RegistrationContextPro
       stepThreeVisible: visible === 'step3',
       stepFourVisible: visible === 'step4',
       stepFiveVisible: visible === 'step5',
-      stepSixVisible: visible === 'step6',
+      stepSixVisible: visible === 'step6'
 
     }}>
       {children}
