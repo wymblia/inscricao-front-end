@@ -5,7 +5,7 @@ import { api } from "../services/api"
 
 export default function useCourse() {
   const { displayStep3, displayStep5, listOffer, setListOffer} = useContext(RegistrationContext)
-  const [course] = useState<Course>(Course.createVoid())
+  const [course, setCourse] = useState<Course>(Course.createVoid())
 
   function getCourse() {
     api.get('/process', {
@@ -22,7 +22,6 @@ export default function useCourse() {
   function backStepThree() {
     displayStep3()
   }
-
 
   return {
     getCourse,

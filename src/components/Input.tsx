@@ -27,11 +27,11 @@ export default function Input (props: InputProps) {
         mask={props.mask}
         id = {props.idInput}
         type = {props.typeInput}
-        value = {props.valueInput  || props.defaultValue}
+        value = {props.valueInput}
         onChange = { e => props.onChange?.(e.target.value) }
         onBlur = { e => props.onBlur?.(e.target.value) }
         hidden = {props.hidden}
-        defaultValue = {props.valueInput}
+        defaultValue = {props.defaultValue}
         required = {props.required}
         className = {`md:min-w-[550px] h-10 mb-2 border border-gray-300 rounded-2xl focus:outline-none bg-gray-50 px-4 py-2 focus:bg-white ${props.readOnly ? 'bg-gray-200 focus:bg-gray-200' : null} ${props.classNameInput}`}
       />

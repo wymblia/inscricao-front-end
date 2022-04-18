@@ -10,18 +10,14 @@ import useCourse from "../hooks/useCourse"
 import useCourseResume from "../hooks/useCourseResume"
 import FormAddress from "../components/FormAddress"
 import FormResume from "../components/FormCourseResume"
-import Stepper from "../components/Stepper"
-import Fundo from "../components/imgs/fundo.webp"
-import Image from 'next/image'
 import Steps from "../components/Steps"
-
 
 export default function Home() {
   const { lead, saveLead } = useLeads()
   const { personalData, savePersonalData, backStepOne } = usePersonalData()
   const { address, saveAddress, backStepTwo } = useAddress()
-  const { course, getCourse, nextStepFive, backStepThree } = useCourse()
-  const { courseResume, nextStepSix, backStepFour } = useCourseResume()
+  const { course, nextStepFive, backStepThree } = useCourse()
+  const { nextStepSix, backStepFour } = useCourseResume()
 
   const { stepOneVisible, stepTwoVisible, stepThreeVisible, stepFourVisible, stepFiveVisible } = useContext(RegistrationContext)
 
@@ -86,44 +82,20 @@ export default function Home() {
                     :
                     (
                       stepFiveVisible ? (
-                        <div>
-                          <div id="main" className="flex flex-col md:flex-row flex-grow">
-                            <div className="flex-grow md:max-w-[40%]">
-                              <div className="h-32 bg-[url('/img/mobile.jpg')] block md:hidden" />
-                              <div className="md:h-screen bg-[url('https://www.ftec.com.br/static/media/uploads/imagens-formas-de-ingresso/transferencia.png')] hidden md:block bg-cover bg-center" />
-                            </div>
-                            <div className="bg-gray-100 flex-grow md:max-w-[60%]">
-                              <div className="flex justify-center items-center md:h-screen">
-                                <Stepper
-                                  className={"hidden md:block steps-vertical"}
-                                  classNameStep1={"step-primary"}
-                                  classNameStep2={"step-primary"}
-                                  classNameStep3={"step-primary"}
-                                  classNameStep4={"step-primary"}
-                                />
-                                <div className="flex-row">
-                                  <Stepper
-                                    className={"steps-horizontal md:hidden"}
-                                    classNameStep1={"step-primary"}
-                                    classNameStep2={"step-primary"}
-                                    classNameStep3={"step-primary"}
-                                    classNameStep4={"step-primary"}
-                                  />
-                                  <div className="flex justify-center items-center">
-                                    <h1 className="text-2xl font-light m-10 text-cyan-900">Vestibular Uniftec</h1>
-                                  </div>
-                                  <FormResume
-                                    courseResumeChange={nextStepSix}
-                                    backPage={backStepFour}
-                                  />
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
+                        <Steps
+                        form={
+                        <FormResume
+                          courseResumeChange={nextStepSix}
+                          backPage={backStepFour}
+                        />
+                        }
+                        classNameStep2={"step-primary"}
+                        classNameStep3={"step-primary"}
+                        classNameStep4={"step-primary"}
+                      />
                       )
                         : (
-                          <h1>jfosdfi</h1>
+                          <h1 className="bg-green-300">uhul</h1>
                         )
                     )
                 )
