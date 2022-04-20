@@ -13,6 +13,7 @@ interface CourseResumeProps {
   backPage?: () => void
 }
 
+
 export default function FormCourseResume(props: CourseResumeProps) {
   
   const {selectedCourse, unity, modality, showModalityName, showCourseName, name, socialName, email, phone, cpf,
@@ -39,12 +40,22 @@ export default function FormCourseResume(props: CourseResumeProps) {
       title: 'Confirmando sua inscrição!',
       text: 'Em instantes, você receberá um e-mail com todas as informações.',
       confirmButtonText: 'Ok',
-      icon: 'success'
+      icon: 'success',
     }).then((result) => {
       if (result.isConfirmed) {
-        window.location.href = "https://www.ftec.com.br";
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Aguarde, você será redirecionado',
+          showConfirmButton: false,
+          timer: 4000
+        })
+
+        setTimeout(() => {window.location.href = "https://www.ftec.com.br"}, 3000);
+        
       }
     })
+
 
     const ufId = await getUfIdBaseFtec()
 
@@ -150,7 +161,7 @@ export default function FormCourseResume(props: CourseResumeProps) {
     //   providencia: providence
     // }
 
-    // return console.log(retorno)
+    return console.log(retorno)
 
   }
 
