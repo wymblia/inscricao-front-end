@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useContext } from "react";
+import Swal from "sweetalert2";
 import { RegistrationContext } from "../contexts/RegistrationContext";
 import Address from "../core/Address";
 import Button from "./Button";
@@ -21,11 +22,26 @@ export default function FormAddress (props: FormAddressProps) {
     .get(`https://viacep.com.br/ws/${cep}/json`)
     .then(response => {
         const {data} = response
-        setState(data.uf)
-        setCity(data.localidade)
-        setDistrict(data.bairro)
-        setStreet(data.logradouro)
+        if(data.erro){
+
+          Swal.fire({
+            title: '<p>Cep inválido</p>',
+            icon: 'warning',
+            html:
+              'Não sabe seu CEP? ' +
+              '<a href="https://www2.correios.com.br/sistemas/buscacep/buscaCep.cfm" target="_blank"> <br><br> <u>Consulte-o aqui</u></a> ',
+            focusConfirm: true,
+            confirmButtonText: 'Ok'
+          })
+
+        } else {
+          setState(data.uf)
+          setCity(data.localidade)
+          setDistrict(data.bairro)
+          setStreet(data.logradouro)
+        }
     })
+
   }
 
   function FormSubmit(e: any) {

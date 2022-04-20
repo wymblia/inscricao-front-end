@@ -13,7 +13,6 @@ interface CourseResumeProps {
   backPage?: () => void
 }
 
-
 export default function FormCourseResume(props: CourseResumeProps) {
   
   const {selectedCourse, unity, modality, showModalityName, showCourseName, name, socialName, email, phone, cpf,
@@ -47,17 +46,12 @@ export default function FormCourseResume(props: CourseResumeProps) {
       }
     })
 
-    // Swal.fire(
-    //   'Confirmando sua inscrição!',
-    //   'Em instantes, você receberá um e-mail com demais informações.',
-    //   'success'
-    // )
-
     const ufId = await getUfIdBaseFtec()
 
     let retorno = await api.post('/new-enrollment', {
       nome_contato: firstName,
       sobrenome_contato: lastName,
+      nome_social: socialName,
       email_contato: email,
       fone_contato: phone,
       como_chegou: null,
@@ -109,6 +103,7 @@ export default function FormCourseResume(props: CourseResumeProps) {
     // let retorno = {
     //   nome_contato: firstName,
     //   sobrenome_contato: lastName,
+    //   nome_social: socialName,
     //   email_contato: email,
     //   fone_contato: phone,
     //   como_chegou: null,
@@ -155,7 +150,7 @@ export default function FormCourseResume(props: CourseResumeProps) {
     //   providencia: providence
     // }
 
-    return console.log(retorno)
+    // return console.log(retorno)
 
   }
 
