@@ -35,7 +35,7 @@ export default function FormAddress (props: FormAddressProps) {
 
   return (
     <div>
-      <form onSubmit={FormSubmit}>
+      <form onSubmit={FormSubmit} autoComplete="off">
         <Input mask="99999-999" textLabel="CEP" typeInput="cep" idInput="cep" valueInput={cep} onChange={setCep} onBlur={chamarCep} required={true} />
         <Input textLabel="Estado" typeInput="text" idInput="state" valueInput={state} onChange={setState} required={true} />
         <Input textLabel="Cidade" typeInput="text" idInput="city" valueInput={city} onChange={setCity} required={true} />

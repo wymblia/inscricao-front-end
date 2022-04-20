@@ -6,6 +6,7 @@ import { FiMonitor, FiClock } from 'react-icons/fi';
 import { BsCalendarWeek } from 'react-icons/bs';
 import { api } from "../services/api";
 import moment from "moment"
+import Swal from "sweetalert2";
 
 interface CourseResumeProps {
   courseResumeChange?: () => void
@@ -35,9 +36,77 @@ export default function FormCourseResume(props: CourseResumeProps) {
 
   async function newEnrollment() {
 
+    Swal.fire({
+      title: 'Confirmando sua inscrição!',
+      text: 'Em instantes, você receberá um e-mail com todas as informações.',
+      confirmButtonText: 'Ok',
+      icon: 'success'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location.href = "https://www.ftec.com.br";
+      }
+    })
+
+    // Swal.fire(
+    //   'Confirmando sua inscrição!',
+    //   'Em instantes, você receberá um e-mail com demais informações.',
+    //   'success'
+    // )
+
     const ufId = await getUfIdBaseFtec()
 
-    // let retorno = await api.post('/new-enrollment', {
+    let retorno = await api.post('/new-enrollment', {
+      nome_contato: firstName,
+      sobrenome_contato: lastName,
+      email_contato: email,
+      fone_contato: phone,
+      como_chegou: null,
+      filial_id: filialCourse,
+      forma_ingresso: idEntryForm,
+      vestibular_id: selectedEnrollment,
+      filial_old: null,
+      local_prova_id: null,
+      enem_ano: yearEnem,
+      enem_inscricao: codeEnemAndEncceja,
+      enem_nota_objetiva: objectiveTestGrade,
+      enem_nota_redacao: redactionTestGrade,
+      modalidade_ensino: modalidadeCourse,
+      modalidade: modalidadeCourse,
+      opcao_curso: null,
+      turno: turnoCourse,
+      selected_opcao1: selectedCourse+'#'+turnoIdCourse+'#'+matrizCourse+'#'+showCourseName,
+      selected_opcao2: selectedCourse+'#'+turnoIdCourse+'#'+matrizCourse+'#'+showCourseName,
+      hidden_curso_id: null,
+      hidden_turno_id: null,
+      hidden_matriz: null,
+      hidden_curso: null,
+      opcao1: selectedCourse,
+      opcao2: selectedCourse,
+      cpf: cpf,
+      documento_estrangeiro: null,
+      pais: 1,
+      nome: firstName,
+      sobrenome: lastName,
+      sexo: gender,
+      data_nascimento: birthDateFormatBr,
+      email: email,
+      fone1: phone,
+      fone2: phone,
+      cep: cep,
+      uf_id: ufId,
+      cidade: city,
+      bairro: district,
+      logradouro: street,
+      numero: number,
+      cidade_escola: null,
+      atendimento_consultor: null,
+      consultor_usuarioid: null,
+      providencia: providence
+    }
+
+    )
+
+    // let retorno = {
     //   nome_contato: firstName,
     //   sobrenome_contato: lastName,
     //   email_contato: email,
@@ -85,57 +154,6 @@ export default function FormCourseResume(props: CourseResumeProps) {
     //   consultor_usuarioid: null,
     //   providencia: providence
     // }
-
-    // )
-
-    let retorno = {
-      nome_contato: firstName,
-      sobrenome_contato: lastName,
-      email_contato: email,
-      fone_contato: phone,
-      como_chegou: null,
-      filial_id: filialCourse,
-      forma_ingresso: null,
-      vestibular_id: selectedEnrollment,
-      filial_old: null,
-      local_prova_id: null,
-      enem_ano: yearEnem,
-      enem_inscricao: codeEnemAndEncceja,
-      enem_nota_objetiva: objectiveTestGrade,
-      enem_nota_redacao: redactionTestGrade,
-      modalidade_ensino: modalidadeCourse,
-      modalidade: modalidadeCourse,
-      opcao_curso: null,
-      turno: turnoCourse,
-      selected_opcao1: selectedCourse+'#'+turnoIdCourse+'#'+matrizCourse+'#'+showCourseName,
-      selected_opcao2: selectedCourse+'#'+turnoIdCourse+'#'+matrizCourse+'#'+showCourseName,
-      hidden_curso_id: null,
-      hidden_turno_id: null,
-      hidden_matriz: null,
-      hidden_curso: null,
-      opcao1: selectedCourse,
-      opcao2: selectedCourse,
-      cpf: cpf,
-      documento_estrangeiro: null,
-      pais: 1,
-      nome: firstName,
-      sobrenome: lastName,
-      sexo: gender,
-      data_nascimento: birthDateFormatBr,
-      email: email,
-      fone1: phone,
-      fone2: phone,
-      cep: cep,
-      uf_id: ufId,
-      cidade: city,
-      bairro: district,
-      logradouro: street,
-      numero: number,
-      cidade_escola: null,
-      atendimento_consultor: null,
-      consultor_usuarioid: null,
-      providencia: providence
-    }
 
     return console.log(retorno)
 

@@ -23,7 +23,7 @@ export default function Form (props: FormProps) {
 
   return (
     <div>
-       <form onSubmit={FormSubmit}>
+       <form onSubmit={FormSubmit} autoComplete="off">
         <div className="flex justify-end -mb-4z text-sm">
           <div className="form-check form-switch">
             <input defaultChecked={appearanceSocialName} className="form-check-input appearance-none w-9 -ml-10 rounded-full float-left h-5 align-top bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm" type="checkbox" role="switch" id="flexSwitchCheckDefault" onClick={setAppearanceSocialNameFunction}/>

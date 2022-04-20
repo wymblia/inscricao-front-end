@@ -342,7 +342,6 @@ export const RegistrationContextProvider = ({ children }: RegistrationContextPro
       modalidadeCourse,
       selectedEnrollment,
       idEntryForm,
-
       selectedCourse,
       showModalityName,
       showUnityName,

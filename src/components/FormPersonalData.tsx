@@ -83,7 +83,7 @@ export default function FormPersonalData(props: PersonalDataProps) {
     <div>
       <form onSubmit={FormSubmit}>
         <div id="blocoCpf">
-          <Input mask="999.999.999-99" textLabel="CPF" placeholder='999.999.999-99' defaultValue={cpf || ''} typeInput="text" idInput="cpf" onChange={setCpf} onBlur={validateCpfReturn} classNameInput={setClassNameInputFunction} required />
+          <Input mask="999.999.999-99" textLabel="CPF" defaultValue={cpf || ''} typeInput="text" idInput="cpf" onChange={setCpf} onBlur={validateCpfReturn} classNameInput={setClassNameInputFunction} required />
           <div className="text-sm text-red-600" hidden={invisibleErrorCpf}>
             <div className="flex justify-end -mt-3">
               <svg className=" pt-0.5 h-6 w-6 text-red-500" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
