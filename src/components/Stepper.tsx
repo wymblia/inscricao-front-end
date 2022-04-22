@@ -1,9 +1,20 @@
-export default function Stepper () {
+interface StepperProps {
+  className?: string
+  classNameStep2?: string
+  classNameStep3?: string
+  classNameStep4?: string
+
+}
+
+export default function Stepper (props: StepperProps) {
   return (
-    <div className="flex flex-row md:flex-col">
-        <div className="p-2 bg-orange-400 m-2 rounded-full w-10 h-10 flex justify-center items-center">01</div>
-        <div className="p-2 bg-orange-400 m-2 rounded-full w-10 h-10 flex justify-center items-center">02</div>
-        <div className="p-2 bg-orange-400 m-2 rounded-full w-10 h-10 flex justify-center items-center">03</div>
-    </div>
+      <div data-theme="corporate">
+          <ul className={`steps ${props.className} font-light `} >
+              <li data-content="✓" className={`step step-neutral step-primary `}>Dados Pessoais</li>
+              <li data-content="✓" className={`step step-neutral mb-50 ${props.classNameStep2}`}>Endereço</li>
+              <li data-content="✓" className={`step step-neutral ${props.classNameStep3}`}>Curso</li>
+              <li data-content="✓" className={`step step-neutral ${props.classNameStep4}`}>Validação</li>
+          </ul>
+      </div>
   )
 }

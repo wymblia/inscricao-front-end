@@ -1,59 +1,106 @@
-import React, {useContext} from "react"
-import Button from "../components/Button"
+import React, { useContext } from "react"
 import Form from "../components/Form"
+import FormCourse from "../components/FormCourse"
+import FormPersonalData from "../components/FormPersonalData"
 import { RegistrationContext } from "../contexts/RegistrationContext"
 import useLeads from "../hooks/useLeads"
+import usePersonalData from "../hooks/usePersonalData"
+import useAddress from "../hooks/useAddress"
+import useCourse from "../hooks/useCourse"
+import useCourseResume from "../hooks/useCourseResume"
+import FormAddress from "../components/FormAddress"
+import FormResume from "../components/FormCourseResume"
+import Steps from "../components/Steps"
 
 export default function Home() {
-  const {lead, saveLead, teste} = useLeads()
+  const { lead, saveLead } = useLeads()
+  const { personalData, savePersonalData, backStepOne } = usePersonalData()
+  const { address, saveAddress, backStepTwo } = useAddress()
+  const { course, nextStepFive, backStepThree } = useCourse()
+  const { nextStepSix, backStepFour } = useCourseResume()
 
-  const {stepOneVisible, stepTwoVisible,} = useContext(RegistrationContext)
-  
-  console.log()
+  const { stepOneVisible, stepTwoVisible, stepThreeVisible, stepFourVisible, stepFiveVisible } = useContext(RegistrationContext)
 
   return (
     <>
-    {stepOneVisible ? (
-      <div id="container" className="flex flex-col">
-        <div id="main" className="flex flex-col md:flex-row flex-grow">
-          <div className="flex-grow">
-            <div className="h-32 bg-[url('/img/mobile.jpg')] block md:hidden" />
-            <div className="md:h-screen bg-[url('/img/desktop.jpg')] hidden md:block" />
-          </div>
-          <div className="p-4 bg-gray-100 flex-grow">
-            <div className="flex justify-center items-center md:h-screen">
-              <div className="flex-row">
-                <button className="bg-gray-400 text-white px-28 py-4 rounded-2xl mb-4">
-                  Curso outras regras
-                </button>
-                <div className="flex justify-center items-center">
-                  <h1 className="text-2xl font-light m-10 text-cyan-900">Vestibular Uniftec</h1>
-                </div>
-                <Form 
-                  lead={lead} 
-                  leadChange={saveLead}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    ) 
-    : 
-    (
-      stepTwoVisible ? (
-        <div>
-          <h1>Teste</h1>
-          <div className="flex flex-col mt-12">
-            <Button onClick={teste}>Enviar</Button>
-          </div>
-        </div>
-        ) 
-        : 
+
+      {stepOneVisible ? (
+
+        <Steps
+          form={
+            <Form
+              lead={lead}
+              leadChange={saveLead}
+              />
+            }
+            invisible={"hidden"}
+        />
+      )
+        :
         (
-          <p>Teste 50</p>
-        )
-    )}
+          stepTwoVisible ? (
+            <Steps
+              form={
+                <FormPersonalData
+                  personalData={personalData}
+                  personalDataChange={savePersonalData}
+                  backPage={backStepOne}
+                />
+              }
+            />
+          )
+            :
+            (
+              stepThreeVisible ? (
+                <Steps
+                  form={
+                    <FormAddress
+                      address={address}
+                      addressChange={saveAddress}
+                      backPage={backStepTwo}
+                    />
+                  }
+                  classNameStep2={"step-primary"}
+                />
+              )
+                :
+                (
+                  stepFourVisible ? (
+                    <Steps
+                      form={
+                        <FormCourse
+                          course={course}
+                          courseChange={nextStepFive}
+                          backPage={backStepThree}
+                        />
+                      }
+                      classNameStep2={"step-primary"}
+                      classNameStep3={"step-primary"}
+                    />
+                  )
+                    :
+                    (
+                      stepFiveVisible ? (
+                        <Steps
+                        form={
+                        <FormResume
+                          courseResumeChange={nextStepSix}
+                          backPage={backStepFour}
+                        />
+                        }
+                        classNameStep2={"step-primary"}
+                        classNameStep3={"step-primary"}
+                        classNameStep4={"step-primary"}
+                      />
+                      )
+                        : (
+                          <h1 className="bg-green-300">uhul</h1>
+                        )
+                    )
+                )
+            )
+        )}
     </>
   )
 }
+
