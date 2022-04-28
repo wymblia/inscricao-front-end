@@ -62,6 +62,7 @@ type UserContextType = {
   codeEnemAndEncceja: string
   objectiveTestGrade: string
   redactionTestGrade: string
+  enemFile: any
   nameCourse: string
   selectedCourse: string
   showModalityName: string
@@ -83,6 +84,7 @@ type UserContextType = {
   setCodeEnemAndEncceja: (newState: string) => void
   setObjectiveTestGrade: (newState: string) => void
   setRedactionTestGrade: (newState: string) => void
+  setEnemFile: (newState: any) => void
   setNameCourse: (newState: string) => void
   setSelectedCourse: (newState: string) => void
   setShowModalityName: (newState: string) => void
@@ -169,6 +171,7 @@ const initialValues = {
   codeEnemAndEncceja: null,
   objectiveTestGrade: null,
   redactionTestGrade: null,
+  enemFile: null,
   nameCourse: "",
   selectedCourse: "",
   showModalityName: "",
@@ -189,6 +192,7 @@ const initialValues = {
   setCodeEnemAndEncceja: () => {},
   setObjectiveTestGrade: () => {},
   setRedactionTestGrade: () => {},
+  setEnemFile: () => {},
   setNameCourse: () => {},
   setSelectedCourse: () => {},
   setShowModalityName: () => {},
@@ -254,6 +258,7 @@ export const RegistrationContextProvider = ({ children }: RegistrationContextPro
   const [codeEnemAndEncceja, setCodeEnemAndEncceja] = useState(initialValues.codeEnemAndEncceja)
   const [objectiveTestGrade, setObjectiveTestGrade] = useState(initialValues.objectiveTestGrade)
   const [redactionTestGrade, setRedactionTestGrade] = useState(initialValues.redactionTestGrade)
+  const [enemFile, setEnemFile] = useState(initialValues.enemFile)
   const [nameCourse, setNameCourse] = useState(initialValues.nameCourse)
   const [selectedCourse, setSelectedCourse] = useState(initialValues.selectedCourse)
   const [showModalityName, setShowModalityName] = useState(initialValues.showModalityName)
@@ -334,6 +339,7 @@ export const RegistrationContextProvider = ({ children }: RegistrationContextPro
       codeEnemAndEncceja,
       objectiveTestGrade,
       redactionTestGrade,
+      enemFile,
       nameCourse,
       filialCourse,
       turnoCourse,
@@ -354,6 +360,7 @@ export const RegistrationContextProvider = ({ children }: RegistrationContextPro
       setCodeEnemAndEncceja,
       setObjectiveTestGrade,
       setRedactionTestGrade,
+      setEnemFile,
       setNameCourse,
       setSelectedCourse,
       setShowModalityName,
