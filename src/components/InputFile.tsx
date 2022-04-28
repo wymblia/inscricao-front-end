@@ -10,10 +10,8 @@ interface InputProps {
   classNameInput?: any
   onChange?: (valueInput: any) => void
 
-  onBlur?: (valueInput: any) => void
   hidden?: boolean
   readOnly?: boolean
-  mask?: string
   defaultValue?: any
   accept?: any
   required?: boolean
@@ -27,13 +25,11 @@ export default function Input (props: InputProps) {
         {props.textLabel}
       </label>
       <InputMask
-        mask = { props.mask }
         placeholder = { props.placeholder }
         id = { props.idInput }
         type = { props.typeInput }
         value = { props.valueInput }
-        onChange = { (e => props.onChange?.(e.target.value)) }
-        onBlur = { e => props.onBlur?.(e.target.value) }
+        onChange = { (e => props.onChange?.(e.target.files[0])) }
         hidden = { props.hidden }
         defaultValue = { props.defaultValue }
         accept = { props.accept }
