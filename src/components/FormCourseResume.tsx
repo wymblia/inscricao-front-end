@@ -107,7 +107,6 @@ export default function FormCourseResume(props: CourseResumeProps) {
       atendimento_consultor: null,
       consultor_usuarioid: null,
       providencia: providence
-      // comprovante_enem: 
     }
 
     )

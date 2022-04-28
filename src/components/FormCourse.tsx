@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { RegistrationContext } from "../contexts/RegistrationContext";
 import Course from "../core/Course";
 import useCourse from "../hooks/useCourse";
+import { api } from "../services/api";
 import Button from "./Button";
 import ButtonBack from "./ButtonBack";
 import ButtonOptions from "./ButtonOptions";
@@ -17,7 +18,7 @@ interface CourseProps {
 }
 
 export default function FormCourse(props: CourseProps) {
-  const { modality, setModality, unity, setUnity, entryForm, setEntryForm, yearEnem, setYearEnem, codeEnemAndEncceja, setCodeEnemAndEncceja, objectiveTestGrade, setObjectiveTestGrade, redactionTestGrade, setRedactionTestGrade, nameCourse, selectedCourse, setSelectedCourse, setShowCourseName, setShowModalityName, setFilialCourse, setTurnoCourse, setTurnoIdCourse, setMatrizCourse, setModalidadeCourse, selectedEnrollment,setSelectedEnrollment, setIdEntryForm, enemFile, setEnemFile } = useContext(RegistrationContext)
+  const { modality, setModality, unity, setUnity, entryForm, setEntryForm, yearEnem, setYearEnem, codeEnemAndEncceja, setCodeEnemAndEncceja, objectiveTestGrade, setObjectiveTestGrade, redactionTestGrade, setRedactionTestGrade, nameCourse, selectedCourse, setSelectedCourse, setShowCourseName, setShowModalityName, setFilialCourse, setTurnoCourse, setTurnoIdCourse, setMatrizCourse, setModalidadeCourse, selectedEnrollment,setSelectedEnrollment, setIdEntryForm, enemFile, setEnemFile, cpf} = useContext(RegistrationContext)
   const { listOffer } = useCourse()
 
   const [coursesOptions, setCoursesOptions] = useState([])
@@ -184,31 +185,28 @@ export default function FormCourse(props: CourseProps) {
     props.courseChange?.(new Course(modality, unity, entryForm, yearEnem, nameCourse))
   }
 
-  function fileValidation(e: any) {
-
+  async function fileValidation(e: any) {
+    // api.
+  
+    // const data = []
+  
+    // data.push({
+    //   test: false,
+    //   originalName: e.name,
+    //   mimeType: e.type,
+    //   size: e.size,
+    //   error: 0
+    // })
     if(((e.size / 1024) / 1024) <= 2) {
+      const formData = new FormData()
+      formData.append('fileEnem', e)
+      formData.append('cpf', cpf)
 
-      const data = []
-
-      data.push({
-        test: false,
-        originalName: e.name,
-        mimeType: e.type,
-        size: e.size,
-        error: 0
+      await api.post('/upload-enem',formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
       })
-
-      setEnemFile(data)
-
-      // let data = new FormData()
-
-      // data.append('enemFile', enemFile)
-
-      console.log(e.name)
-
-      setEnemFile(e.name)
-
-      console.log('william', enemFile, 'william')
 
     } else {
       alert('Arquivo muito grande! Limite máximo 2MB')
@@ -263,7 +261,8 @@ export default function FormCourse(props: CourseProps) {
           <Input valueInput={codeEnemAndEncceja || ""} textLabel="Informe o código da inscrição do Enem/Encceja" typeInput="text" onChange={setCodeEnemAndEncceja} required={entryForm === 'enem-encceja'}/>
           <Input valueInput={objectiveTestGrade || ""} textLabel="Informe a nota da prova objetiva" typeInput="text" onChange={setObjectiveTestGrade} required={entryForm === 'enem-encceja'}/>
           <Input valueInput={redactionTestGrade || ""} textLabel="Informe a nota da redação" typeInput="text" onChange={setRedactionTestGrade} required={entryForm === 'enem-encceja'}/>
-          <InputFile valueInput={enemFile || ""} typeInput="file" textLabel="Selecione o comprovante do Enem" onChange={fileValidation} accept="application/pdf" required={entryForm === 'enem-encceja'}/>
+          {/* <InputFile valueInput={enemFile || ""} typeInput="file" textLabel="Selecione o comprovante do Enem" onChange={fileValidation} accept="application/pdf" required={entryForm === 'enem-encceja'}/> */}
+          <input type="file" accept="application/pdf" onChange={(e) => fileValidation(e.target.files[0])}></input>
         </div>
 
         </div>
@@ -278,3 +277,7 @@ export default function FormCourse(props: CourseProps) {
     </div>
   )
 }
+function cpf(arg0: string, cpf: any) {
+  throw new Error("Function not implemented.");
+}
+
