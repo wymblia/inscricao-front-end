@@ -49,6 +49,11 @@ export default function FormCourse(props: CourseProps) {
       label: "Reingresso",
       value: "reingresso",
       idFormFtec: 1
+    },
+    {
+      label: "Segunda Graduação",
+      value: "segunda-graduacao",
+      idFormFtec: 1
     }
   ]
 
@@ -97,7 +102,7 @@ export default function FormCourse(props: CourseProps) {
   }, [unity])
 
   function UnityFunction(e) {
-    setSelectedCourse('') 
+    setSelectedCourse('')
     setUnity(e.target.value)
   }
 
@@ -186,17 +191,7 @@ export default function FormCourse(props: CourseProps) {
   }
 
   async function fileValidation(e: any) {
-    // api.
-  
-    // const data = []
-  
-    // data.push({
-    //   test: false,
-    //   originalName: e.name,
-    //   mimeType: e.type,
-    //   size: e.size,
-    //   error: 0
-    // })
+
     if(((e.size / 1024) / 1024) <= 2) {
       const formData = new FormData()
       formData.append('fileEnem', e)

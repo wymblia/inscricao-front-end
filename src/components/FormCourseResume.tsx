@@ -161,7 +161,7 @@ export default function FormCourseResume(props: CourseResumeProps) {
     //   providencia: providence
     // }
 
-    return console.log(retorno)
+    // return console.log(retorno)
 
   }
 
