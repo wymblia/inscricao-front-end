@@ -97,7 +97,7 @@ export default function FormCourse(props: CourseProps) {
   }, [unity])
 
   function UnityFunction(e) {
-    setSelectedCourse('') 
+    setSelectedCourse('')
     setUnity(e.target.value)
   }
 

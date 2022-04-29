@@ -1,9 +1,10 @@
-import { useContext } from "react";
+import { useContext, useEffect, useLayoutEffect } from "react";
 import Swal from "sweetalert2";
 import { RegistrationContext } from "../contexts/RegistrationContext";
 import Lead from "../core/Lead";
 import Button from "./Button";
 import Input from "./Input";
+import { Router, useRouter } from 'next/router';
 
 interface FormProps {
   lead: Lead
@@ -11,7 +12,29 @@ interface FormProps {
 }
 
 export default function Form (props: FormProps) {
-  const {socialName, name, email, phone, setSocialName, setName, setemail, setphone, appearanceSocialName, setAppearanceSocialName} = useContext(RegistrationContext)
+  
+  const {socialName, name, email, phone, setSocialName, setName, setemail, setphone, appearanceSocialName, setAppearanceSocialName, setModality, setUnity, setSelectedCourse, setEntryForm, setSelectedEnrollment, setShowCourseName, setShowModalityName} = useContext(RegistrationContext)
+  
+  const router = useRouter()
+  useEffect(() => {
+
+
+    if(router.query.completeName != 'undefined'|| router.query.selectedEnrollment != 'undefined') {
+      setName(String(router.query.completeName))
+      setemail(String(router.query.email))
+      setphone(String(router.query.phone))
+      setModality(String(router.query.modality))
+      setUnity(String(router.query.unity))
+      setSelectedCourse(String(router.query.course))
+      setEntryForm(String(router.query.entryForm))
+      setSelectedEnrollment(String(router.query.selectedEnrollment))
+      setShowCourseName(String(router.query.showCourseName))
+      setShowModalityName(String(router.query.showModalityName))
+      console.log(router.query.completeName, 'setando')
+    }
+  }, [])
+
+
 
   function setAppearanceSocialNameFunction() {
     appearanceSocialName ? setAppearanceSocialName(false) : setAppearanceSocialName(true)
@@ -32,7 +55,7 @@ export default function Form (props: FormProps) {
 
   return (
     <div>
-       <form onSubmit={FormSubmit} autoComplete="off">
+      <form onSubmit={FormSubmit} autoComplete="off">
         <div className="flex justify-end -mb-4z text-sm">
           <div className="form-check form-switch">
             <input defaultChecked={appearanceSocialName} className="form-check-input appearance-none w-9 -ml-10 rounded-full float-left h-5 align-top bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm" type="checkbox" role="switch" id="flexSwitchCheckDefault" onClick={setAppearanceSocialNameFunction}/>
