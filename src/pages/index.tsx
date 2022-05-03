@@ -11,6 +11,7 @@ import useCourseResume from "../hooks/useCourseResume"
 import FormAddress from "../components/FormAddress"
 import FormResume from "../components/FormCourseResume"
 import Steps from "../components/Steps"
+import {Helmet} from "react-helmet"
 
 export default function Home() {
   const { lead, saveLead } = useLeads()
@@ -23,6 +24,11 @@ export default function Home() {
 
   return (
     <>
+      <div>
+        <Helmet>
+          <title>Inscrição</title>
+        </Helmet>
+      </div>
       {stepOneVisible ? (
 
         <Steps
