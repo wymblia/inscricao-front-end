@@ -23,7 +23,7 @@ export default function Steps(props: StepsProps) {
       <div id="main" className="flex flex-col md:flex-row flex-grow">
         <div className="flex-grow md:max-w-[50%]">
           <div className="bg-[url('/img/mobile.jpg')] block md:hidden" />
-          <div className="md:h-screen bg-[url('https://www.ftec.com.br/static/media/uploads/NEW_VESTIBULAR/vestibular.png')] hidden md:block bg-cover bg-center" />
+          <div className="md:h-screen bg-[url('https://www.ftec.com.br/static/media/uploads/NEW_VESTIBULAR/vestibular1.png')] hidden md:block bg-cover bg-center" />
         </div>
         <div className={`flex flex-grow justify-start items-center md:max-w-[12%] md:min-w-[12%] md:h-screen ${props.invisible} p-5`}>
           <Stepper
