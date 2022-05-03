@@ -1,0 +1,10 @@
+image: node:14.7.0
+
+stages:
+  - build
+
+build-job:
+  stage: build
+  script:
+    - npm install
+    - npm run build
