@@ -15,7 +15,7 @@ interface SelectProps {
   
 export default function Select (props: SelectProps) {
   return (
-    <div className="flex flex-col mb-2">
+    <div className="flex flex-col mb-2 text-gray-700">
       <label className={`mb-2 font-light text-sm ${props.classNameLabel}`} htmlFor={props.idSelect}>
         {props.textLabel}
       </label>
