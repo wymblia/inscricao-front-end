@@ -12,13 +12,13 @@ interface FormProps {
   leadChange?: (lead: Lead) => any
 }
 
-export default function Form (props: FormProps) {
-  
-  const {socialName, name, email, phone, setSocialName, setName, setemail, setphone, appearanceSocialName, setAppearanceSocialName, setModality, setUnity, setSelectedCourse, setEntryForm, setSelectedEnrollment, setShowCourseName, setShowModalityName, setFilialCourse, setIdEntryForm, setModalidadeCourse, setTurnoCourse, setTurnoIdCourse, setMatrizCourse } = useContext(RegistrationContext)
-  
+export default function Form(props: FormProps) {
+
+  const { socialName, name, email, phone, setSocialName, setName, setemail, setphone, appearanceSocialName, setAppearanceSocialName, setModality, setUnity, setSelectedCourse, setEntryForm, setSelectedEnrollment, setShowCourseName, setShowModalityName, setFilialCourse, setIdEntryForm, setModalidadeCourse, setTurnoCourse, setTurnoIdCourse, setMatrizCourse } = useContext(RegistrationContext)
+
   const router = useRouter()
 
-  if(router.query.completeName != undefined) {
+  if (router.query.completeName != undefined) {
     setMatrizCourse(String(router.query.matrizCourse))
     setTurnoCourse(String(router.query.turnoCourse))
     setTurnoIdCourse(String(router.query.idTurnoCourse))
@@ -46,8 +46,8 @@ export default function Form (props: FormProps) {
     props.leadChange?.(new Lead(name, email, phone))
   }
 
-  function ValidateFirstAndLastName(e: any){
-    if(!e.target.value.split(' ')[1])
+  function ValidateFirstAndLastName(e: any) {
+    if (!e.target.value.split(' ')[1])
       Swal.fire({
         icon: 'error',
         text: 'Informe nome e sobrenome!'
@@ -59,37 +59,37 @@ export default function Form (props: FormProps) {
       <form onSubmit={FormSubmit} autoComplete="off">
         <div className="flex justify-end -mb-4z text-sm">
           <div className="form-check form-switch">
-            <input defaultChecked={appearanceSocialName} className="form-check-input appearance-none w-9 -ml-10 rounded-full float-left h-5 align-top bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm" type="checkbox" role="switch" id="flexSwitchCheckDefault" onClick={setAppearanceSocialNameFunction}/>
+            <input defaultChecked={appearanceSocialName} className="form-check-input appearance-none w-9 -ml-10 rounded-full float-left h-5 align-top bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm" type="checkbox" role="switch" id="flexSwitchCheckDefault" onClick={setAppearanceSocialNameFunction} />
             <label className="form-check-label inline-block text-gray-800" htmlFor="flexSwitchCheckDefault">Utilizar um Nome Social</label>
           </div>
         </div>
         <div hidden={!appearanceSocialName}>
-        <Input textLabel="Nome Social" typeInput="text" idInput="socialName" defaultValue={socialName} onChange={setSocialName} />
+          <Input textLabel="Nome Social" typeInput="text" idInput="socialName" defaultValue={socialName} onChange={setSocialName} />
         </div>
 
         <div className="flex flex-col mb-2">
           <label className={`mb-2 font-light text-sm `} htmlFor="name">
-            Nome Completo
+            <p className="text-gray-700">Nome completo</p>
           </label>
-        <input type="text" id="name" defaultValue={name} onChange={(e) => setName(e.target.value)} onBlur={ValidateFirstAndLastName} required={true} className='md:min-w-[550px] h-10 mb-2 border border-gray-300 rounded-2xl focus:outline-none bg-gray-50 px-4 py-2 focus:bg-white'/>
+          <input type="text" id="name" defaultValue={name} onChange={(e) => setName(e.target.value)} onBlur={ValidateFirstAndLastName} required={true} className='md:min-w-[550px] h-10 mb-2 border border-gray-300 rounded-2xl focus:outline-none bg-gray-50 px-4 py-2 focus:bg-white text-gray-700' />
         </div>
 
         <div className="flex flex-col mb-2">
           <label className={`mb-2 font-light text-sm`} htmlFor="email">
-            Email
+           <p className="text-gray-700">E-mail</p>
           </label>
-        <input type="email" id="email" defaultValue={email} onChange={(e) => setemail(e.target.value)} required={true} className='md:min-w-[550px] h-10 mb-2 border border-gray-300 rounded-2xl focus:outline-none bg-gray-50 px-4 py-2 focus:bg-white'/>
+          <input type="email" id="email" defaultValue={email} onChange={(e) => setemail(e.target.value)} required={true} className='md:min-w-[550px] h-10 mb-2 border border-gray-300 rounded-2xl focus:outline-none bg-gray-50 px-4 py-2 focus:bg-white text-gray-700' />
         </div>
 
         <div className="flex flex-col mb-2">
           <label className={`mb-2 font-light text-sm`} htmlFor='phone'>
-            Celular
+            <p className="text-gray-700">Celular</p>
           </label>
-          {router.query.phone ? 
-        <input type="text" id="phone" defaultValue={phone} onChange={(e) => setphone(e.target.value)} required={true} className='md:min-w-[550px] h-10 mb-2 border border-gray-300 rounded-2xl focus:outline-none bg-gray-50 px-4 py-2 focus:bg-white'/>
-          :
-        <InputMask mask="(99) 99999-9999" type="text" id="phone" defaultValue={phone} onChange={(e) => setphone(e.target.value)} required={true} className='md:min-w-[550px] h-10 mb-2 border border-gray-300 rounded-2xl focus:outline-none bg-gray-50 px-4 py-2 focus:bg-white'/>
-        }
+          {router.query.phone ?
+            <input type="text" id="phone" defaultValue={phone} onChange={(e) => setphone(e.target.value)} required={true} className='md:min-w-[550px] h-10 mb-2 border border-gray-300 rounded-2xl focus:outline-none bg-gray-50 px-4 py-2 focus:bg-white text-gray-700' />
+            :
+            <InputMask mask="(99) 99999-9999" type="text" id="phone" defaultValue={phone} onChange={(e) => setphone(e.target.value)} required={true} className='md:min-w-[550px] h-10 mb-2 border border-gray-300 rounded-2xl focus:outline-none bg-gray-50 px-4 py-2 focus:bg-white text-gray-700' />
+          }
         </div>
 
         <div className="flex flex-col mt-12">

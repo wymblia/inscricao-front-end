@@ -101,7 +101,7 @@ export default function FormPersonalData(props: PersonalDataProps) {
           </div>
         </div>
 
-        <Input textLabel="Data de Nascimento" typeInput="date" idInput="birthDate" defaultValue={birthDate} onChange={setBirthDate} required />
+        <Input classNameInput={"text-gray-700"} classNameLabel={"text-gray-700"} textLabel="Data de Nascimento" typeInput="date" idInput="birthDate" defaultValue={birthDate} onChange={setBirthDate} required />
 
         <Select textLabel="Gênero" defaultValue={gender} onChange={setGenderFunction} required>
           <option disabled value="">Selecione</option>
