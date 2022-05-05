@@ -37,79 +37,81 @@ export default function FormCourseResume(props: CourseResumeProps) {
   async function newEnrollment() {
 
     Swal.fire({
-      title: 'Confirmando sua inscrição!',
-      text: 'Em instantes, você receberá um e-mail com todas as informações.',
-      confirmButtonText: 'Ok',
+      position: 'top-end',
       icon: 'success',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'Aguarde, você será redirecionado',
-          showConfirmButton: false,
-          timer: 4000
-        })
-
-        setTimeout(() => {window.location.href = "https://www.ftec.com.br"}, 3000);
-        
-      }
+      title: 'Aguarde, estamos confirmando sua inscrição',
+      showConfirmButton: false,
+      timer: 10000
     })
-
-
     const ufId = await getUfIdBaseFtec()
+    try {
+      let retorno = await api.post('/new-enrollment', {
+            nome_contato: firstName,
+            sobrenome_contato: lastName,
+            nome_social: socialName,
+            email_contato: email,
+            fone_contato: phone,
+            como_chegou: null,
+            filial_id: filialCourse,
+            forma_ingresso: idEntryForm,
+            vestibular_id: selectedEnrollment,
+            filial_old: null,
+            local_prova_id: null,
+            enem_ano: yearEnem,
+            enem_inscricao: codeEnemAndEncceja,
+            enem_nota_objetiva: objectiveTestGrade,
+            enem_nota_redacao: redactionTestGrade,
+            modalidade_ensino: modalidadeCourse,
+            modalidade: modalidadeCourse,
+            opcao_curso: null,
+            turno: turnoCourse,
+            selected_opcao1: selectedCourse+'#'+turnoIdCourse+'#'+matrizCourse+'#'+showCourseName,
+            selected_opcao2: selectedCourse+'#'+turnoIdCourse+'#'+matrizCourse+'#'+showCourseName,
+            hidden_curso_id: null,
+            hidden_turno_id: null,
+            hidden_matriz: null,
+            hidden_curso: null,
+            opcao1: selectedCourse,
+            opcao2: selectedCourse,
+            cpf: cpf,
+            documento_estrangeiro: null,
+            pais: 1,
+            nome: firstName,
+            sobrenome: lastName,
+            sexo: gender,
+            data_nascimento: birthDateFormatBr,
+            email: email,
+            fone1: phone,
+            fone2: phone,
+            cep: cep,
+            uf_id: ufId,
+            cidade: city,
+            bairro: district,
+            logradouro: street,
+            numero: number,
+            cidade_escola: null,
+            atendimento_consultor: null,
+            consultor_usuarioid: null,
+            providencia: providence
+          })
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Aguarde, você será redirecionado',
+            showConfirmButton: false,
+            timer: 4000
+          })
 
-    let retorno = await api.post('/new-enrollment', {
-      nome_contato: firstName,
-      sobrenome_contato: lastName,
-      nome_social: socialName,
-      email_contato: email,
-      fone_contato: phone,
-      como_chegou: null,
-      filial_id: filialCourse,
-      forma_ingresso: idEntryForm,
-      vestibular_id: selectedEnrollment,
-      filial_old: null,
-      local_prova_id: null,
-      enem_ano: yearEnem,
-      enem_inscricao: codeEnemAndEncceja,
-      enem_nota_objetiva: objectiveTestGrade,
-      enem_nota_redacao: redactionTestGrade,
-      modalidade_ensino: modalidadeCourse,
-      modalidade: modalidadeCourse,
-      opcao_curso: null,
-      turno: turnoCourse,
-      selected_opcao1: selectedCourse+'#'+turnoIdCourse+'#'+matrizCourse+'#'+showCourseName,
-      selected_opcao2: selectedCourse+'#'+turnoIdCourse+'#'+matrizCourse+'#'+showCourseName,
-      hidden_curso_id: null,
-      hidden_turno_id: null,
-      hidden_matriz: null,
-      hidden_curso: null,
-      opcao1: selectedCourse,
-      opcao2: selectedCourse,
-      cpf: cpf,
-      documento_estrangeiro: null,
-      pais: 1,
-      nome: firstName,
-      sobrenome: lastName,
-      sexo: gender,
-      data_nascimento: birthDateFormatBr,
-      email: email,
-      fone1: phone,
-      fone2: phone,
-      cep: cep,
-      uf_id: ufId,
-      cidade: city,
-      bairro: district,
-      logradouro: street,
-      numero: number,
-      cidade_escola: null,
-      atendimento_consultor: null,
-      consultor_usuarioid: null,
-      providencia: providence
-    }
+          // setTimeout(() => {window.location.href = "https://www.ftec.com.br"}, 2000);
 
-    )
+        } catch (err) {
+          Swal.fire({
+            title: 'Candidato já inscrito',
+            text: 'O candidato já está inscrito neste processo seletivo. Escolha outro!',
+            confirmButtonText: 'Ok',
+            icon: 'error',
+          })
+        }        
 
     // let retorno = {
     //   nome_contato: firstName,
@@ -160,9 +162,6 @@ export default function FormCourseResume(props: CourseResumeProps) {
     //   consultor_usuarioid: null,
     //   providencia: providence
     // }
-
-    // return console.log(retorno)
-
   }
 
 

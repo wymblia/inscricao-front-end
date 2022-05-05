@@ -257,7 +257,7 @@ export default function FormCourse(props: CourseProps) {
           <Input valueInput={objectiveTestGrade || ""} textLabel="Informe a nota da prova objetiva" typeInput="text" onChange={setObjectiveTestGrade} required={entryForm === 'enem-encceja'}/>
           <Input valueInput={redactionTestGrade || ""} textLabel="Informe a nota da redação" typeInput="text" onChange={setRedactionTestGrade} required={entryForm === 'enem-encceja'}/>
           {/* <InputFile valueInput={enemFile || ""} typeInput="file" textLabel="Selecione o comprovante do Enem" onChange={fileValidation} accept="application/pdf" required={entryForm === 'enem-encceja'}/> */}
-          <input type="file" accept="application/pdf, image/*" onChange={(e) => fileValidation(e.target.files[0])}></input>
+          <input type="file" accept="application/pdf" onChange={(e) => fileValidation(e.target.files[0])}></input>
         </div>
 
         </div>
