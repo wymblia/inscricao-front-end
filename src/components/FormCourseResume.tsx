@@ -102,7 +102,7 @@ export default function FormCourseResume(props: CourseResumeProps) {
             timer: 4000
           })
 
-          // setTimeout(() => {window.location.href = "https://www.ftec.com.br"}, 2000);
+          setTimeout(() => {window.location.href = "https://www.ftec.com.br"}, 2000);
 
         } catch (err) {
           Swal.fire({
