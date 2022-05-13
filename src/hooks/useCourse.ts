@@ -4,7 +4,7 @@ import Course from "../core/Course"
 import { api } from "../services/api"
 
 export default function useCourse() {
-  const { displayStep3, displayStep5, listOffer, setListOffer} = useContext(RegistrationContext)
+  const { displayStep3, displayStep5, listOffer, setListOffer, listConsulters ,setListConsulters } = useContext(RegistrationContext)
   const [course] = useState<Course>(Course.createVoid())
 
   function getCourse() {
@@ -12,6 +12,14 @@ export default function useCourse() {
     })
     .then (response => {
       setListOffer(response.data);
+    })
+  }
+
+  function getConsulters() {
+    api.get('/get-consulters', {
+    })
+    .then (response => {
+      setListConsulters(response.data)
     })
   }
 
@@ -23,9 +31,9 @@ export default function useCourse() {
     displayStep3()
   }
 
-
   return {
     getCourse,
+    getConsulters,
     nextStepFive,
     listOffer,
     course,

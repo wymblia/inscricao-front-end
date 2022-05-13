@@ -76,7 +76,7 @@ export default function Form(props: FormProps) {
 
         <div className="flex flex-col mb-2">
           <label className={`mb-2 font-light text-sm`} htmlFor="email">
-           <p className="text-gray-700">E-mail</p>
+            <p className="text-gray-700">E-mail</p>
           </label>
           <input type="email" id="email" defaultValue={email} onChange={(e) => setemail(e.target.value)} required={true} className='md:min-w-[550px] h-10 mb-2 border border-gray-300 rounded-2xl focus:outline-none bg-gray-50 px-4 py-2 focus:bg-white text-gray-700' />
         </div>

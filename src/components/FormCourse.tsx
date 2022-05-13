@@ -18,16 +18,19 @@ interface CourseProps {
 }
 
 export default function FormCourse(props: CourseProps) {
-  const { modality, setModality, unity, setUnity, entryForm, setEntryForm, yearEnem, setYearEnem, codeEnemAndEncceja, setCodeEnemAndEncceja, objectiveTestGrade, setObjectiveTestGrade, redactionTestGrade, setRedactionTestGrade, nameCourse, selectedCourse, setSelectedCourse, setShowCourseName, setShowModalityName, setFilialCourse, setTurnoCourse, setTurnoIdCourse, setMatrizCourse, setModalidadeCourse, selectedEnrollment,setSelectedEnrollment, setIdEntryForm, enemFile, setEnemFile, cpf} = useContext(RegistrationContext)
+  const { modality, setModality, unity, setUnity, entryForm, setEntryForm, yearEnem, setYearEnem, codeEnemAndEncceja, setCodeEnemAndEncceja, objectiveTestGrade, setObjectiveTestGrade, redactionTestGrade, setRedactionTestGrade, nameCourse, selectedCourse, filialCourse, setSelectedCourse, setShowCourseName, setShowModalityName, setFilialCourse, setTurnoCourse, setTurnoIdCourse, setMatrizCourse, setModalidadeCourse, selectedEnrollment, setSelectedEnrollment, setIdEntryForm, enemFile, setEnemFile, cpf, externConsultant, setExternConsultant, appearanceExternConsultant, setAppearanceExternConsultant, listConsulters, existsExternConsultant, setExistsExternConsultant } = useContext(RegistrationContext)
   const { listOffer } = useCourse()
 
   const [coursesOptions, setCoursesOptions] = useState([])
+  const [listConsultersOptions, setListConsultersOptions] = useState([])
+  const [selectedEnrollmentEnem, setSelectedEnrollmentEnem] = useState([])
   const [unityOptions, setUnityOptions] = useState([])
   const [listVestibular, setListVestibular] = useState([])
   const [arquivoEnem, setArquivoEnem] = useState([])
 
   let unityOptionsArray = []
   let coursesOptionsArray = []
+  let listConsultersArray = []
 
   const entryFormsOptions = [
     {
@@ -110,22 +113,22 @@ export default function FormCourse(props: CourseProps) {
     setSelectedEnrollment('')
     setEntryForm(e.target.value)
 
-    if(e.target.value != 'enem-encceja') {
+    if (e.target.value != 'enem-encceja') {
       setYearEnem("")
       setCodeEnemAndEncceja("")
       setObjectiveTestGrade("")
       setRedactionTestGrade("")
     }
 
-    if(e.target.value === 'enem-encceja') {
+    if (e.target.value === 'enem-encceja') {
       setIdEntryForm('2')
     } else {
       setIdEntryForm('1')
     }
 
-    if(e.target.value === 'enem-encceja') {
+    if (e.target.value === 'enem-encceja') {
       setListVestibular(listVestibular.filter(value => value.permitir_nota_enem === '1'))
-    } else if(e.target.value === 'transferencia' || e.target.value === 'reingresso') {
+    } else if (e.target.value === 'transferencia' || e.target.value === 'reingresso') {
       setListVestibular(listVestibular.filter(value => value.descricao.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase().includes('transferencia')))
     } else {
       vestibularFunction()
@@ -158,12 +161,100 @@ export default function FormCourse(props: CourseProps) {
     vestibularFunction()
   }, [selectedCourse])
 
+  function setSelectedEnrollmentEnemFunction() {
+    switch (unity) {
+      case 'Caxias do Sul':
+        setSelectedEnrollment('1397')
+        break
+      case 'Bento Gonçalves':
+        setSelectedEnrollment('1396')
+        break
+      case 'Novo Hamburgo':
+        setSelectedEnrollment('1394')
+        break
+      case 'Porto Alegre':
+        setSelectedEnrollment('1393')
+        break
+      case 'IBGEN':
+        setSelectedEnrollment('1395')
+        break
+      case 'Uniftec Caxias do Sul/RS':
+        setSelectedEnrollment('1315')
+        break
+      case 'FTEC Bento Gonçalves/RS':
+        setSelectedEnrollment('1316')
+        break
+      case 'FTEC Novo Hamburgo/RS':
+        setSelectedEnrollment('1317')
+        break
+      case 'FTEC Porto Alegre/RS':
+        setSelectedEnrollment('1318')
+        break
+      case 'FTEC Ibgen':
+        setSelectedEnrollment('1319')
+        break
+      case 'Polo Uniftec Arroio dos Ratos/RS':
+        setSelectedEnrollment('1243')
+        break
+      case 'Polo Infox Informática São Marcos/RS':
+        setSelectedEnrollment('1328')
+        break
+      case 'Polo Master Informática Jaguari/RS':
+        setSelectedEnrollment('1326')
+        break
+      case 'Polo Yázigi - Gravataí/RS':
+        setSelectedEnrollment('1325')
+        break
+      case 'Polo Neuron - Casca/RS':
+        setSelectedEnrollment('1322')
+        break
+      case 'Polo Muçum':
+        setSelectedEnrollment('1327')
+        break
+      case 'Polo Capital do Saber Feliz/RS':
+        setSelectedEnrollment('1189')
+        break
+      case 'Polo Question Flores da Cunha RS':
+        setSelectedEnrollment('1324')
+        break
+      case 'Polo Farroupilha/RS':
+        setSelectedEnrollment('1323')
+        break
+      case 'Polo Porto Alegre':
+        setSelectedEnrollment('1323')
+        break
+    }
+    return selectedEnrollmentEnem
+  }
+
   function setSelectedEnrollmentFunction(e: any) {
-    setSelectedEnrollment(e.target.value)
+    if (entryForm != 'enem-encceja') {
+      setSelectedEnrollment(e.target.value)
+    } else {
+      // if (unity === 'Caxias do Sul'){
+      //   setSelectedEnrollment('1397')
+      //   console.log('cx')
+      // } else if (unity === 'Bento Gonçalves'){
+      //     setSelectedEnrollment('1396')
+      //     console.log('bg')
+      // } else if (unity === 'Novo Hamburgo'){
+      //     setSelectedEnrollment('1394')
+      //     console.log('nh')
+      // } else if (unity === 'Porto Alegre'){
+      //   setSelectedEnrollment('1393')
+      //   console.log('poa')
+      // } else if (unity === 'IBGEN'){
+      //   setSelectedEnrollment('1395')
+      //   console.log('ibgen')
+      // } else {
+      //   setSelectedEnrollment('1397')
+      //   console.log('outros')
+      // }
+      setSelectedEnrollmentEnemFunction()
+    }
   }
 
   function modalityFunction(e: any) {
-
     setUnity('')
     setSelectedCourse('')
     setEntryForm('')
@@ -171,20 +262,20 @@ export default function FormCourse(props: CourseProps) {
 
     var btn = document.querySelectorAll(".entry-modality")
 
-    btn.forEach(function(button) {
+    btn.forEach(function (button) {
       button.classList.remove("bg-[#284fac]")
       button.classList.remove("text-slate-50")
     });
 
-    
+
     let classes = e.target.className
     let teste = classes + ' bg-[#284fac] text-slate-50'
     e.target.className = teste
-    
+
     setModality(e.target.value)
     setShowModalityName(e.target.innerHTML)
   }
-  
+
   function FormSubmit(e: any) {
     e.preventDefault();
     props.courseChange?.(new Course(modality, unity, entryForm, yearEnem, nameCourse))
@@ -192,12 +283,12 @@ export default function FormCourse(props: CourseProps) {
 
   async function fileValidation(e: any) {
 
-    if(((e.size / 1024) / 1024) <= 2) {
+    if (((e.size / 1024) / 1024) <= 2) {
       const formData = new FormData()
       formData.append('fileEnem', e)
       formData.append('cpf', cpf)
 
-      await api.post('/upload-enem',formData, {
+      await api.post('/upload-enem', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -208,6 +299,52 @@ export default function FormCourse(props: CourseProps) {
     }
 
   }
+
+  function functionSetAppearanceExternConsultant(e: any) {
+    appearanceExternConsultant ? setAppearanceExternConsultant(false) : setAppearanceExternConsultant(true)
+    existsExternConsultant ? setExistsExternConsultant(false) : setExistsExternConsultant(true)
+    teste()
+  }
+
+  function setListConsultersOptionsFunction() {
+
+    listConsulters.forEach(consulter => {
+
+      listConsultersArray.push({
+        idConsultor: consulter.usuarioid,
+        nomeConsultor: consulter.nome_completo
+      })
+    })
+
+    setListConsultersOptions(listConsultersArray)
+  }
+
+  useEffect(() => {
+    setListConsultersOptionsFunction()
+  }, [externConsultant])
+
+  // useEffect(() => {
+  //   functionSetAppearanceExternConsultant()
+  // }, [appearanceExternConsultant])
+
+  function setExternConsultantFunction(e: any) {
+    if (existsExternConsultant) {
+      setExternConsultant(e.target.value)
+    } else {
+      console.log('aa')
+      setExternConsultant("")
+    }
+  }
+
+  function teste() {
+    setExternConsultant("")
+  }
+
+  // function setExistsExternConsultantFunction() {
+  //   console.log("oi")
+  //   !existsExternConsultant ? setExistsExternConsultant(true) : setExistsExternConsultant(false)
+  //   console.log(existsExternConsultant)
+  // }
 
   return (
     <div>
@@ -241,27 +378,38 @@ export default function FormCourse(props: CourseProps) {
             <option key={index} value={option.value}>{option.label}</option>
           ))}
         </Select>
-
-        <Select textLabel="Processo seletivo" onChange={setSelectedEnrollmentFunction} value={selectedEnrollment} required={true}>
-          <option disabled value="">Selecione</option>
-          {listVestibular.map((option, index) => (
-            <option key={index} value={option.id} >{option.descricao}</option>
-          ))}
-        </Select>
+        <div hidden={entryForm === 'enem-encceja'}>
+          <Select textLabel="Processo seletivo" onChange={setSelectedEnrollmentFunction} value={selectedEnrollment} required={entryForm != 'enem-encceja'}>
+            <option disabled value="">Selecione</option>
+            {listVestibular.map((option, index) => (
+              <option key={index} value={option.id} >{option.descricao}</option>
+            ))}
+          </Select>
+        </div>
 
         <div hidden={entryForm != 'enem-encceja'}>
-
-        <div className="mb-2 font-light text-sm ">
-          <Input valueInput={yearEnem || ""} textLabel="Informe o ano do Enem/Encceja" typeInput="text" onChange={setYearEnem} required={entryForm === 'enem-encceja'}/>
-          <Input valueInput={codeEnemAndEncceja || ""} textLabel="Informe o código da inscrição do Enem/Encceja" typeInput="text" onChange={setCodeEnemAndEncceja} required={entryForm === 'enem-encceja'}/>
-          <Input valueInput={objectiveTestGrade || ""} textLabel="Informe a nota da prova objetiva" typeInput="text" onChange={setObjectiveTestGrade} required={entryForm === 'enem-encceja'}/>
-          <Input valueInput={redactionTestGrade || ""} textLabel="Informe a nota da redação" typeInput="text" onChange={setRedactionTestGrade} required={entryForm === 'enem-encceja'}/>
-          {/* <InputFile valueInput={enemFile || ""} typeInput="file" textLabel="Selecione o comprovante do Enem" onChange={fileValidation} accept="application/pdf" required={entryForm === 'enem-encceja'}/> */}
-          <input type="file" accept="application/pdf" onChange={(e) => fileValidation(e.target.files[0])}></input>
+          <div className="mb-2 font-light text-sm ">
+            <Input valueInput={yearEnem || ""} textLabel="Informe o ano do Enem/Encceja" typeInput="text" onChange={setYearEnem} required={entryForm === 'enem-encceja'} />
+            <Input valueInput={codeEnemAndEncceja || ""} textLabel="Informe o código da inscrição do Enem/Encceja" typeInput="text" onChange={setCodeEnemAndEncceja} required={entryForm === 'enem-encceja'} />
+            <Input valueInput={objectiveTestGrade || ""} textLabel="Informe a nota da prova objetiva" typeInput="text" onChange={setObjectiveTestGrade} required={entryForm === 'enem-encceja'} />
+            <Input valueInput={redactionTestGrade || ""} textLabel="Informe a nota da redação" typeInput="text" onChange={setRedactionTestGrade} required={entryForm === 'enem-encceja'} />
+            {/* <InputFile valueInput={enemFile || ""} typeInput="file" textLabel="Selecione o comprovante do Enem" onChange={fileValidation} accept="application/pdf" required={entryForm === 'enem-encceja'}/> */}
+            <input type="file" accept="application/pdf" onChange={(e) => fileValidation(e.target.files[0])} required={entryForm === 'enem-encceja'} onClick={setSelectedEnrollmentFunction} />
+          </div>
+        </div>
+        <div className="form-check form-switch">
+          <input className="form-check-input appearance-none w-9 -ml-10 rounded-full float-left h-5 align-top bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm" type="checkbox" role="switch" id="flexSwitchCheckDefault" onClick={functionSetAppearanceExternConsultant} defaultChecked={appearanceExternConsultant} />
+          <label className="form-check-label inline-block text-gray-800" htmlFor="flexSwitchCheckDefault" defaultChecked={appearanceExternConsultant}>Teve ajuda de consultor externo?</label>
         </div>
 
+        <div hidden={!appearanceExternConsultant}>
+          <Select textLabel="Consultor Comercial" onChange={setExternConsultantFunction} value={externConsultant} required={appearanceExternConsultant}>
+            <option value="">Selecione</option>
+            {listConsultersOptions.map((option, index) => (
+              <option key={index} value={option.idConsultor}>{option.nomeConsultor}</option>
+            ))}
+          </Select>
         </div>
-
         <div className="flex flex-col mt-12">
           <Button type="submit">Próximo</Button>
         </div>
@@ -275,4 +423,3 @@ export default function FormCourse(props: CourseProps) {
 function cpf(arg0: string, cpf: any) {
   throw new Error("Function not implemented.");
 }
-

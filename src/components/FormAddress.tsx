@@ -14,7 +14,7 @@ interface FormAddressProps {
 }
 
 export default function FormAddress (props: FormAddressProps) {
-  const {cep, state, city, district, street, number, setCep, setState, setCity, setDistrict, setStreet, setNumber, } = useContext(RegistrationContext)
+  const {cep, state, city, district, street, number, complement, setCep, setState, setCity, setDistrict, setStreet, setNumber, setComplement} = useContext(RegistrationContext)
 
 
   function chamarCep(){
@@ -23,7 +23,6 @@ export default function FormAddress (props: FormAddressProps) {
     .then(response => {
         const {data} = response
         if(data.erro){
-
           Swal.fire({
             title: '<p>Cep inválido</p>',
             icon: 'warning',
@@ -57,9 +56,8 @@ export default function FormAddress (props: FormAddressProps) {
         <Input textLabel="Cidade" typeInput="text" idInput="city" valueInput={city} onChange={setCity} required={true} />
         <Input textLabel="Bairro" typeInput="text" idInput="district" valueInput={district} onChange={setDistrict} required={true} />
         <Input textLabel="Rua" typeInput="text" idInput="street" valueInput={street} onChange={setStreet} required={true} />
-
         <Input textLabel="Número" typeInput="text" idInput="number" defaultValue={number} onChange={setNumber} required={true}/>
-
+        <Input textLabel="Complemento" typeInput="text" idInput="complement" defaultValue={complement} onChange={setComplement} required={false}/>
         <div className="flex flex-col mt-12">
           <Button type="submit">Próximo</Button>
         </div>

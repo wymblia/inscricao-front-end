@@ -6,6 +6,7 @@ type RegistrationContextProps = {
 
 type UserContextType = {
   listOffer: any
+  listConsulters: any
 
   name: string
   socialName: string
@@ -15,6 +16,7 @@ type UserContextType = {
   appearanceSocialName: boolean
 
   setListOffer: (newState: string) => void 
+  setListConsulters: (newState: string) => void 
 
   setName: (newState: string) => void 
   setSocialName: (newState: string) => void 
@@ -47,6 +49,7 @@ type UserContextType = {
   district: string
   street: string
   number: string
+  complement: string
   
   setCep: (newState: string) => void
   setState: (newState: string) => void
@@ -54,6 +57,7 @@ type UserContextType = {
   setDistrict: (newState: string) => void
   setStreet: (newState: string) => void
   setNumber: (newState: string) => void
+  setComplement: (newState: string) =>void
 
   modality: string
   unity: string
@@ -68,14 +72,16 @@ type UserContextType = {
   showModalityName: string
   showUnityName: string
   showCourseName: string
-  filialCourse: string,
-  turnoCourse: string,
+  filialCourse: string
+  turnoCourse: string
   turnoIdCourse: string
-  matrizCourse: string,
+  matrizCourse: string
   modalidadeCourse: string
   selectedEnrollment: string
   idEntryForm: string
-  
+  externConsultant: string
+  appearanceExternConsultant: boolean
+  existsExternConsultant: boolean
 
   setModality: (newState: string) => void
   setUnity: (newState: string) => void
@@ -97,6 +103,9 @@ type UserContextType = {
   setModalidadeCourse: (newState: string) => void
   setSelectedEnrollment: (newState: string) => void
   setIdEntryForm: (newState: string) => void
+  setExternConsultant: (newState: string) => void
+  setAppearanceExternConsultant: (newState: boolean) => void
+  setExistsExternConsultant: (newState: boolean) => void
 
   displayStep1: (newState: void) => void 
   displayStep2: (newState: void) => void 
@@ -115,6 +124,7 @@ type UserContextType = {
 
 const initialValues = {
   listOffer: "",
+  listConsulters: "",
 
   name: "",
   socialName: "",
@@ -124,6 +134,7 @@ const initialValues = {
   appearanceSocialName: false,
 
   setListOffer: () => {},
+  setListConsulters: () => {},
   
   setName: () => {},
   setSocialName: () => {},
@@ -156,6 +167,7 @@ const initialValues = {
   district: "",
   street: "",
   number: "",
+  complement: "",
 
   setCep: () => {},
   setState: () => {},
@@ -163,6 +175,7 @@ const initialValues = {
   setDistrict: () => {},
   setStreet: () => {},
   setNumber: () => {},
+  setComplement: () => {},
 
   modality: "",
   unity: "",
@@ -184,6 +197,9 @@ const initialValues = {
   modalidadeCourse: "",
   selectedEnrollment: "",
   idEntryForm: "",
+  externConsultant: "",
+  appearanceExternConsultant: false,
+  existsExternConsultant: false,
 
   setModality: () => {},
   setUnity: () => {},
@@ -205,6 +221,9 @@ const initialValues = {
   setModalidadeCourse: () => {},
   setSelectedEnrollment: () => {},
   setIdEntryForm: () => {},
+  setExternConsultant: () => {},
+  setAppearanceExternConsultant: () => {},
+  setExistsExternConsultant: () => {},
 
   displayStep1: () => {},
   displayStep2: () => {},
@@ -227,6 +246,7 @@ export const RegistrationContext = createContext<UserContextType>(initialValues)
 export const RegistrationContextProvider = ({ children }: RegistrationContextProps) => {
 
   const [listOffer, setListOffer] = useState(initialValues.listOffer)
+  const [listConsulters, setListConsulters] = useState(initialValues.listConsulters)
 
   const [name, setName] = useState(initialValues.name)
   const [socialName, setSocialName] = useState(initialValues.socialName)
@@ -250,6 +270,7 @@ export const RegistrationContextProvider = ({ children }: RegistrationContextPro
   const [district, setDistrict] = useState(initialValues.district)
   const [street, setStreet] = useState(initialValues.street)
   const [number, setNumber] = useState(initialValues.number)
+  const [complement, setComplement] = useState(initialValues.number)
 
   const [modality, setModality] = useState(initialValues.modality)
   const [unity, setUnity] = useState(initialValues.unity)
@@ -271,6 +292,9 @@ export const RegistrationContextProvider = ({ children }: RegistrationContextPro
   const [modalidadeCourse, setModalidadeCourse] = useState(initialValues.modalidadeCourse)
   const [selectedEnrollment, setSelectedEnrollment] = useState(initialValues.selectedEnrollment)
   const [idEntryForm, setIdEntryForm] = useState(initialValues.idEntryForm)
+  const [externConsultant, setExternConsultant] = useState(initialValues.externConsultant) 
+  const [appearanceExternConsultant, setAppearanceExternConsultant] = useState(initialValues.appearanceExternConsultant) 
+  const [existsExternConsultant, setExistsExternConsultant] = useState(initialValues.existsExternConsultant) 
 
   const [visible, setVisible] = useState<'step1' | 'step2' | 'step3' | 'step4' | 'step5' | 'step6'>('step1')
 
@@ -284,6 +308,7 @@ export const RegistrationContextProvider = ({ children }: RegistrationContextPro
   return(
     <RegistrationContext.Provider value={{
       listOffer,
+      listConsulters,
 
       name,
       socialName,
@@ -293,6 +318,7 @@ export const RegistrationContextProvider = ({ children }: RegistrationContextPro
       appearanceSocialName,
 
       setListOffer,
+      setListConsulters,
       setName,
       setSocialName,
       setVisibleSocialName,
@@ -322,6 +348,7 @@ export const RegistrationContextProvider = ({ children }: RegistrationContextPro
       district,
       street,
       number,
+      complement,
       invisibleErrorCpf,
 
       setCep,
@@ -330,6 +357,7 @@ export const RegistrationContextProvider = ({ children }: RegistrationContextPro
       setDistrict,
       setStreet,
       setNumber,
+      setComplement,
       setInvisibleErrorCpf,
 
       modality,
@@ -352,6 +380,9 @@ export const RegistrationContextProvider = ({ children }: RegistrationContextPro
       showModalityName,
       showUnityName,
       showCourseName,
+      externConsultant,
+      appearanceExternConsultant,
+      existsExternConsultant,
     
       setModality,
       setUnity,
@@ -373,6 +404,9 @@ export const RegistrationContextProvider = ({ children }: RegistrationContextPro
       setModalidadeCourse,
       setSelectedEnrollment,
       setIdEntryForm,
+      setExternConsultant,
+      setAppearanceExternConsultant,
+      setExistsExternConsultant,
 
       displayStep1,
       displayStep2,
