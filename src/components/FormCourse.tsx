@@ -331,7 +331,6 @@ export default function FormCourse(props: CourseProps) {
     if (existsExternConsultant) {
       setExternConsultant(e.target.value)
     } else {
-      console.log('aa')
       setExternConsultant("")
     }
   }
