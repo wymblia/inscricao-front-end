@@ -18,7 +18,7 @@ interface CourseProps {
 }
 
 export default function FormCourse(props: CourseProps) {
-  const { modality, setModality, unity, setUnity, entryForm, setEntryForm, yearEnem, setYearEnem, codeEnemAndEncceja, setCodeEnemAndEncceja, objectiveTestGrade, setObjectiveTestGrade, redactionTestGrade, setRedactionTestGrade, nameCourse, selectedCourse, filialCourse, setSelectedCourse, setShowCourseName, setShowModalityName, setFilialCourse, setTurnoCourse, setTurnoIdCourse, setMatrizCourse, setModalidadeCourse, selectedEnrollment, setSelectedEnrollment, setIdEntryForm, enemFile, setEnemFile, cpf, externConsultant, setExternConsultant, appearanceExternConsultant, setAppearanceExternConsultant, listConsulters, existsExternConsultant, setExistsExternConsultant } = useContext(RegistrationContext)
+  const { modality, setModality, unity, setUnity, entryForm, setEntryForm, yearEnem, setYearEnem, codeEnemAndEncceja, setCodeEnemAndEncceja, objectiveTestGrade, setObjectiveTestGrade, redactionTestGrade, setRedactionTestGrade, nameCourse, selectedCourse, filialCourse, setSelectedCourse, setShowCourseName, setShowModalityName, setFilialCourse, setTurnoCourse, setTurnoIdCourse, setMatrizCourse, setModalidadeCourse, selectedEnrollment, setSelectedEnrollment, setIdEntryForm, enemFile, setEnemFile, cpf, externConsultant, setExternConsultant, appearanceExternConsultant, setAppearanceExternConsultant, listConsulters, existsExternConsultant, setExistsExternConsultant, modalidadeCourse } = useContext(RegistrationContext)
   const { listOffer } = useCourse()
 
   const [coursesOptions, setCoursesOptions] = useState([])
@@ -162,67 +162,144 @@ export default function FormCourse(props: CourseProps) {
   }, [selectedCourse])
 
   function setSelectedEnrollmentEnemFunction() {
-    switch (unity) {
-      case 'Caxias do Sul':
-        setSelectedEnrollment('1397')
-        break
-      case 'Bento Gonçalves':
-        setSelectedEnrollment('1396')
-        break
-      case 'Novo Hamburgo':
-        setSelectedEnrollment('1394')
-        break
-      case 'Porto Alegre':
-        setSelectedEnrollment('1393')
-        break
-      case 'IBGEN':
-        setSelectedEnrollment('1395')
-        break
-      case 'Uniftec Caxias do Sul/RS':
-        setSelectedEnrollment('1315')
-        break
-      case 'FTEC Bento Gonçalves/RS':
-        setSelectedEnrollment('1316')
-        break
-      case 'FTEC Novo Hamburgo/RS':
-        setSelectedEnrollment('1317')
-        break
-      case 'FTEC Porto Alegre/RS':
-        setSelectedEnrollment('1318')
-        break
-      case 'FTEC Ibgen':
-        setSelectedEnrollment('1319')
-        break
-      case 'Polo Uniftec Arroio dos Ratos/RS':
-        setSelectedEnrollment('1243')
-        break
-      case 'Polo Infox Informática São Marcos/RS':
-        setSelectedEnrollment('1328')
-        break
-      case 'Polo Master Informática Jaguari/RS':
-        setSelectedEnrollment('1326')
-        break
-      case 'Polo Yázigi - Gravataí/RS':
-        setSelectedEnrollment('1325')
-        break
-      case 'Polo Neuron - Casca/RS':
-        setSelectedEnrollment('1322')
-        break
-      case 'Polo Muçum':
-        setSelectedEnrollment('1327')
-        break
-      case 'Polo Capital do Saber Feliz/RS':
-        setSelectedEnrollment('1189')
-        break
-      case 'Polo Question Flores da Cunha RS':
-        setSelectedEnrollment('1324')
-        break
-      case 'Polo Farroupilha/RS':
-        setSelectedEnrollment('1323')
-        break
-      case 'Polo Porto Alegre':
-        setSelectedEnrollment('1323')
-        break
+    if (modalidadeCourse === 'Presencia' || modalidadeCourse === 'EAD') {
+      switch (unity) {
+        case 'Caxias do Sul':
+          setSelectedEnrollment('1448')
+          break
+        case 'Bento Gonçalves':
+          setSelectedEnrollment('1452')
+          break
+        case 'Novo Hamburgo':
+          setSelectedEnrollment('1456')
+          break
+        case 'Porto Alegre':
+          setSelectedEnrollment('1459')
+          break
+        case 'IBGEN':
+          setSelectedEnrollment('1502')
+          break
+        case 'Uniftec Caxias do Sul/RS':
+          setSelectedEnrollment('1461')
+          break
+        case 'FTEC Bento Gonçalves/RS':
+          setSelectedEnrollment('1464')
+          break
+        case 'FTEC Novo Hamburgo/RS':
+          setSelectedEnrollment('1466')
+          break
+        case 'FTEC Porto Alegre/RS':
+          setSelectedEnrollment('1468')
+          break
+        case 'FTEC Ibgen':
+          setSelectedEnrollment('1470')
+          break
+        case 'Polo Uniftec Arroio dos Ratos/RS':
+          setSelectedEnrollment('1472')
+          break
+        case 'Polo Infox Informática São Marcos/RS':
+          setSelectedEnrollment('1488')
+          break
+        case 'Polo Master Informática Jaguari/RS':
+          setSelectedEnrollment('1484')
+          break
+        case 'Polo Yázigi - Gravataí/RS':
+          setSelectedEnrollment('1482')
+          break
+        case 'Polo Neuron - Casca/RS':
+          setSelectedEnrollment('1474')
+          break
+        case 'Polo Muçum':
+          setSelectedEnrollment('1486')
+          break
+        case 'Polo Capital do Saber Feliz/RS':
+          setSelectedEnrollment('1478')
+          break
+        case 'Polo Question Flores da Cunha RS':
+          setSelectedEnrollment('1480')
+          break
+        case 'Polo Petrópolis Ensino Cartesiano':
+          setSelectedEnrollment('1507')
+          break
+        case 'Polo Porto Alegre':
+          setSelectedEnrollment('1468')
+          break
+        case 'Polo Arroio dos Ratos':
+          setSelectedEnrollment('1472')
+          break
+        case 'Polo Casca':
+          setSelectedEnrollment('1474')
+          break
+        case 'Polo Infoserv Treinamento- Farroupilha':
+          setSelectedEnrollment('1476')
+          break
+        case 'Polo Feliz':
+          setSelectedEnrollment('1478')
+          break
+        case 'Polo Flores da Cunha':
+          setSelectedEnrollment('1480')
+          break
+        case 'Polo Gravataí/RS':
+          setSelectedEnrollment('1482')
+          break
+        case 'Jaguari':
+          setSelectedEnrollment('1484')
+          break
+        case 'Polo de Muçum':
+          setSelectedEnrollment('1486')
+          break
+        case 'Polo São Marcos':
+          setSelectedEnrollment('1488')
+          break
+        case 'Polo Bento Gonçalves':
+          setSelectedEnrollment('1464')
+          break
+        case 'Polo Caxias do Sul':
+          setSelectedEnrollment('1461')
+          break
+        case 'IBGEN':
+          setSelectedEnrollment('1470')
+          break
+        case 'Polo Novo Hamburgo':
+          setSelectedEnrollment('1466')
+          break
+        case 'Polo Farroupilha/RS':
+          setSelectedEnrollment('1476')
+          break
+      }
+    } else if (modalidadeCourse === 'Semi Presencial') {
+      switch (unity) {
+        case 'FTEC Ibgen':
+          setSelectedEnrollment('1497')
+          break
+        case 'FTEC Porto Alegre ZN':
+          setSelectedEnrollment('1495')
+          break
+        case 'FTEC Novo Hamburgo/RS':
+          setSelectedEnrollment('1493')
+          break
+        case 'Uniftec Caxias do Sul/RS':
+          setSelectedEnrollment('1489')
+          break
+        case 'FTEC Bento Gonçalves/RS':
+          setSelectedEnrollment('1491')
+          break
+        case 'Polo Paideia':
+          setSelectedEnrollment('1550')
+          break
+        case 'Polo Bento Gonçalves':
+          setSelectedEnrollment('1491')
+          break
+        case 'Polo Caxias do Sul':
+          setSelectedEnrollment('1489')
+          break
+        case 'Polo Feliz':
+          setSelectedEnrollment('1500')
+          break
+        case 'Polo Flores da Cunha':
+          setSelectedEnrollment('1501')
+          break
+      }
     }
     return selectedEnrollmentEnem
   }
