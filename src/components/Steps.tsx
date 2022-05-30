@@ -22,7 +22,7 @@ export default function Steps(props: StepsProps) {
     <div id="container" className="flex m-2 md:m-0">
       <div id="main" className="flex flex-col md:flex-row flex-grow">
         <div className="flex-grow md:max-w-[50%]">
-          <div className="bg-[url('/img/mobile.jpg')] block md:hidden" />
+          <div className="h-60 bg-[url('https://www.ftec.com.br/static/media/uploads/NEW_VESTIBULAR/vestibular-mobile.png')] block md:hidden bg-cover bg-center" />
           <div className="md:h-screen bg-[url('https://www.ftec.com.br/static/media/uploads/NEW_VESTIBULAR/vestibular1.png')] hidden md:block bg-cover bg-center" />
         </div>
         <div className={`flex flex-grow justify-start items-center md:max-w-[12%] md:min-w-[12%] md:h-screen ${props.invisible} p-5`}>
@@ -43,7 +43,7 @@ export default function Steps(props: StepsProps) {
                   classNameStep4={props.classNameStep4}
               />
               <div className="flex justify-center items-center">
-                <h1 className="text-3xl font-normal m-10 text-[#4B6BFB]">Inscreva-se</h1>
+                <h1 className="text-3xl font-normal mb-10 text-[#4B6BFB]">Inscreva-se</h1>
               </div>
               {props.form}
           </div>
