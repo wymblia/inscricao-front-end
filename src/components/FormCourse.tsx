@@ -162,7 +162,7 @@ export default function FormCourse(props: CourseProps) {
   }, [selectedCourse])
 
   function setSelectedEnrollmentEnemFunction() {
-    if (modalidadeCourse === 'Presencia' || modalidadeCourse === 'EAD') {
+    if (modalidadeCourse === 'Presencial' || modalidadeCourse === 'EAD') {
       switch (unity) {
         case 'Caxias do Sul':
           setSelectedEnrollment('1448')
