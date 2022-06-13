@@ -26,6 +26,8 @@ export default function FormCourse(props: CourseProps) {
   const [selectedEnrollmentEnem, setSelectedEnrollmentEnem] = useState([])
   const [unityOptions, setUnityOptions] = useState([])
   const [listVestibular, setListVestibular] = useState([])
+  const [notice, setNotice] = useState([])
+
   const [arquivoEnem, setArquivoEnem] = useState([])
 
   let unityOptionsArray = []
@@ -148,9 +150,9 @@ export default function FormCourse(props: CourseProps) {
     setShowCourseName(curseSelected.DESCRICAO_INSCRICAO)
     setSelectedCourse(e.target.value)
   }
+  let vestibulares = listOffer.find(value => value.CURSO_ID === selectedCourse)
 
   function vestibularFunction() {
-    let vestibulares = listOffer.find(value => value.CURSO_ID === selectedCourse)
 
     if (vestibulares) {
       setListVestibular(vestibulares.VESTIBULARES)
@@ -305,28 +307,11 @@ export default function FormCourse(props: CourseProps) {
   }
 
   function setSelectedEnrollmentFunction(e: any) {
+    console.log(notice)
+    setNotice(vestibulares.edital)
     if (entryForm != 'enem-encceja') {
       setSelectedEnrollment(e.target.value)
     } else {
-      // if (unity === 'Caxias do Sul'){
-      //   setSelectedEnrollment('1397')
-      //   console.log('cx')
-      // } else if (unity === 'Bento Gonçalves'){
-      //     setSelectedEnrollment('1396')
-      //     console.log('bg')
-      // } else if (unity === 'Novo Hamburgo'){
-      //     setSelectedEnrollment('1394')
-      //     console.log('nh')
-      // } else if (unity === 'Porto Alegre'){
-      //   setSelectedEnrollment('1393')
-      //   console.log('poa')
-      // } else if (unity === 'IBGEN'){
-      //   setSelectedEnrollment('1395')
-      //   console.log('ibgen')
-      // } else {
-      //   setSelectedEnrollment('1397')
-      //   console.log('outros')
-      // }
       setSelectedEnrollmentEnemFunction()
     }
   }
@@ -461,6 +446,18 @@ export default function FormCourse(props: CourseProps) {
               <option key={index} value={option.id} >{option.descricao}</option>
             ))}
           </Select>
+          {
+
+            notice.length  > 0 ? 
+            <ButtonOptions classNameButton="h-6 rounded-md" value="S" >
+            <a href={`https://inscricao.ftec.com.br/edital/${notice}`} title="Abrir o Edital" target="_blank" class="link-edital">Veja o Edital</a>
+            </ButtonOptions>
+            : null
+          }
+          {/* <ButtonOptions classNameButton="h-7" value="S" >
+          <a href={`https://inscricao.ftec.com.br/edital/${notice}`} title="Abrir o Edital" target="_blank" class="link-edital">Veja o Edital</a>
+          </ButtonOptions> */}
+
         </div>
 
         <div hidden={entryForm != 'enem-encceja'}>
