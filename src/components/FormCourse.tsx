@@ -307,7 +307,6 @@ export default function FormCourse(props: CourseProps) {
   }
 
   function setSelectedEnrollmentFunction(e: any) {
-    console.log(notice)
     setNotice(vestibulares.edital)
     if (entryForm != 'enem-encceja') {
       setSelectedEnrollment(e.target.value)
@@ -385,10 +384,6 @@ export default function FormCourse(props: CourseProps) {
     setListConsultersOptionsFunction()
   }, [externConsultant])
 
-  // useEffect(() => {
-  //   functionSetAppearanceExternConsultant()
-  // }, [appearanceExternConsultant])
-
   function setExternConsultantFunction(e: any) {
     if (existsExternConsultant) {
       setExternConsultant(e.target.value)
@@ -400,12 +395,6 @@ export default function FormCourse(props: CourseProps) {
   function teste() {
     setExternConsultant("")
   }
-
-  // function setExistsExternConsultantFunction() {
-  //   console.log("oi")
-  //   !existsExternConsultant ? setExistsExternConsultant(true) : setExistsExternConsultant(false)
-  //   console.log(existsExternConsultant)
-  // }
 
   return (
     <div>
@@ -448,18 +437,14 @@ export default function FormCourse(props: CourseProps) {
           </Select>
           {
 
-            notice.length  > 0 ? 
-            <ButtonOptions classNameButton="h-6 rounded-md" value="S" >
-            <a href={`https://inscricao.ftec.com.br/edital/${notice}`} title="Abrir o Edital" target="_blank" class="link-edital">Veja o Edital</a>
-            </ButtonOptions>
-            : null
+            notice.length > 0 ?
+              <ButtonOptions classNameButton="h-6 rounded-md" value="S" >
+                <a href={`https://inscricao.ftec.com.br/edital/${notice}`} title="Abrir o Edital" target="_blank">Veja o Edital</a>
+              </ButtonOptions>
+              : null
           }
-          {/* <ButtonOptions classNameButton="h-7" value="S" >
-          <a href={`https://inscricao.ftec.com.br/edital/${notice}`} title="Abrir o Edital" target="_blank" class="link-edital">Veja o Edital</a>
-          </ButtonOptions> */}
 
         </div>
-
         <div hidden={entryForm != 'enem-encceja'}>
           <div className="mb-2 font-light text-sm ">
             <Input valueInput={yearEnem || ""} textLabel="Informe o ano do Enem/Encceja" typeInput="text" onChange={setYearEnem} required={entryForm === 'enem-encceja'} />
