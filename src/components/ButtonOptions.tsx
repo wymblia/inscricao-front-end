@@ -6,7 +6,7 @@ interface ButtonOptions {
     idButtonOptions?: string
     value: string
     classNameButtonOptions?: string
-    onClick: (valueInput: any) => void
+    onClick?: (valueInput: any) => void
     children: any
     classNameButton?: string
     }
