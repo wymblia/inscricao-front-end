@@ -14,6 +14,8 @@ import Steps from "../components/Steps"
 import { Helmet } from "react-helmet"
 
 import Script from 'next/script'
+import FormCongratulations from "../components/FormCongralutations"
+import useCongratulations from "../hooks/useCongratulations"
 
 export default function Home() { 
   const { lead, saveLead } = useLeads()
@@ -21,9 +23,9 @@ export default function Home() {
   const { address, saveAddress, backStepTwo } = useAddress()
   const { course, nextStepFive, backStepThree } = useCourse()
   const { nextStepSix, backStepFour } = useCourseResume()
+  const { nextStepSeven, backStepFive } = useCongratulations()
 
-  const { stepOneVisible, stepTwoVisible, stepThreeVisible, stepFourVisible, stepFiveVisible } = useContext(RegistrationContext)
-
+  const { stepOneVisible, stepTwoVisible, stepThreeVisible, stepFourVisible, stepFiveVisible, stepSixVisible } = useContext(RegistrationContext)
   return (
     <>
       <div>
@@ -118,7 +120,20 @@ export default function Home() {
                       />
                       )
                         : (
-                          <h1 className="bg-green-300">uhul</h1>
+                          stepSixVisible ? (
+                            <Steps
+                            form={
+                            <FormCongratulations
+                              congratulationsChange={nextStepSeven}
+                              backPage={backStepFive}
+                            />
+                            }
+                            classNameStep2={"step-primary"}
+                            classNameStep3={"step-primary"}
+                            classNameStep4={"step-primary"}
+                          />
+                          )
+                          : null
                         )
                     )
                 )

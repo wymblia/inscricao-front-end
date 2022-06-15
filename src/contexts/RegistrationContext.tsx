@@ -113,13 +113,15 @@ type UserContextType = {
   displayStep4: (newState: void) => void
   displayStep5: (newState: void) => void
   displayStep6: (newState: void) => void
+  displayStep7: (newState: void) => void
 
   stepOneVisible: boolean,
   stepTwoVisible: boolean,
   stepThreeVisible: boolean,
   stepFourVisible: boolean,
-  stepFiveVisible: boolean
-  stepSixVisible: boolean
+  stepFiveVisible: boolean,
+  stepSixVisible: boolean,
+  stepSevenVisible: boolean,
 }
 
 const initialValues = {
@@ -231,14 +233,15 @@ const initialValues = {
   displayStep4: () => {},
   displayStep5: () => {},
   displayStep6: () => {},
+  displayStep7: () => {},
 
   stepOneVisible: false,
   stepTwoVisible: false,
   stepThreeVisible: false,
   stepFourVisible: false,
   stepFiveVisible: false,
-  stepSixVisible: false
-
+  stepSixVisible: false,
+  stepSevenVisible: false,
 }
 
 export const RegistrationContext = createContext<UserContextType>(initialValues)
@@ -296,7 +299,7 @@ export const RegistrationContextProvider = ({ children }: RegistrationContextPro
   const [appearanceExternConsultant, setAppearanceExternConsultant] = useState(initialValues.appearanceExternConsultant) 
   const [existsExternConsultant, setExistsExternConsultant] = useState(initialValues.existsExternConsultant) 
 
-  const [visible, setVisible] = useState<'step1' | 'step2' | 'step3' | 'step4' | 'step5' | 'step6'>('step1')
+  const [visible, setVisible] = useState<'step1' | 'step2' | 'step3' | 'step4' | 'step5' | 'step6' | 'step7'>('step1')
 
   const displayStep1 = () => setVisible('step1')
   const displayStep2 = () => setVisible('step2')
@@ -304,6 +307,7 @@ export const RegistrationContextProvider = ({ children }: RegistrationContextPro
   const displayStep4 = () => setVisible('step4')
   const displayStep5 = () => setVisible('step5')
   const displayStep6 = () => setVisible('step6')
+  const displayStep7 = () => setVisible('step7')
 
   return(
     <RegistrationContext.Provider value={{
@@ -414,13 +418,15 @@ export const RegistrationContextProvider = ({ children }: RegistrationContextPro
       displayStep4,
       displayStep5,
       displayStep6,
+      displayStep7,
       
       stepOneVisible: visible === 'step1',
       stepTwoVisible: visible === 'step2',
       stepThreeVisible: visible === 'step3',
       stepFourVisible: visible === 'step4',
       stepFiveVisible: visible === 'step5',
-      stepSixVisible: visible === 'step6'
+      stepSixVisible: visible === 'step6',
+      stepSevenVisible: visible === 'step7'
 
     }}>
       {children}
