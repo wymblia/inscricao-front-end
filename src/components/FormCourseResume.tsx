@@ -37,11 +37,11 @@ export default function FormCourseResume(props: CourseResumeProps) {
   async function newEnrollment() {
 
     Swal.fire({
-      position: 'top-end',
+      position: 'center',
       icon: 'success',
       title: 'Aguarde, estamos confirmando sua inscrição',
       showConfirmButton: false,
-      timer: 10000
+      timer: 6800
     })
     const ufId = await getUfIdBaseFtec()
     try {
@@ -95,22 +95,13 @@ export default function FormCourseResume(props: CourseResumeProps) {
         consultor_usuarioid: externConsultant,
         providencia: providence
       })
-      Swal.fire({
-        position: 'top-end',
-        icon: 'success',
-        title: 'Aguarde, você será redirecionado',
-        showConfirmButton: false,
-        timer: 4000
-      })
-
-      setTimeout(() => { window.location.href = "https://www.ftec.com.br" }, 2000);
-
+      props.courseResumeChange()
     } catch (err) {
       Swal.fire({
         title: 'Candidato já inscrito',
         text: 'O candidato já está inscrito neste processo seletivo. Escolha outro!',
         confirmButtonText: 'Ok',
-        icon: 'error',
+        icon: 'warning',
       })
     }
 

@@ -16,7 +16,7 @@ interface StepsProps {
 }
 
 export default function Steps(props: StepsProps) {
-  const { stepOneVisible } = useContext(RegistrationContext)
+  const { stepOneVisible, stepSixVisible } = useContext(RegistrationContext)
 
   return (
     <div id="container" className="flex m-2 md:m-0">
@@ -43,7 +43,7 @@ export default function Steps(props: StepsProps) {
                   classNameStep4={props.classNameStep4}
               />
               <div className="flex justify-center items-center">
-                <h1 className="text-3xl font-normal mb-10 text-[#4B6BFB]">Inscreva-se</h1>
+                <h1 className={`${stepSixVisible ? 'hidden' : 'text-3xl font-normal mb-10 text-[#4B6BFB]'}`}>Inscreva-se</h1>
               </div>
               {props.form}
           </div>
