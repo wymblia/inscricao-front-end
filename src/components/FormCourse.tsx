@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import Swal from "sweetalert2";
 import { RegistrationContext } from "../contexts/RegistrationContext";
 import Course from "../core/Course";
 import useCourse from "../hooks/useCourse";
@@ -343,22 +344,48 @@ export default function FormCourse(props: CourseProps) {
   }
 
   async function fileValidation(e: any) {
-
-    if (((e.size / 1024) / 1024) <= 2) {
-      const formData = new FormData()
-      formData.append('fileEnem', e)
-      formData.append('cpf', cpf)
-
-      await api.post('/upload-enem', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
+    let fileType = ['application/pdf'];
+    let selectedFile = e.target.files[0];
+    if ((selectedFile && !fileType.includes(selectedFile.type))) {
+      e.target.value = null;
+      
+      Swal.fire({
+        title: '<strong>Selecione um arquivo em formato PDF</strong>',
+        html:
+          'Caso precise converter o seu documento, ' +
+          '<a target="_blank" href="//smallpdf.com/pt/conversor-de-pdf"><b>CLIQUE AQUI</b></a> ',
+        confirmButtonText: 'Ok',
+        icon: 'info',
       })
-
     } else {
-      alert('Arquivo muito grande! Limite máximo 2MB')
-    }
+      if (!e.target.files[0]){
+        Swal.fire({
+          title: 'Escolha um arquivo!',
+          confirmButtonText: 'Ok',
+          icon: 'info',
+        })
+      } else if (((e.target.files[0].size / 1024) / 1024) <= 2) {
+        const formData = new FormData()
+        formData.append('fileEnem', e.target.files[0])
+        formData.append('cpf', cpf)
 
+        await api.post('/upload-enem', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        })
+
+      } else if (((e.target.files[0].size / 1024) / 1024) > 2) {
+        e.target.value = null;
+
+        Swal.fire({
+          title: 'Arquivo muito grande!',
+          text: 'Limite máximo de 2MB',
+          confirmButtonText: 'Ok',
+          icon: 'info',
+        })
+      }
+    }
   }
 
   function functionSetAppearanceExternConsultant(e: any) {
@@ -436,7 +463,6 @@ export default function FormCourse(props: CourseProps) {
             ))}
           </Select>
           {
-
             notice.length > 0 ?
               <ButtonOptions classNameButton="h-6 rounded-md" value="S" >
                 <a href={`https://inscricao.ftec.com.br/edital/${notice}`} title="Abrir o Edital" target="_blank">Veja o Edital</a>
@@ -452,7 +478,10 @@ export default function FormCourse(props: CourseProps) {
             <Input valueInput={objectiveTestGrade || ""} textLabel="Informe a nota da prova objetiva" typeInput="text" onChange={setObjectiveTestGrade} required={entryForm === 'enem-encceja'} />
             <Input valueInput={redactionTestGrade || ""} textLabel="Informe a nota da redação" typeInput="text" onChange={setRedactionTestGrade} required={entryForm === 'enem-encceja'} />
             {/* <InputFile valueInput={enemFile || ""} typeInput="file" textLabel="Selecione o comprovante do Enem" onChange={fileValidation} accept="application/pdf" required={entryForm === 'enem-encceja'}/> */}
-            <input type="file" accept="application/pdf" onChange={(e) => fileValidation(e.target.files[0])} required={entryForm === 'enem-encceja'} onClick={setSelectedEnrollmentFunction} />
+
+
+            {/* <input type="file" accept="application/pdf" onChange={(e) => fileValidation(e.target.files[0])} required={entryForm === 'enem-encceja'} onClick={setSelectedEnrollmentFunction} /> */}
+            <input type="file" accept="application/pdf" onChange={fileValidation} required={(entryForm === 'enem-encceja')} onClick={setSelectedEnrollmentFunction} />
           </div>
         </div>
         <div className="form-check form-switch">
