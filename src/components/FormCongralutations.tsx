@@ -1,42 +1,36 @@
 import React, { useContext } from "react";
 import { RegistrationContext } from "../contexts/RegistrationContext";
-import Button from "./Button";
 import ButtonBack from "./ButtonBack";
-import { FiMonitor, FiClock } from 'react-icons/fi';
-import { BsCalendarWeek } from 'react-icons/bs';
-import { api } from "../services/api";
-import moment from "moment"
-import Swal from "sweetalert2";
+import Script from "next/script";
 
 interface CongratulationsProps {
   congratulationsChange?: () => void
   backPage?: () => void
 }
 
-
 export default function FormCongratulations(props: CongratulationsProps) {
-
-  const { selectedCourse, unity, modality, showModalityName, showCourseName, name, socialName, email, phone, cpf,
-    birthDate, providence, cep, state, city, district, street, number, complement, yearEnem, codeEnemAndEncceja, objectiveTestGrade, redactionTestGrade, filialCourse, turnoCourse, matrizCourse, modalidadeCourse, turnoIdCourse, gender, selectedEnrollment, idEntryForm, externConsultant, existsExternConsultant } = useContext(RegistrationContext)
 
   return (
     <>
       <div className="md:max-w-[450px] m-auto">
-    {/* <img className="w-full" src={'https://www.ftec.com.br/static/media/uploads/NEW_VESTIBULAR/uniftec11.png'}/> */}
         <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-2">
-          <div className="flex justify-center text-center border-1 border-gray-300 rounded-t-box p-7 bg-gradient-to-r  from-green-300 to-blue-400 text-gray-700">
-            <p className="text-3xl ">
+          <div className="flex justify-center text-center border-1 border-gray-300 rounded-t-box p-7 bg-blue-600 text-gray-100">
+            <p className="text-3xl font-medium">
               Parabéns!
             </p>
           </div>
-          <div className="flex mx-10 justify-center text-center border-2 border-gray-300 rounded-2xl p-3 bg-gradient-to-r from-green-200 to-blue-300 text-gray-700">
-          <p className="text-xl">
-              Sua inscrição foi confirmada
+          <div className="text-center border-1 border-gray-300 rounded-b-box p-7 bg-gradient-to-r bg-blue-100 text-gray-800">
+            <div className="text-xl py-6 font-semibold">
+              <p className="pl-9 md:pl-0">Sua inscrição foi confirmada!
+              </p>
+              <svg className="h-12 w-15 text-green-400 -mt-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12" /></svg>
+            </div>
+            <p className="text-lg pb-8">
+              Você deu o primeiro passo
+              <text className="bg-[#cbf100]"> para o seu futuro.</text>
             </p>
-          </div>
-          <div className="flex mx-16 justify-center font-medium text-lg text-center border-2 border-gray-300 rounded-3xl p-6	bg-gradient-to-br from-green-300 to-blue-400 text-black">
-            <p>
-              Você deu o primeiro passo para o seu futuro
+            <p className="text-md pb-6">
+              Encaminhamos no seu e-mail todas as informações necessárias.
             </p>
           </div>
         </div>
@@ -48,6 +42,19 @@ export default function FormCongratulations(props: CongratulationsProps) {
           <ButtonBack onClick={() => props.backPage()}>Voltar</ButtonBack>
         </div>
       </div>
+      <Script id="facebook-pixel">
+        {`
+      !function(f,b,e,v,n,t,s)
+      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);
+        t.async=!0; t.src=v;s=b.getElementsByTagName(e)[0]; 
+        s.parentNode.insertBefore(t,s)}(window, document,'script', 
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '843519542354455'); fbq('track', 'PageView');
+      `}
+      </Script>
     </>
   )
 }
