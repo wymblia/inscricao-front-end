@@ -38,7 +38,7 @@ export default function Input (props: InputProps) {
         defaultValue = { props.defaultValue }
         accept = { props.accept }
         required = { props.required }
-        className = {`md:min-w-[550px] h-10 mb-2 border border-gray-300 rounded-2xl focus:outline-none bg-gray-50 px-4 py-2 focus:bg-white text-gray-700 ${props.readOnly ? 'bg-gray-200 focus:bg-gray-200' : null} ${props.classNameInput}`}
+        className = {`xl:w-[480px] h-10 mb-2 border border-gray-300 rounded-2xl focus:outline-none bg-gray-50 px-4 py-2 focus:bg-white text-gray-700 ${props.readOnly ? 'bg-gray-200 focus:bg-gray-200' : null} ${props.classNameInput}`}
       />
     </div>
   )

@@ -21,7 +21,7 @@ export default function Select (props: SelectProps) {
       </label>
       <select
         id = {props.idSelect}
-        className = {`max-w-[400px] md:min-w-[550px] h-10 mb-2 border border-gray-300 rounded-2xl focus:outline-none bg-gray-50 px-4 py-2 focus:bg-white ${props.classNameSelect}`}
+        className = {`xl:w-[480px] h-10 mb-2 border border-gray-300 rounded-2xl focus:outline-none bg-gray-50 px-4 py-2 focus:bg-white ${props.classNameSelect}`}
         onChange = { props.onChange }
         onClick = { props.onClick }
         children = {props.children}

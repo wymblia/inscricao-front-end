@@ -56,7 +56,7 @@ export default function Form(props: FormProps) {
 
   return (
     <div>
-      <form onSubmit={FormSubmit} autoComplete="off">
+      <form onSubmit={FormSubmit} autoComplete="off" className="xl:w-[480px] mx-auto">
         <div className="flex justify-end -mb-4z text-sm">
           <div className="form-check form-switch">
             <input defaultChecked={appearanceSocialName} className="form-check-input appearance-none w-9 -ml-10 rounded-full float-left h-5 align-top bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm" type="checkbox" role="switch" id="flexSwitchCheckDefault" onClick={setAppearanceSocialNameFunction} />
@@ -71,14 +71,14 @@ export default function Form(props: FormProps) {
           <label className={`mb-2 font-light text-sm `} htmlFor="name">
             <p className="text-gray-700">Nome completo</p>
           </label>
-          <input type="text" id="name" defaultValue={name} onChange={(e) => setName(e.target.value)} onBlur={ValidateFirstAndLastName} required={true} className='md:min-w-[550px] h-10 mb-2 border border-gray-300 rounded-2xl focus:outline-none bg-gray-50 px-4 py-2 focus:bg-white text-gray-700' />
+          <input type="text" id="name" defaultValue={name} onChange={(e) => setName(e.target.value)} onBlur={ValidateFirstAndLastName} required={true} className='xl:w-[480px] h-10 mb-2 border border-gray-300 rounded-2xl focus:outline-none bg-gray-50 px-4 py-2 focus:bg-white text-gray-700' />
         </div>
 
         <div className="flex flex-col mb-2">
           <label className={`mb-2 font-light text-sm`} htmlFor="email">
             <p className="text-gray-700">E-mail</p>
           </label>
-          <input type="email" id="email" defaultValue={email} onChange={(e) => setemail(e.target.value)} required={true} className='md:min-w-[550px] h-10 mb-2 border border-gray-300 rounded-2xl focus:outline-none bg-gray-50 px-4 py-2 focus:bg-white text-gray-700' />
+          <input type="email" id="email" defaultValue={email} onChange={(e) => setemail(e.target.value)} required={true} className='xl:w-[480px] h-10 mb-2 border border-gray-300 rounded-2xl focus:outline-none bg-gray-50 px-4 py-2 focus:bg-white text-gray-700' />
         </div>
 
         <div className="flex flex-col mb-2">
@@ -86,9 +86,9 @@ export default function Form(props: FormProps) {
             <p className="text-gray-700">Celular</p>
           </label>
           {router.query.phone ?
-            <input type="text" id="phone" defaultValue={phone} onChange={(e) => setphone(e.target.value)} required={true} className='md:min-w-[550px] h-10 mb-2 border border-gray-300 rounded-2xl focus:outline-none bg-gray-50 px-4 py-2 focus:bg-white text-gray-700' />
+            <input type="text" id="phone" defaultValue={phone} onChange={(e) => setphone(e.target.value)} required={true} className='xl:w-[480px] h-10 mb-2 border border-gray-300 rounded-2xl focus:outline-none bg-gray-50 px-4 py-2 focus:bg-white text-gray-700' />
             :
-            <InputMask mask="(99) 99999-9999" type="text" id="phone" defaultValue={phone} onChange={(e) => setphone(e.target.value)} required={true} className='md:min-w-[550px] h-10 mb-2 border border-gray-300 rounded-2xl focus:outline-none bg-gray-50 px-4 py-2 focus:bg-white text-gray-700' />
+            <InputMask mask="(99) 99999-9999" type="text" id="phone" defaultValue={phone} onChange={(e) => setphone(e.target.value)} required={true} className='xl:w-[480px] h-10 mb-2 border border-gray-300 rounded-2xl focus:outline-none bg-gray-50 px-4 py-2 focus:bg-white text-gray-700' />
           }
         </div>
 
