@@ -27,7 +27,7 @@ export default function Steps(props: StepsProps) {
         </div>
         <div className={`flex flex-grow justify-start items-center md:max-w-[12%] md:min-w-[12%] xl:h-screen ${props.invisible} p-5`}>
           <Stepper
-            className={"hidden 4xl:block steps-vertical"}
+            className={"hidden 2xl:block steps-vertical"}
             classNameStep2={props.classNameStep2}
             classNameStep3={props.classNameStep3}
             classNameStep4={props.classNameStep4}
