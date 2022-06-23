@@ -10,6 +10,8 @@ build-job:
   script:
     - npm install
     - npm run build
+  only:
+    - merge_requests
 
 deploy_staging:
   stage: deploy
