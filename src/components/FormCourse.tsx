@@ -463,10 +463,12 @@ export default function FormCourse(props: CourseProps) {
             ))}
           </Select>
           {
-            notice.length > 0 ?
-              <ButtonOptions classNameButton="h-6 rounded-md" value="S" >
-                <a href={`https://inscricao.ftec.com.br/edital/${notice}`} title="Abrir o Edital" target="_blank">Veja o Edital</a>
-              </ButtonOptions>
+            notice ?
+              (notice.length > 0 ?
+                <ButtonOptions classNameButton="h-6 rounded-md" value="S" >
+                  <a href={`https://inscricao.ftec.com.br/edital/${notice}`} title="Abrir o Edital" target="_blank">Veja o Edital</a>
+                </ButtonOptions>
+                : null)
               : null
           }
 
