@@ -8,7 +8,6 @@ import Button from "./Button";
 import ButtonBack from "./ButtonBack";
 import ButtonOptions from "./ButtonOptions";
 import Input from "./Input";
-import InputFile from "./InputFile";
 
 import Select from "./Select";
 
@@ -19,21 +18,17 @@ interface CourseProps {
 }
 
 export default function FormCourse(props: CourseProps) {
-  const { modality, setModality, unity, setUnity, entryForm, setEntryForm, yearEnem, setYearEnem, codeEnemAndEncceja, setCodeEnemAndEncceja, objectiveTestGrade, setObjectiveTestGrade, redactionTestGrade, setRedactionTestGrade, nameCourse, selectedCourse, filialCourse, setSelectedCourse, setShowCourseName, setShowModalityName, setFilialCourse, setTurnoCourse, setTurnoIdCourse, setMatrizCourse, setModalidadeCourse, selectedEnrollment, setSelectedEnrollment, setIdEntryForm, enemFile, setEnemFile, cpf, externConsultant, setExternConsultant, appearanceExternConsultant, setAppearanceExternConsultant, listConsulters, existsExternConsultant, setExistsExternConsultant, modalidadeCourse } = useContext(RegistrationContext)
+  const { modality, setModality, unity, setUnity, entryForm, setEntryForm, yearEnem, setYearEnem, codeEnemAndEncceja, setCodeEnemAndEncceja, objectiveTestGrade, setObjectiveTestGrade, redactionTestGrade, setRedactionTestGrade, nameCourse, selectedCourse, setSelectedCourse, setShowCourseName, setShowModalityName, setFilialCourse, setTurnoCourse, setTurnoIdCourse, setMatrizCourse, setModalidadeCourse, selectedEnrollment, setSelectedEnrollment, setIdEntryForm, cpf,  modalidadeCourse } = useContext(RegistrationContext)
   const { listOffer } = useCourse()
 
   const [coursesOptions, setCoursesOptions] = useState([])
-  const [listConsultersOptions, setListConsultersOptions] = useState([])
-  const [selectedEnrollmentEnem, setSelectedEnrollmentEnem] = useState([])
+  const [selectedEnrollmentEnem] = useState([])
   const [unityOptions, setUnityOptions] = useState([])
   const [listVestibular, setListVestibular] = useState([])
   const [notice, setNotice] = useState([])
 
-  const [arquivoEnem, setArquivoEnem] = useState([])
-
   let unityOptionsArray = []
   let coursesOptionsArray = []
-  let listConsultersArray = []
 
   const entryFormsOptions = [
     {
@@ -90,7 +85,6 @@ export default function FormCourse(props: CourseProps) {
 
   function courseForModalityAndUnity() {
     listOffer.forEach(course => {
-
       if (course.MODALIDADE === modality && course.UNIDADE === unity) {
         coursesOptionsArray.push({
           label: course['CURSO'],
@@ -98,9 +92,7 @@ export default function FormCourse(props: CourseProps) {
         })
       }
     })
-
     setCoursesOptions(coursesOptionsArray)
-
   }
 
   useEffect(() => {
@@ -136,7 +128,6 @@ export default function FormCourse(props: CourseProps) {
     } else {
       vestibularFunction()
     }
-
   }
 
   function CoursesFunction(e: any) {
@@ -388,41 +379,6 @@ export default function FormCourse(props: CourseProps) {
     }
   }
 
-  function functionSetAppearanceExternConsultant(e: any) {
-    appearanceExternConsultant ? setAppearanceExternConsultant(false) : setAppearanceExternConsultant(true)
-    existsExternConsultant ? setExistsExternConsultant(false) : setExistsExternConsultant(true)
-    teste()
-  }
-
-  function setListConsultersOptionsFunction() {
-
-    listConsulters.forEach(consulter => {
-
-      listConsultersArray.push({
-        idConsultor: consulter.usuarioid,
-        nomeConsultor: consulter.nome_completo
-      })
-    })
-
-    setListConsultersOptions(listConsultersArray)
-  }
-
-  useEffect(() => {
-    setListConsultersOptionsFunction()
-  }, [externConsultant])
-
-  function setExternConsultantFunction(e: any) {
-    if (existsExternConsultant) {
-      setExternConsultant(e.target.value)
-    } else {
-      setExternConsultant("")
-    }
-  }
-
-  function teste() {
-    setExternConsultant("")
-  }
-
   return (
     <div>
       <form onSubmit={FormSubmit}>
@@ -469,7 +425,7 @@ export default function FormCourse(props: CourseProps) {
                   <a href={`https://inscricao.ftec.com.br/edital/${notice}`} title="Abrir o Edital" target="_blank">Veja o Edital</a>
                 </ButtonOptions>
                 : null)
-              : null
+              : null 
           }
 
         </div>
@@ -483,19 +439,7 @@ export default function FormCourse(props: CourseProps) {
             <input type="file" accept="application/pdf" onChange={fileValidation} required={(entryForm === 'enem-encceja')} onClick={setSelectedEnrollmentFunction} />
           </div>
         </div>
-        <div className="form-check form-switch">
-          <input className="form-check-input appearance-none w-9 -ml-10 rounded-full float-left h-5 align-top bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm" type="checkbox" role="switch" id="flexSwitchCheckDefault" onClick={functionSetAppearanceExternConsultant} defaultChecked={appearanceExternConsultant} />
-          <label className="form-check-label inline-block text-gray-800" htmlFor="flexSwitchCheckDefault" defaultChecked={appearanceExternConsultant}>Teve ajuda de consultor externo?</label>
-        </div>
 
-        <div hidden={!appearanceExternConsultant}>
-          <Select textLabel="Consultor Comercial" onChange={setExternConsultantFunction} value={externConsultant} required={appearanceExternConsultant}>
-            <option value="">Selecione</option>
-            {listConsultersOptions.map((option, index) => (
-              <option key={index} value={option.idConsultor}>{option.nomeConsultor}</option>
-            ))}
-          </Select>
-        </div>
         <div className="flex flex-col mt-12">
           <Button type="submit">Próximo</Button>
         </div>
