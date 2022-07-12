@@ -6,7 +6,7 @@ import useCourse from "../hooks/useCourse";
 
 export default function useLeads () {
   const { displayStep2 } = useContext(RegistrationContext)
-  const { getCourse, getConsulters } = useCourse()
+  const { getCourse } = useCourse()
   const [lead] = useState<Lead>(Lead.createVoid())
 
   function saveLead (lead: Lead) {
@@ -22,7 +22,6 @@ export default function useLeads () {
       filial_id: 1
     })
     getCourse()
-    getConsulters()
     displayStep2()
   }
 
@@ -31,4 +30,3 @@ export default function useLeads () {
     lead
   }
 }
-
