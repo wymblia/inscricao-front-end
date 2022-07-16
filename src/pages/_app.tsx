@@ -1,5 +1,5 @@
-import { RegistrationContextProvider } from '../contexts/RegistrationContext'
-import '../styles/globals.css'
+import { RegistrationContextProvider } from "../contexts/RegistrationContext"
+import "../styles/globals.css"
 
 function MyApp({ Component, pageProps }) {
   return (
