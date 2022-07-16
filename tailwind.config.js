@@ -6,10 +6,7 @@ module.exports = {
     "./node_modules/tw-elements/dist/js/**/*.js"
   ],
   theme: {
-    extend: {},
+    extend: {}
   },
-  plugins: [
-    require('tw-elements/dist/plugin'),
-    require("daisyui"),
-  ],
+  plugins: [require("tw-elements/dist/plugin"), require("daisyui")]
 }
