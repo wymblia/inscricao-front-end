@@ -1,0 +1,28 @@
+image: node:14.7.0
+
+stages:
+  - build
+  - before_script
+  - deploy
+
+build-job:
+  stage: build
+  script:
+    - npm install
+    - npm run build
+  only:
+    - merge_requests
+
+deploy_staging:
+  stage: deploy
+  image: alpine
+  before_script:
+    - apk add openssh-client
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+  script:
+  - ssh -o StrictHostKeyChecking=no root@172.16.0.202 "cd /var/www/vestibular-form-registration && git checkout master && git pull origin master && npm install && npm run build && pm2 restart vestibular-form-registration && exit"
+  only:
+    - tags

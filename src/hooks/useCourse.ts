@@ -3,29 +3,30 @@ import { RegistrationContext } from "../contexts/RegistrationContext"
 import Course from "../core/Course"
 import { api } from "../services/api"
 
-export default function useCourse () {
-  const { displayStep3, displayStep5, displayStep6 } = useContext(RegistrationContext)
-  
-  const [course, setCourse] = useState<Course>(Course.createVoid())
+export default function useCourse() {
+  const { displayStep3, displayStep5, listOffer, setListOffer } = useContext(RegistrationContext)
+  const [course] = useState<Course>(Course.createVoid())
 
-  function saveCourse (course: Course) {
-    // api.post('/leads', {
-    //   name: lead.name,
-    //   email: lead.email,
-    //   phone: lead.phone
-    // })
-    // .then (response => {
-    //   console.log(response.data);
-    // })
+  function getCourse() {
+    api.get('/process', {
+    })
+    .then (response => {
+      setListOffer(JSON.parse(response.data))
+    })
+  }
+
+  function nextStepFive() {
     displayStep5()
   }
 
-  function backStepThree () {
+  function backStepThree() {
     displayStep3()
   }
 
   return {
-    saveCourse,
+    getCourse,
+    nextStepFive,
+    listOffer,
     course,
     backStepThree
   }
