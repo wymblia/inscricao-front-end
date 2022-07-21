@@ -1,6 +1,6 @@
 import React, { Fragment, useContext } from "react"
 import { RegistrationContext } from "../contexts/RegistrationContext"
-import Button from "./Button"
+import ButtonNext from "./ButtonNext"
 import ButtonBack from "./ButtonBack"
 import { FiMonitor, FiClock } from "react-icons/fi"
 import { BsCalendarWeek } from "react-icons/bs"
@@ -19,7 +19,7 @@ export default function FormCourseResume(props: CourseResumeProps) {
     socialName,
     email,
     phone,
-    cpf,
+    CPF,
     birthDate,
     disabilityRelief,
     cep,
@@ -101,7 +101,7 @@ export default function FormCourseResume(props: CourseResumeProps) {
         hidden_curso: null,
         opcao1: selectedCourse,
         opcao2: selectedCourse,
-        cpf: cpf,
+        cpf: CPF,
         documento_estrangeiro: null,
         pais: 1,
         nome: firstName,
@@ -163,7 +163,7 @@ export default function FormCourseResume(props: CourseResumeProps) {
     //   hidden_curso: null,
     //   opcao1: selectedCourse,
     //   opcao2: selectedCourse,
-    //   cpf: cpf,
+    //   cpf: CPF,
     //   documento_estrangeiro: null,
     //   pais: 1,
     //   nome: firstName,
@@ -192,19 +192,19 @@ export default function FormCourseResume(props: CourseResumeProps) {
     <Fragment>
       <div className="md:max-w-[450px] m-auto">
         <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-4">
-          <div className="flex justify-center font-light text-lg text-center border-2 border-gray-300 rounded-xl p-6 bg-gray-100 text-gray-700">
+          <div className="flex justify-center font-light text-lg text-center border-2 border-grey-300 rounded-xl p-6 bg-grey-100 text-grey-700">
             <p>
-              <FiMonitor className="m-auto text-4xl mb-3 text-gray-700" />
+              <FiMonitor className="m-auto text-4xl mb-3 text-grey-700" />
               {selectedCourse ? showCourseName : "Volte e selecione um curso!"}
             </p>
           </div>
-          <div className="flex justify-center font-light text-lg text-center border-2 border-gray-300 rounded-xl p-6 bg-gray-100 text-gray-700">
+          <div className="flex justify-center font-light text-lg text-center border-2 border-grey-300 rounded-xl p-6 bg-grey-100 text-grey-700">
             <p>
               <BsCalendarWeek className="m-auto text-4xl mb-3" />
               {modality ? showModalityName : "Volte e selecione a modalidade!"}
             </p>
           </div>
-          <div className="flex justify-center font-light text-lg text-center border-2 border-gray-300 rounded-xl p-6 bg-gray-100 text-gray-700">
+          <div className="flex justify-center font-light text-lg text-center border-2 border-grey-300 rounded-xl p-6 bg-grey-100 text-grey-700">
             <p>
               <FiClock className="m-auto text-4xl mb-3" />
               {unity ? unity : "Volte e selecione a unidade!"}
@@ -214,7 +214,7 @@ export default function FormCourseResume(props: CourseResumeProps) {
       </div>
       <div className="md:min-w-[550px]">
         <div className="flex flex-col mt-12">
-          <Button onClick={newEnrollment}>Confirmar inscrição</Button>
+          <ButtonNext onClick={newEnrollment}>Confirmar inscrição</ButtonNext>
         </div>
         <div className="flex flex-col mt-2">
           <ButtonBack onClick={() => props.backPage()}>Voltar</ButtonBack>
