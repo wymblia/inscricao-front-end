@@ -4,12 +4,13 @@ import { RegistrationContext } from "../contexts/RegistrationContext"
 import Course from "../core/Course"
 import useCourse from "../hooks/useCourse"
 import { api } from "../services/api"
-import Button from "./Button"
+import ButtonNext from "./ButtonNext"
 import ButtonBack from "./ButtonBack"
-import ButtonOptions from "./ButtonOptions"
+import ButtonModality from "./ButtonModality"
 import Input from "./Input"
 import InputFile from "./InputFile"
 import Select from "./Select"
+import ButtonNotice from "./ButtonNotice"
 
 interface CourseProps {
   course: Course
@@ -20,7 +21,7 @@ interface CourseProps {
 export default function FormCourse(props: CourseProps) {
   const {
     nameCourse,
-    cpf,
+    CPF,
     courseModality,
     modality,
     setModality,
@@ -92,20 +93,10 @@ export default function FormCourse(props: CourseProps) {
     setSelectedCourse("")
     setEntryForm("")
     setSelectedEntranceExam("")
-
-    var btn = document.querySelectorAll(".entry-modality")
-
-    btn.forEach(function (button) {
-      button.classList.remove("bg-[#284fac]")
-      button.classList.remove("text-slate-50")
-    })
-
-    let classes = e.target.className
-    let newClass = classes + " bg-[#284fac] text-slate-50"
-    e.target.className = newClass
+    setNotice([])
 
     setModality(e.target.value)
-    setShowModalityName(e.target.innerHTML)
+    setShowModalityName(e.target.id)
   }
 
   function fillUnityByModality() {
@@ -379,7 +370,7 @@ export default function FormCourse(props: CourseProps) {
       } else if (e.target.files[0].size / 1024 / 1024 <= 2) {
         const formData = new FormData()
         formData.append("fileEnem", e.target.files[0])
-        formData.append("cpf", cpf)
+        formData.append("cpf", CPF)
 
         await api.post("/upload-enem", formData, {
           headers: {
@@ -402,17 +393,37 @@ export default function FormCourse(props: CourseProps) {
     <div>
       <form onSubmit={FormSubmit}>
         <div id="modality">
-          <label className="font-light text-sm">Modalidade</label>
-          <div className="flex mt-2 space-x-2 justify-center">
-            <ButtonOptions classNameButton="entry-modality" value="S" onClick={handleModality}>
-              Semipresencial
-            </ButtonOptions>
-            <ButtonOptions classNameButton="entry-modality" value="P" onClick={handleModality}>
-              Presencial
-            </ButtonOptions>
-            <ButtonOptions classNameButton="entry-modality" value="E" onClick={handleModality}>
-              EAD
-            </ButtonOptions>
+          <label className="font-light text-sm text-grey-700">Modalidade</label>
+          <div className="flex mt-1 space-x-2 justify-center">
+            <ButtonModality
+              label="Semipresencial"
+              className="sr-only peer"
+              value="S"
+              name="answer"
+              id="Semipresencial"
+              htmlFor="Semipresencial"
+              onClick={handleModality}
+            />
+
+            <ButtonModality
+              label="Presencial"
+              className="sr-only peer"
+              value="P"
+              name="answer"
+              id="Presencial"
+              htmlFor="Presencial"
+              onClick={handleModality}
+            />
+
+            <ButtonModality
+              label="EAD"
+              className="sr-only peer"
+              value="E"
+              name="answer"
+              id="EAD"
+              htmlFor="EAD"
+              onClick={handleModality}
+            />
           </div>
         </div>
 
@@ -453,6 +464,7 @@ export default function FormCourse(props: CourseProps) {
             </option>
           ))}
         </Select>
+
         <div hidden={entryForm === "enem-encceja"}>
           <Select
             textLabel="Processo seletivo"
@@ -469,20 +481,8 @@ export default function FormCourse(props: CourseProps) {
               </option>
             ))}
           </Select>
-          {notice ? (
-            notice.length > 0 ? (
-              <ButtonOptions classNameButton="h-6 rounded-md" value="S">
-                <a
-                  href={`https://inscricao.ftec.com.br/edital/${notice}`}
-                  title="Abrir o Edital"
-                  target="_blank"
-                >
-                  Veja o Edital
-                </a>
-              </ButtonOptions>
-            ) : null
-          ) : null}
         </div>
+
         <div hidden={entryForm != "enem-encceja"}>
           <div className="mb-2 font-light text-sm ">
             <Input
@@ -524,8 +524,10 @@ export default function FormCourse(props: CourseProps) {
           </div>
         </div>
 
+        {notice?.length > 0 ? <ButtonNotice notice={notice} /> : null}
+
         <div className="flex flex-col mt-12">
-          <Button type="submit">Próximo</Button>
+          <ButtonNext type="submit">Próximo</ButtonNext>
         </div>
         <div className="flex flex-col mt-2">
           <ButtonBack onClick={() => props.backPage()}>Voltar</ButtonBack>
