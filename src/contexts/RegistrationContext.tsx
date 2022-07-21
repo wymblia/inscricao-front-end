@@ -7,15 +7,13 @@ type RegistrationContextProps = {
 type UserContextType = {
   offerList: any
   setOfferList: (newState: string) => void
-  consultantsOptions: any
-  setConsultantsOptions: (newState: string) => void
+  consultantsOptionsList: any
+  setConsultantsOptionsList: (newState: string) => void
 
   name: string
   setName: (newState: string) => void
-  setSocialName: (newState: string) => void
   socialName: string
-  visibleSocialName: boolean
-  setVisibleSocialName: (newState: boolean) => void
+  setSocialName: (newState: string) => void
   email: string
   setEmail: (newState: string) => void
   phone: string
@@ -23,8 +21,8 @@ type UserContextType = {
   switchShowSocialName: boolean
   setSwitchShowSocialName: (newState: boolean) => void
 
-  cpf: string
-  setCpf: (newState: string) => void
+  CPF: string
+  setCPF: (newState: string) => void
   birthDate: Date
   setBirthDate: (newState: Date) => void
   gender: string
@@ -115,16 +113,15 @@ export const RegistrationContext = createContext<UserContextType>({} as UserCont
 
 export const RegistrationContextProvider = ({ children }: RegistrationContextProps) => {
   const [offerList, setOfferList] = useState("")
-  const [consultantsOptions, setConsultantsOptions] = useState("")
+  const [consultantsOptionsList, setConsultantsOptionsList] = useState("")
 
   const [name, setName] = useState("")
   const [socialName, setSocialName] = useState("")
-  const [visibleSocialName, setVisibleSocialName] = useState(false)
   const [email, setEmail] = useState("")
   const [phone, setPhone] = useState("")
   const [switchShowSocialName, setSwitchShowSocialName] = useState(false)
 
-  const [cpf, setCpf] = useState("")
+  const [CPF, setCPF] = useState("")
   const [birthDate, setBirthDate] = useState(new Date("2000-01-01"))
   const [gender, setGender] = useState("")
   const [switchShowDeficiency, setSwitchShowDeficiency] = useState(false)
@@ -178,15 +175,13 @@ export const RegistrationContextProvider = ({ children }: RegistrationContextPro
       value={{
         offerList,
         setOfferList,
-        consultantsOptions,
-        setConsultantsOptions,
+        consultantsOptionsList,
+        setConsultantsOptionsList,
 
         name,
         setName,
         socialName,
         setSocialName,
-        visibleSocialName,
-        setVisibleSocialName,
         email,
         setEmail,
         phone,
@@ -194,8 +189,8 @@ export const RegistrationContextProvider = ({ children }: RegistrationContextPro
         switchShowSocialName,
         setSwitchShowSocialName,
 
-        cpf,
-        setCpf,
+        CPF,
+        setCPF,
         birthDate,
         setBirthDate,
         gender,
