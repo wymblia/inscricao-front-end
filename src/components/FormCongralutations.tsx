@@ -11,10 +11,10 @@ export default function FormCongratulations(props: CongratulationsProps) {
     <Fragment>
       <div className="md:max-w-[450px] m-auto">
         <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-2">
-          <div className="flex justify-center text-center border-1 border-gray-300 rounded-t-box p-7 bg-blue-600 text-gray-100">
+          <div className="flex justify-center text-center border-1 border-grey-300 rounded-t-box p-7 bg-blue-600 text-grey-100">
             <p className="text-3xl font-medium">Parabéns!</p>
           </div>
-          <div className="text-center border-1 border-gray-300 rounded-b-box p-7 bg-gradient-to-r bg-blue-100 text-gray-800">
+          <div className="text-center border-1 border-grey-300 rounded-b-box p-7 bg-gradient-to-r bg-blue-100 text-grey-800">
             <div className="text-xl py-6 font-semibold">
               <p className="pl-9 md:pl-0">Sua inscrição foi confirmada!</p>
               <svg
