@@ -3,9 +3,9 @@ import React, { Fragment, useContext } from "react"
 import Swal from "sweetalert2"
 import { RegistrationContext } from "../contexts/RegistrationContext"
 import Address from "../core/Address"
-import Button from "./Button"
 import ButtonBack from "./ButtonBack"
 import Input from "./Input"
+import ButtonNext from "./ButtonNext"
 
 interface FormAddressProps {
   address: Address
@@ -31,8 +31,16 @@ export default function FormAddress(props: FormAddressProps) {
     setComplement
   } = useContext(RegistrationContext)
 
-  function getCep() {
-    if (!cep.includes("_")) {
+  function handleIncompleteAndInvalidCep() {
+    if (cep.includes("_")) {
+      Swal.fire({
+        title: "CEP incompleto",
+        text: "Digite o CEP completo!",
+        confirmButtonText: "Ok",
+        icon: "warning"
+      })
+      return true
+    } else {
       axios.get(`https://viacep.com.br/ws/${cep}/json`).then((response) => {
         const { data } = response
         if (data.erro) {
@@ -45,6 +53,8 @@ export default function FormAddress(props: FormAddressProps) {
             focusConfirm: true,
             confirmButtonText: "Ok"
           })
+          setCep("")
+          return true
         } else {
           setState(data.uf)
           setCity(data.localidade)
@@ -52,34 +62,31 @@ export default function FormAddress(props: FormAddressProps) {
           setStreet(data.logradouro)
         }
       })
-    } else {
-      Swal.fire({
-        title: "CEP incompleto",
-        text: "Digite o CEP completo!",
-        confirmButtonText: "Ok",
-        icon: "warning"
-      })
     }
   }
 
   function FormSubmit(e: any) {
     e.preventDefault()
-    props.addressChange?.(new Address(cep, state, city, street, number))
+    handleIncompleteAndInvalidCep()
+      ? null
+      : props.addressChange?.(new Address(cep, state, city, street, number))
   }
 
   return (
     <Fragment>
       <form onSubmit={FormSubmit} autoComplete="off">
         <Input
-          mask="99999-999"
           textLabel="CEP"
-          typeInput="cep"
           idInput="cep"
+          typeInput="cep"
           valueInput={cep}
           onChange={setCep}
-          onBlur={getCep}
+          onBlur={handleIncompleteAndInvalidCep}
+          existsMask={true}
+          mask="99999-999"
           required={true}
         />
+
         <Input
           textLabel="Estado"
           typeInput="text"
@@ -88,6 +95,7 @@ export default function FormAddress(props: FormAddressProps) {
           onChange={setState}
           required={true}
         />
+
         <Input
           textLabel="Cidade"
           typeInput="text"
@@ -96,6 +104,7 @@ export default function FormAddress(props: FormAddressProps) {
           onChange={setCity}
           required={true}
         />
+
         <Input
           textLabel="Bairro"
           typeInput="text"
@@ -104,6 +113,7 @@ export default function FormAddress(props: FormAddressProps) {
           onChange={setDistrict}
           required={true}
         />
+
         <Input
           textLabel="Rua"
           typeInput="text"
@@ -112,25 +122,29 @@ export default function FormAddress(props: FormAddressProps) {
           onChange={setStreet}
           required={true}
         />
+
         <Input
           textLabel="Número"
           typeInput="text"
           idInput="number"
-          defaultValue={number}
+          valueInput={number}
           onChange={setNumber}
           required={true}
         />
+
         <Input
           textLabel="Complemento"
           typeInput="text"
           idInput="complement"
-          defaultValue={complement}
+          valueInput={complement}
           onChange={setComplement}
           required={false}
         />
+
         <div className="flex flex-col mt-12">
-          <Button type="submit">Próximo</Button>
+          <ButtonNext type="submit">Próximo</ButtonNext>
         </div>
+
         <div className="flex flex-col mt-2">
           <ButtonBack onClick={() => props.backPage()}>Voltar</ButtonBack>
         </div>
