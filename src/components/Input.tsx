@@ -31,7 +31,7 @@ export default function Input(props: InputProps) {
         />
       ) : (
         <input
-          className="xl:w-[480px] h-10 mb-2 border border-grey-300 rounded-2xl focus:outline-none bg-grey-50 px-4 py-2 focus:bg-white text-grey-700 focus:border-blue-300"
+          className="w-[480px] h-10 mb-2 border border-grey-300 rounded-2xl focus:outline-none bg-grey-50 px-4 py-2 focus:bg-white text-grey-700 focus:border-blue-300"
           id={props.idInput}
           type={props.typeInput}
           value={props.valueInput}
