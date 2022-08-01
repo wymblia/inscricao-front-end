@@ -4,14 +4,12 @@ import Course from "../core/Course"
 import { api } from "../services/api"
 
 export default function useCourse() {
-  const { displayStep3, displayStep5, listOffer, setListOffer } = useContext(RegistrationContext)
+  const { displayStep3, displayStep5, offerList, setOfferList } = useContext(RegistrationContext)
   const [course] = useState<Course>(Course.createVoid())
 
   function getCourse() {
-    api.get('/process', {
-    })
-    .then (response => {
-      setListOffer(JSON.parse(response.data))
+    api.get("/process", {}).then((response) => {
+      setOfferList(JSON.parse(response.data))
     })
   }
 
@@ -26,7 +24,7 @@ export default function useCourse() {
   return {
     getCourse,
     nextStepFive,
-    listOffer,
+    offerList,
     course,
     backStepThree
   }

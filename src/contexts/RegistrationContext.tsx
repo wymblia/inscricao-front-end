@@ -1,434 +1,282 @@
-import { createContext, ReactNode, useState } from "react";
+import { createContext, ReactNode, useState } from "react"
 
 type RegistrationContextProps = {
   children: ReactNode
 }
 
 type UserContextType = {
-  listOffer: any
-  listConsulters: any
+  offerList: any
+  setOfferList: (newState: string) => void
+  consultantsOptionsList: any
+  setConsultantsOptionsList: (newState: string) => void
 
   name: string
+  setName: (newState: string) => void
   socialName: string
-  visibleSocialName: boolean
+  setSocialName: (newState: string) => void
   email: string
+  setEmail: (newState: string) => void
   phone: string
-  appearanceSocialName: boolean
+  setPhone: (newState: string) => void
+  switchShowSocialName: boolean
+  setSwitchShowSocialName: (newState: boolean) => void
 
-  setListOffer: (newState: string) => void 
-  setListConsulters: (newState: string) => void 
-
-  setName: (newState: string) => void 
-  setSocialName: (newState: string) => void 
-  setVisibleSocialName: (newState: boolean) => void 
-  setemail: (newState: string) => void 
-  setphone: (newState: string) => void 
-  setAppearanceSocialName: (newState: boolean) => void 
-
-  cpf: string
+  CPF: string
+  setCPF: (newState: string) => void
   birthDate: Date
-  gender: string
-  deficiency: string
-  invisibleErrorCpf: boolean
-  appearanceDeficiency: boolean
-  appearanceSwitchDeficiency: boolean
-  providence: string
-
-  setCpf: (newState: string) => void
   setBirthDate: (newState: Date) => void
+  gender: string
   setGender: (newState: string) => void
-  setDeficiency: (newState: string) => void
-  setInvisibleErrorCpf: (newState: boolean) => void
-  setAppearanceDeficiency: (newState: boolean) => void
-  setAppearanceSwitchDeficiency: (newState: boolean) => void
-  setProvidence: (newState: string) => void
+  switchShowDeficiency: boolean
+  setSwitchShowDeficiency: (newState: boolean) => void
+  disabilityRelief: string
+  setDisabilityRelief: (newState: string) => void
 
   cep: string
-  state: string
-  city: string
-  district: string
-  street: string
-  number: string
-  complement: string
-  
   setCep: (newState: string) => void
+  state: string
   setState: (newState: string) => void
+  city: string
   setCity: (newState: string) => void
+  district: string
   setDistrict: (newState: string) => void
+  street: string
   setStreet: (newState: string) => void
+  number: string
   setNumber: (newState: string) => void
-  setComplement: (newState: string) =>void
+  complement: string
+  setComplement: (newState: string) => void
 
   modality: string
-  unity: string
-  entryForm: string
-  yearEnem: string
-  codeEnemAndEncceja: string
-  objectiveTestGrade: string
-  redactionTestGrade: string
-  enemFile: any
-  nameCourse: string
-  selectedCourse: string
-  showModalityName: string
-  showUnityName: string
-  showCourseName: string
-  filialCourse: string
-  turnoCourse: string
-  turnoIdCourse: string
-  matrizCourse: string
-  modalidadeCourse: string
-  selectedEnrollment: string
-  idEntryForm: string
-  externConsultant: string
-  appearanceExternConsultant: boolean
-  existsExternConsultant: boolean
-
   setModality: (newState: string) => void
+  unity: string
   setUnity: (newState: string) => void
+  entryForm: string
   setEntryForm: (newState: string) => void
+  yearEnem: string
   setYearEnem: (newState: string) => void
+  codeEnemAndEncceja: string
   setCodeEnemAndEncceja: (newState: string) => void
+  objectiveTestGrade: string
   setObjectiveTestGrade: (newState: string) => void
+  redactionTestGrade: string
   setRedactionTestGrade: (newState: string) => void
+  enemFile: any
   setEnemFile: (newState: any) => void
+  nameCourse: string
   setNameCourse: (newState: string) => void
+  selectedCourse: string
   setSelectedCourse: (newState: string) => void
+  showModalityName: string
   setShowModalityName: (newState: string) => void
+  showUnityName: string
   setShowUnityName: (newState: string) => void
+  showCourseName: string
   setShowCourseName: (newState: string) => void
+  filialCourse: string
   setFilialCourse: (newState: string) => void
-  setTurnoCourse: (newState: string) => void
-  setTurnoIdCourse: (newState: string) => void
-  setMatrizCourse: (newState: string) => void
-  setModalidadeCourse: (newState: string) => void
-  setSelectedEnrollment: (newState: string) => void
-  setIdEntryForm: (newState: string) => void
-  setExternConsultant: (newState: string) => void
-  setAppearanceExternConsultant: (newState: boolean) => void
-  setExistsExternConsultant: (newState: boolean) => void
+  courseShift: string
+  setCourseShift: (newState: string) => void
+  courseIdShift: string
+  setCourseIdShift: (newState: string) => void
+  courseMatrix: string
+  setCourseMatrix: (newState: string) => void
+  courseModality: string
+  setCourseModality: (newState: string) => void
+  selectedEntranceExam: string
+  setSelectedEntranceExam: (newState: string) => void
+  entryFormId: string
+  setEntryFormId: (newState: string) => void
+  externalConsultant: string
+  setExternalConsultant: (newState: string) => void
+  switchShowExternalConsultant: boolean
+  setSwitchShowExternalConsultant: (newState: boolean) => void
 
-  displayStep1: (newState: void) => void 
-  displayStep2: (newState: void) => void 
-  displayStep3: (newState: void) => void 
+  displayStep1: (newState: void) => void
+  displayStep2: (newState: void) => void
+  displayStep3: (newState: void) => void
   displayStep4: (newState: void) => void
   displayStep5: (newState: void) => void
   displayStep6: (newState: void) => void
   displayStep7: (newState: void) => void
 
-  stepOneVisible: boolean,
-  stepTwoVisible: boolean,
-  stepThreeVisible: boolean,
-  stepFourVisible: boolean,
-  stepFiveVisible: boolean,
-  stepSixVisible: boolean,
-  stepSevenVisible: boolean,
+  stepOneVisible: boolean
+  stepTwoVisible: boolean
+  stepThreeVisible: boolean
+  stepFourVisible: boolean
+  stepFiveVisible: boolean
+  stepSixVisible: boolean
+  stepSevenVisible: boolean
 }
 
-const initialValues = {
-  listOffer: "",
-  listConsulters: "",
-
-  name: "",
-  socialName: "",
-  visibleSocialName: false,
-  email: "",
-  phone: "",
-  appearanceSocialName: false,
-
-  setListOffer: () => {},
-  setListConsulters: () => {},
-  
-  setName: () => {},
-  setSocialName: () => {},
-  setVisibleSocialName: () => {},
-  setemail: () => {},
-  setphone: () => {},
-  setAppearanceSocialName: () => {},
-
-  cpf: "",
-  birthDate: new Date('2000-01-01'),
-  gender: "",
-  deficiency: "",
-  invisibleErrorCpf: true,
-  appearanceDeficiency: false,
-  appearanceSwitchDeficiency: true,
-  providence: "",
-
-  setCpf: () => {},
-  setBirthDate: () => {},
-  setGender: () => {},
-  setDeficiency: () => {},
-  setInvisibleErrorCpf: () => {},
-  setAppearanceDeficiency: () => {},
-  setAppearanceSwitchDeficiency: () => {},
-  setProvidence: () => {},
-
-  cep: "",
-  state: "",
-  city: "",
-  district: "",
-  street: "",
-  number: "",
-  complement: "",
-
-  setCep: () => {},
-  setState: () => {},
-  setCity: () => {},
-  setDistrict: () => {},
-  setStreet: () => {},
-  setNumber: () => {},
-  setComplement: () => {},
-
-  modality: "",
-  unity: "",
-  entryForm: "",
-  yearEnem: null,
-  codeEnemAndEncceja: null,
-  objectiveTestGrade: null,
-  redactionTestGrade: null,
-  enemFile: null,
-  nameCourse: "",
-  selectedCourse: "",
-  showModalityName: "",
-  showUnityName: "",
-  showCourseName: "",
-  filialCourse: "",
-  turnoCourse: "",
-  turnoIdCourse: "",
-  matrizCourse: "",
-  modalidadeCourse: "",
-  selectedEnrollment: "",
-  idEntryForm: "",
-  externConsultant: "",
-  appearanceExternConsultant: false,
-  existsExternConsultant: false,
-
-  setModality: () => {},
-  setUnity: () => {},
-  setEntryForm: () => {},
-  setYearEnem: () => {},
-  setCodeEnemAndEncceja: () => {},
-  setObjectiveTestGrade: () => {},
-  setRedactionTestGrade: () => {},
-  setEnemFile: () => {},
-  setNameCourse: () => {},
-  setSelectedCourse: () => {},
-  setShowModalityName: () => {},
-  setShowUnityName: () => {},
-  setShowCourseName: () => {},
-  setFilialCourse: () => {},
-  setTurnoCourse: () => {},
-  setTurnoIdCourse: () => {},
-  setMatrizCourse: () => {},
-  setModalidadeCourse: () => {},
-  setSelectedEnrollment: () => {},
-  setIdEntryForm: () => {},
-  setExternConsultant: () => {},
-  setAppearanceExternConsultant: () => {},
-  setExistsExternConsultant: () => {},
-
-  displayStep1: () => {},
-  displayStep2: () => {},
-  displayStep3: () => {},
-  displayStep4: () => {},
-  displayStep5: () => {},
-  displayStep6: () => {},
-  displayStep7: () => {},
-
-  stepOneVisible: false,
-  stepTwoVisible: false,
-  stepThreeVisible: false,
-  stepFourVisible: false,
-  stepFiveVisible: false,
-  stepSixVisible: false,
-  stepSevenVisible: false,
-}
-
-export const RegistrationContext = createContext<UserContextType>(initialValues)
+export const RegistrationContext = createContext<UserContextType>({} as UserContextType)
 
 export const RegistrationContextProvider = ({ children }: RegistrationContextProps) => {
+  const [offerList, setOfferList] = useState("")
+  const [consultantsOptionsList, setConsultantsOptionsList] = useState("")
 
-  const [listOffer, setListOffer] = useState(initialValues.listOffer)
-  const [listConsulters, setListConsulters] = useState(initialValues.listConsulters)
+  const [name, setName] = useState("")
+  const [socialName, setSocialName] = useState("")
+  const [email, setEmail] = useState("")
+  const [phone, setPhone] = useState("")
+  const [switchShowSocialName, setSwitchShowSocialName] = useState(false)
 
-  const [name, setName] = useState(initialValues.name)
-  const [socialName, setSocialName] = useState(initialValues.socialName)
-  const [visibleSocialName, setVisibleSocialName] = useState(initialValues.visibleSocialName)
-  const [email, setemail] = useState(initialValues.email)
-  const [phone, setphone] = useState(initialValues.phone)
-  const [appearanceSocialName, setAppearanceSocialName] = useState(initialValues.appearanceSocialName)
+  const [CPF, setCPF] = useState("")
+  const [birthDate, setBirthDate] = useState(new Date("2000-01-01"))
+  const [gender, setGender] = useState("")
+  const [switchShowDeficiency, setSwitchShowDeficiency] = useState(false)
+  const [disabilityRelief, setDisabilityRelief] = useState("")
 
-  const [cpf, setCpf] = useState(initialValues.cpf)
-  const [birthDate, setBirthDate] = useState(initialValues.birthDate)
-  const [gender, setGender] = useState(initialValues.gender)
-  const [deficiency, setDeficiency] = useState(initialValues.deficiency)
-  const [invisibleErrorCpf, setInvisibleErrorCpf] = useState(initialValues.invisibleErrorCpf)
-  const [appearanceDeficiency, setAppearanceDeficiency] = useState(initialValues.appearanceDeficiency)
-  const [appearanceSwitchDeficiency, setAppearanceSwitchDeficiency] = useState(initialValues.appearanceSwitchDeficiency)
-  const [providence, setProvidence] = useState(initialValues.providence)
+  const [cep, setCep] = useState("")
+  const [state, setState] = useState("")
+  const [city, setCity] = useState("")
+  const [district, setDistrict] = useState("")
+  const [street, setStreet] = useState("")
+  const [number, setNumber] = useState("")
+  const [complement, setComplement] = useState("")
 
-  const [cep, setCep] = useState(initialValues.cep)
-  const [state, setState] = useState(initialValues.state)
-  const [city, setCity] = useState(initialValues.city)
-  const [district, setDistrict] = useState(initialValues.district)
-  const [street, setStreet] = useState(initialValues.street)
-  const [number, setNumber] = useState(initialValues.number)
-  const [complement, setComplement] = useState(initialValues.number)
+  const [modality, setModality] = useState("")
+  const [unity, setUnity] = useState("")
+  const [entryForm, setEntryForm] = useState("")
+  const [yearEnem, setYearEnem] = useState(null)
+  const [codeEnemAndEncceja, setCodeEnemAndEncceja] = useState(null)
+  const [objectiveTestGrade, setObjectiveTestGrade] = useState(null)
+  const [redactionTestGrade, setRedactionTestGrade] = useState(null)
+  const [enemFile, setEnemFile] = useState(null)
+  const [nameCourse, setNameCourse] = useState("")
+  const [selectedCourse, setSelectedCourse] = useState("")
+  const [showModalityName, setShowModalityName] = useState("")
+  const [showUnityName, setShowUnityName] = useState("")
+  const [showCourseName, setShowCourseName] = useState("")
+  const [filialCourse, setFilialCourse] = useState("")
+  const [courseShift, setCourseShift] = useState("")
+  const [courseIdShift, setCourseIdShift] = useState("")
+  const [courseMatrix, setCourseMatrix] = useState("")
+  const [courseModality, setCourseModality] = useState("")
+  const [selectedEntranceExam, setSelectedEntranceExam] = useState("")
+  const [entryFormId, setEntryFormId] = useState("")
+  const [externalConsultant, setExternalConsultant] = useState("")
+  const [switchShowExternalConsultant, setSwitchShowExternalConsultant] = useState(false)
 
-  const [modality, setModality] = useState(initialValues.modality)
-  const [unity, setUnity] = useState(initialValues.unity)
-  const [entryForm, setEntryForm] = useState(initialValues.entryForm)
-  const [yearEnem, setYearEnem] = useState(initialValues.yearEnem)
-  const [codeEnemAndEncceja, setCodeEnemAndEncceja] = useState(initialValues.codeEnemAndEncceja)
-  const [objectiveTestGrade, setObjectiveTestGrade] = useState(initialValues.objectiveTestGrade)
-  const [redactionTestGrade, setRedactionTestGrade] = useState(initialValues.redactionTestGrade)
-  const [enemFile, setEnemFile] = useState(initialValues.enemFile)
-  const [nameCourse, setNameCourse] = useState(initialValues.nameCourse)
-  const [selectedCourse, setSelectedCourse] = useState(initialValues.selectedCourse)
-  const [showModalityName, setShowModalityName] = useState(initialValues.showModalityName)
-  const [showUnityName, setShowUnityName] = useState(initialValues.showUnityName)
-  const [showCourseName, setShowCourseName] = useState(initialValues.showCourseName)
-  const [filialCourse, setFilialCourse] = useState(initialValues.filialCourse)
-  const [turnoCourse, setTurnoCourse] = useState(initialValues.turnoCourse)
-  const [turnoIdCourse, setTurnoIdCourse] = useState(initialValues.turnoIdCourse)
-  const [matrizCourse, setMatrizCourse] = useState(initialValues.matrizCourse)
-  const [modalidadeCourse, setModalidadeCourse] = useState(initialValues.modalidadeCourse)
-  const [selectedEnrollment, setSelectedEnrollment] = useState(initialValues.selectedEnrollment)
-  const [idEntryForm, setIdEntryForm] = useState(initialValues.idEntryForm)
-  const [externConsultant, setExternConsultant] = useState(initialValues.externConsultant) 
-  const [appearanceExternConsultant, setAppearanceExternConsultant] = useState(initialValues.appearanceExternConsultant) 
-  const [existsExternConsultant, setExistsExternConsultant] = useState(initialValues.existsExternConsultant) 
+  const [visible, setVisible] = useState<
+    "step1" | "step2" | "step3" | "step4" | "step5" | "step6" | "step7"
+  >("step1")
 
-  const [visible, setVisible] = useState<'step1' | 'step2' | 'step3' | 'step4' | 'step5' | 'step6' | 'step7'>('step1')
+  const displayStep1 = () => setVisible("step1")
+  const displayStep2 = () => setVisible("step2")
+  const displayStep3 = () => setVisible("step3")
+  const displayStep4 = () => setVisible("step4")
+  const displayStep5 = () => setVisible("step5")
+  const displayStep6 = () => setVisible("step6")
+  const displayStep7 = () => setVisible("step7")
 
-  const displayStep1 = () => setVisible('step1')
-  const displayStep2 = () => setVisible('step2')
-  const displayStep3 = () => setVisible('step3')
-  const displayStep4 = () => setVisible('step4')
-  const displayStep5 = () => setVisible('step5')
-  const displayStep6 = () => setVisible('step6')
-  const displayStep7 = () => setVisible('step7')
+  return (
+    <RegistrationContext.Provider
+      value={{
+        offerList,
+        setOfferList,
+        consultantsOptionsList,
+        setConsultantsOptionsList,
 
-  return(
-    <RegistrationContext.Provider value={{
-      listOffer,
-      listConsulters,
+        name,
+        setName,
+        socialName,
+        setSocialName,
+        email,
+        setEmail,
+        phone,
+        setPhone,
+        switchShowSocialName,
+        setSwitchShowSocialName,
 
-      name,
-      socialName,
-      visibleSocialName,
-      email,
-      phone,
-      appearanceSocialName,
+        CPF,
+        setCPF,
+        birthDate,
+        setBirthDate,
+        gender,
+        setGender,
+        switchShowDeficiency,
+        setSwitchShowDeficiency,
+        disabilityRelief,
+        setDisabilityRelief,
 
-      setListOffer,
-      setListConsulters,
-      setName,
-      setSocialName,
-      setVisibleSocialName,
-      setemail,
-      setphone,
-      setAppearanceSocialName,
+        cep,
+        setCep,
+        state,
+        setState,
+        city,
+        setCity,
+        district,
+        setDistrict,
+        street,
+        setStreet,
+        number,
+        setNumber,
+        complement,
+        setComplement,
 
-      cpf,
-      birthDate,
-      gender,
-      deficiency,
-      appearanceDeficiency,
-      appearanceSwitchDeficiency,
-      providence,
+        modality,
+        setModality,
+        unity,
+        setUnity,
+        entryForm,
+        setEntryForm,
+        yearEnem,
+        setYearEnem,
+        codeEnemAndEncceja,
+        setCodeEnemAndEncceja,
+        objectiveTestGrade,
+        setObjectiveTestGrade,
+        redactionTestGrade,
+        setRedactionTestGrade,
+        enemFile,
+        setEnemFile,
+        nameCourse,
+        setNameCourse,
+        filialCourse,
+        setFilialCourse,
+        courseShift,
+        setCourseShift,
+        courseIdShift,
+        setCourseIdShift,
+        courseMatrix,
+        setCourseMatrix,
+        courseModality,
+        setCourseModality,
+        selectedCourse,
+        setSelectedCourse,
+        selectedEntranceExam,
+        setSelectedEntranceExam,
+        entryFormId,
+        setEntryFormId,
+        showModalityName,
+        setShowModalityName,
+        showUnityName,
+        setShowUnityName,
+        showCourseName,
+        setShowCourseName,
+        externalConsultant,
+        setExternalConsultant,
+        switchShowExternalConsultant,
+        setSwitchShowExternalConsultant,
 
-      setCpf,
-      setBirthDate,
-      setGender,
-      setDeficiency,
-      setAppearanceDeficiency,
-      setAppearanceSwitchDeficiency,
-      setProvidence,
-      
-      cep,
-      state,
-      city,
-      district,
-      street,
-      number,
-      complement,
-      invisibleErrorCpf,
+        displayStep1,
+        displayStep2,
+        displayStep3,
+        displayStep4,
+        displayStep5,
+        displayStep6,
+        displayStep7,
 
-      setCep,
-      setState,
-      setCity,
-      setDistrict,
-      setStreet,
-      setNumber,
-      setComplement,
-      setInvisibleErrorCpf,
-
-      modality,
-      unity,
-      entryForm,
-      yearEnem,
-      codeEnemAndEncceja,
-      objectiveTestGrade,
-      redactionTestGrade,
-      enemFile,
-      nameCourse,
-      filialCourse,
-      turnoCourse,
-      turnoIdCourse,
-      matrizCourse,
-      modalidadeCourse,
-      selectedEnrollment,
-      idEntryForm,
-      selectedCourse,
-      showModalityName,
-      showUnityName,
-      showCourseName,
-      externConsultant,
-      appearanceExternConsultant,
-      existsExternConsultant,
-    
-      setModality,
-      setUnity,
-      setEntryForm,
-      setYearEnem,
-      setCodeEnemAndEncceja,
-      setObjectiveTestGrade,
-      setRedactionTestGrade,
-      setEnemFile,
-      setNameCourse,
-      setSelectedCourse,
-      setShowModalityName,
-      setShowUnityName,
-      setShowCourseName,
-      setFilialCourse,
-      setTurnoCourse,
-      setTurnoIdCourse,
-      setMatrizCourse,
-      setModalidadeCourse,
-      setSelectedEnrollment,
-      setIdEntryForm,
-      setExternConsultant,
-      setAppearanceExternConsultant,
-      setExistsExternConsultant,
-
-      displayStep1,
-      displayStep2,
-      displayStep3,
-      displayStep4,
-      displayStep5,
-      displayStep6,
-      displayStep7,
-      
-      stepOneVisible: visible === 'step1',
-      stepTwoVisible: visible === 'step2',
-      stepThreeVisible: visible === 'step3',
-      stepFourVisible: visible === 'step4',
-      stepFiveVisible: visible === 'step5',
-      stepSixVisible: visible === 'step6',
-      stepSevenVisible: visible === 'step7'
-
-    }}>
+        stepOneVisible: visible === "step1",
+        stepTwoVisible: visible === "step2",
+        stepThreeVisible: visible === "step3",
+        stepFourVisible: visible === "step4",
+        stepFiveVisible: visible === "step5",
+        stepSixVisible: visible === "step6",
+        stepSevenVisible: visible === "step7"
+      }}
+    >
       {children}
     </RegistrationContext.Provider>
   )

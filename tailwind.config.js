@@ -1,4 +1,6 @@
-module.exports = {
+const withMT = require("@material-tailwind/react/utils/withMT")
+
+module.exports = withMT({
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx}",
     "./src/components/**/*.{js,ts,jsx,tsx}",
@@ -6,10 +8,7 @@ module.exports = {
     "./node_modules/tw-elements/dist/js/**/*.js"
   ],
   theme: {
-    extend: {},
+    extend: {}
   },
-  plugins: [
-    require('tw-elements/dist/plugin'),
-    require("daisyui"),
-  ],
-}
+  plugins: [require("tw-elements/dist/plugin"), require("daisyui")]
+})

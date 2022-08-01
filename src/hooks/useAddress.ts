@@ -2,16 +2,16 @@ import { useContext, useState } from "react"
 import { RegistrationContext } from "../contexts/RegistrationContext"
 import Address from "../core/Address"
 
-export default function useAddress () {
+export default function useAddress() {
   const { displayStep2, displayStep4 } = useContext(RegistrationContext)
-  
+
   const [address, setAddress] = useState<Address>(Address.createVoid())
 
-  function saveAddress (address: Address) {
+  function saveAddress(address: Address) {
     displayStep4()
   }
 
-  function backStepTwo () {
+  function backStepTwo() {
     displayStep2()
   }
 

@@ -10,19 +10,18 @@ export default class Lead {
   }
 
   static createVoid() {
-    return new Lead ('','','')
+    return new Lead("", "", "")
   }
 
-  get name () {
+  get name() {
     return this.#name
   }
 
-  get email () {
+  get email() {
     return this.#email
   }
 
-  get phone () {
+  get phone() {
     return this.#phone
   }
- 
 }

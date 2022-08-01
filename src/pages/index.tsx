@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React, { Fragment, useContext } from "react"
 import Form from "../components/Form"
 import FormCourse from "../components/FormCourse"
 import FormPersonalData from "../components/FormPersonalData"
@@ -11,13 +11,13 @@ import useCourseResume from "../hooks/useCourseResume"
 import FormAddress from "../components/FormAddress"
 import FormResume from "../components/FormCourseResume"
 import Steps from "../components/Steps"
-import { Helmet } from "react-helmet"
+import { Helmet, HelmetProvider } from "react-helmet-async"
 
-import Script from 'next/script'
+import Script from "next/script"
 import FormCongratulations from "../components/FormCongralutations"
 import useCongratulations from "../hooks/useCongratulations"
 
-export default function Home() { 
+export default function Home() {
   const { lead, saveLead } = useLeads()
   const { personalData, savePersonalData, backStepOne } = usePersonalData()
   const { address, saveAddress, backStepTwo } = useAddress()
@@ -25,13 +25,22 @@ export default function Home() {
   const { nextStepSix, backStepFour } = useCourseResume()
   const { nextStepSeven, backStepFive } = useCongratulations()
 
-  const { stepOneVisible, stepTwoVisible, stepThreeVisible, stepFourVisible, stepFiveVisible, stepSixVisible } = useContext(RegistrationContext)
+  const {
+    stepOneVisible,
+    stepTwoVisible,
+    stepThreeVisible,
+    stepFourVisible,
+    stepFiveVisible,
+    stepSixVisible
+  } = useContext(RegistrationContext)
   return (
-    <>
+    <Fragment>
       <div>
-        <Helmet>
-          <title>Inscrição</title>
-        </Helmet>
+        <HelmetProvider>
+          <Helmet>
+            <title>Inscrição</title>
+          </Helmet>
+        </HelmetProvider>
       </div>
 
       <Script id="google-analytics" strategy="afterInteractive">
@@ -45,101 +54,57 @@ export default function Home() {
       </Script>
 
       <div hidden>
-          <noscript>
-            <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KMHNNNP" height="0" width="0" ></iframe>
-          </noscript>
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-KMHNNNP"
+            height="0"
+            width="0"
+          ></iframe>
+        </noscript>
       </div>
 
       {stepOneVisible ? (
-
+        <Steps form={<Form lead={lead} leadChange={saveLead} />} invisible={"hidden"} />
+      ) : stepTwoVisible ? (
         <Steps
           form={
-            <Form
-              lead={lead}
-              leadChange={saveLead}
-              />
-            }
-            invisible={"hidden"}
-        />
-      )
-        :
-        (
-          stepTwoVisible ? (
-            <Steps
-              form={
-                <FormPersonalData
-                  personalData={personalData}
-                  personalDataChange={savePersonalData}
-                  backPage={backStepOne}
-                />
-              }
+            <FormPersonalData
+              personalData={personalData}
+              personalDataChange={savePersonalData}
+              backPage={backStepOne}
             />
-          )
-            :
-            (
-              stepThreeVisible ? (
-                <Steps
-                  form={
-                    <FormAddress
-                      address={address}
-                      addressChange={saveAddress}
-                      backPage={backStepTwo}
-                    />
-                  }
-                  classNameStep2={"step-primary"}
-                />
-              )
-                :
-                (
-                  stepFourVisible ? (
-                    <Steps
-                      form={
-                        <FormCourse
-                          course={course}
-                          courseChange={nextStepFive}
-                          backPage={backStepThree}
-                        />
-                      }
-                      classNameStep2={"step-primary"}
-                      classNameStep3={"step-primary"}
-                    />
-                  )
-                    :
-                    (
-                      stepFiveVisible ? (
-                        <Steps
-                        form={
-                        <FormResume
-                          courseResumeChange={nextStepSix}
-                          backPage={backStepFour}
-                        />
-                        }
-                        classNameStep2={"step-primary"}
-                        classNameStep3={"step-primary"}
-                        classNameStep4={"step-primary"}
-                      />
-                      )
-                        : (
-                          stepSixVisible ? (
-                            <Steps
-                            form={
-                            <FormCongratulations
-                              congratulationsChange={nextStepSeven}
-                              backPage={backStepFive}
-                            />
-                            }
-                            classNameStep2={"step-primary"}
-                            classNameStep3={"step-primary"}
-                            classNameStep4={"step-primary"}
-                          />
-                          )
-                          : null
-                        )
-                    )
-                )
-            )
-        )}
-    </>
+          }
+        />
+      ) : stepThreeVisible ? (
+        <Steps
+          form={
+            <FormAddress address={address} addressChange={saveAddress} backPage={backStepTwo} />
+          }
+          classNameStep2={"step-primary"}
+        />
+      ) : stepFourVisible ? (
+        <Steps
+          form={<FormCourse course={course} courseChange={nextStepFive} backPage={backStepThree} />}
+          classNameStep2={"step-primary"}
+          classNameStep3={"step-primary"}
+        />
+      ) : stepFiveVisible ? (
+        <Steps
+          form={<FormResume courseResumeChange={nextStepSix} backPage={backStepFour} />}
+          classNameStep2={"step-primary"}
+          classNameStep3={"step-primary"}
+          classNameStep4={"step-primary"}
+        />
+      ) : stepSixVisible ? (
+        <Steps
+          form={
+            <FormCongratulations congratulationsChange={nextStepSeven} backPage={backStepFive} />
+          }
+          classNameStep2={"step-primary"}
+          classNameStep3={"step-primary"}
+          classNameStep4={"step-primary"}
+        />
+      ) : null}
+    </Fragment>
   )
 }
-

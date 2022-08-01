@@ -1,33 +1,25 @@
 interface SelectProps {
-    name?: string
-    textLabel?: string
-    forLabel?: string
-    classNameLabel?: string
-    idSelect?: string
-    classNameSelect?: string
-    onChange?: (valueInput: any) => void
-    children: any
-    onClick?: (valueInput: any) => void
-    defaultValue?: string
-    value?: string
-    required?: boolean
-  }
-  
-export default function Select (props: SelectProps) {
+  textLabel?: string
+  idSelect?: string
+  value?: string
+  children: any
+  required?: boolean
+  onChange?: (valueInput: any) => void
+  onClick?: (valueInput: any) => void
+}
+
+export default function Select(props: SelectProps) {
   return (
-    <div className="flex flex-col mb-2 text-gray-700">
-      <label className={`mb-2 font-light text-sm ${props.classNameLabel}`} htmlFor={props.idSelect}>
-        {props.textLabel}
-      </label>
+    <div className="flex flex-col mb-2 text-grey-700">
+      <label className="mb-2 font-light text-sm">{props.textLabel}</label>
       <select
-        id = {props.idSelect}
-        className = {`xl:w-[480px] h-10 mb-2 border border-gray-300 rounded-2xl focus:outline-none bg-gray-50 px-4 py-2 focus:bg-white ${props.classNameSelect}`}
-        onChange = { props.onChange }
-        onClick = { props.onClick }
-        children = {props.children}
-        defaultValue = {props.defaultValue}
-        value={ props.value }
-        required={ props.required }
+        className="xl:min-w-[480px] max-w-[480px] h-10 mb-2 border border-grey-300 rounded-2xl focus:outline-none bg-grey-50 px-4 py-2 focus:bg-white"
+        id={props.idSelect}
+        value={props.value}
+        onChange={props.onChange}
+        onClick={props.onClick}
+        required={props.required}
+        children={props.children}
       />
     </div>
   )
