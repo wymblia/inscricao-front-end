@@ -102,6 +102,7 @@ export default function FormPersonalData(props: PersonalDataProps) {
               id="socialName"
               color="blue"
               label="Sou portador de necessidades especiais"
+              labelProps={ {className:"dark:text-grey-50 font-light, select-none, cursor-pointer, mt-px, ml-3"} }
               defaultChecked={switchShowDeficiency}
               onChange={() => (
                 setSwitchShowDeficiency(!switchShowDeficiency), setDisabilityRelief("")

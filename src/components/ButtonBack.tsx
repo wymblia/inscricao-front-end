@@ -6,7 +6,7 @@ interface ButtonBackProps {
 export default function Button(props: ButtonBackProps) {
   return (
     <button
-      className="max-w-screen-sm bg-grey-400 shadow-md shadow-grey-300 text-white font-medium rounded-2xl p-3"
+      className="max-w-screen-sm bg-grey-400 shadow-md shadow-grey-300 dark:shadow-grey-900 text-white font-medium rounded-2xl p-3"
       onClick={props.onClick}
     >
       {props.children}
