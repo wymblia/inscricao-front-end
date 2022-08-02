@@ -23,6 +23,6 @@ deploy_staging:
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
   script:
-  - ssh -o StrictHostKeyChecking=no root@172.16.0.202 "cd /var/www/vestibular-form-registration && git checkout master && git pull origin master && npm install && npm run build && pm2 restart vestibular-form-registration && exit"
+  - ssh -o StrictHostKeyChecking=no root@172.16.0.202 "cd /var/www/vestibular-form-registration && git checkout master && git pull origin master && npm ci && npm run build && pm2 restart vestibular-form-registration && exit"
   only:
     - tags
