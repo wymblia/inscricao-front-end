@@ -225,7 +225,7 @@ export default function Form(props: FormProps) {
         </div>
 
         <div className="flex flex-col mt-12">
-          <ButtonNext type="submit">Próximo</ButtonNext>
+          <ButtonNext type="submit">Próximo</ButtonNext> 
         </div>
       </form>
     </Fragment>
