@@ -21,8 +21,8 @@ export default function Steps(props: StepsProps) {
   } = useContext(RegistrationContext)
 
   return (
-    <div id="container" className="flex m-2 md:m-0">
-      <div id="main" className="flex flex-col xl:flex-row flex-grow">
+    <div id="container" className="flex m-2 md:m-0 dark">
+      <div id="main" className="flex flex-col xl:flex-row flex-grow dark:bg-grey-800">
         <div className="flex-grow md:max-w-[50%]">
           <div className="h-60 bg-[url('https://www.ftec.com.br/static/media/uploads/NEW_VESTIBULAR/vestibular-mobile1.png')] block xl:hidden bg-cover bg-center md:w-screen" />
           <div className="xl:h-screen bg-[url('https://www.ftec.com.br/static/media/uploads/NEW_VESTIBULAR/vestibular11.png')] hidden xl:block bg-cover bg-center" />

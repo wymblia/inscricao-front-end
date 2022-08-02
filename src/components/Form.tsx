@@ -9,6 +9,7 @@ import { api } from "../services/api"
 import { Switch } from "@material-tailwind/react"
 import validator from "validator"
 import ButtonNext from "./ButtonNext"
+import { propTypesClassName } from "@material-tailwind/react/types/components/accordion"
 
 interface FormProps {
   lead: Lead
@@ -177,6 +178,7 @@ export default function Form(props: FormProps) {
         <div className="flex justify-start text-sm mb-2 ml-2 w-max gap-4">
           <Switch
             label="Utilizar um nome social"
+            labelProps={ {className:"dark:text-grey-50 font-light, select-none, cursor-pointer, mt-px, ml-3"} }
             id="socialName"
             color="blue"
             defaultChecked={switchShowSocialName}
@@ -198,6 +200,7 @@ export default function Form(props: FormProps) {
         <div className="flex ustify-start text-sm mb-2 ml-2 w-max gap-4">
           <Switch
             label="Tive ajuda de um consultor externo"
+            labelProps={ {className:"dark:text-grey-50 font-light, select-none, cursor-pointer, mt-px, ml-3"} }
             id="externalConsultant"
             color="blue"
             defaultChecked={switchShowExternalConsultant}

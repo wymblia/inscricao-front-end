@@ -192,19 +192,19 @@ export default function FormCourseResume(props: CourseResumeProps) {
     <Fragment>
       <div className="md:max-w-[450px] m-auto">
         <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-4">
-          <div className="flex justify-center font-light text-lg text-center border-2 border-grey-300 rounded-xl p-6 bg-grey-100 text-grey-700">
+          <div className="flex justify-center font-light text-lg text-center border-2 border-grey-300 dark:border-grey-500 rounded-xl p-6 bg-grey-100 dark:bg-grey-700 text-grey-700 dark:text-grey-50">
             <p>
-              <FiMonitor className="m-auto text-4xl mb-3 text-grey-700" />
+              <FiMonitor className="m-auto text-4xl mb-3" />
               {selectedCourse ? showCourseName : "Volte e selecione um curso!"}
             </p>
           </div>
-          <div className="flex justify-center font-light text-lg text-center border-2 border-grey-300 rounded-xl p-6 bg-grey-100 text-grey-700">
+          <div className="flex justify-center font-light text-lg text-center border-2 border-grey-300 dark:border-grey-500 rounded-xl p-6 bg-grey-100 dark:bg-grey-700 text-grey-700 dark:text-grey-50">
             <p>
               <BsCalendarWeek className="m-auto text-4xl mb-3" />
               {modality ? showModalityName : "Volte e selecione a modalidade!"}
             </p>
           </div>
-          <div className="flex justify-center font-light text-lg text-center border-2 border-grey-300 rounded-xl p-6 bg-grey-100 text-grey-700">
+          <div className="flex justify-center font-light text-lg text-center border-2 border-grey-300 dark:border-grey-500 rounded-xl p-6 bg-grey-100 dark:bg-grey-700 text-grey-700 dark:text-grey-50">
             <p>
               <FiClock className="m-auto text-4xl mb-3" />
               {unity ? unity : "Volte e selecione a unidade!"}
