@@ -20,7 +20,7 @@ export default function Input(props: InputProps) {
       </label>
       {props.existsMask ? (
         <InputMask
-          className="xl:w-[480px] h-10 mb-2 border border-grey-300 dark:border-grey-500 rounded-2xl focus:outline-none bg-grey-50 dark:bg-grey-700  px-4 py-2 focus:bg-white text-grey-700 dark:text-grey-50 focus:border-blue-500 dark:focus:bg-grey-600"
+          className="w-[480px] h-10 mb-2 border border-grey-300 dark:border-grey-500 rounded-2xl focus:outline-none bg-grey-50 dark:bg-grey-700  px-4 py-2 focus:bg-white text-grey-700 dark:text-grey-50 focus:border-blue-500 dark:focus:bg-grey-600"
           id={props.idInput}
           type={props.typeInput}
           value={props.valueInput}
@@ -31,7 +31,7 @@ export default function Input(props: InputProps) {
         />
       ) : (
         <input
-          className="xl:w-[480px] h-10 mb-2 border border-grey-300 dark:border-grey-500 rounded-2xl focus:outline-none bg-grey-50 dark:bg-grey-700  px-4 py-2 focus:bg-white text-grey-700 dark:text-grey-50 focus:border-blue-500 dark:focus:bg-grey-600"
+          className="w-[480px] h-10 mb-2 border border-grey-300 dark:border-grey-500 rounded-2xl focus:outline-none bg-grey-50 dark:bg-grey-700  px-4 py-2 focus:bg-white text-grey-700 dark:text-grey-50 focus:border-blue-500 dark:focus:bg-grey-600"
           id={props.idInput}
           type={props.typeInput}
           value={props.valueInput}
