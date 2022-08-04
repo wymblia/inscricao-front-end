@@ -10,6 +10,7 @@ import { Switch } from "@material-tailwind/react"
 import validator from "validator"
 import ButtonNext from "./ButtonNext"
 import { propTypesClassName } from "@material-tailwind/react/types/components/accordion"
+import React from "react"
 
 interface FormProps {
   lead: Lead
@@ -49,7 +50,9 @@ export default function Form(props: FormProps) {
     setConsultantsOptionsList
   } = useContext(RegistrationContext)
 
-  const [consultantsOptions, setConsultantsOptions] = useState([])
+  // const [consultantsOptions, setConsultantsOptions] = useState([])
+  const [consultantsOptions, setConsultantsOptions] = React.useState<any[]>([])
+
 
   const router = useRouter()
   //Somente se tiver completeName na rota, setar com o que vem da rota
@@ -111,28 +114,25 @@ export default function Form(props: FormProps) {
     }
   }
 
-  function getConsultants() {
-    api.get("/get-consulters", {}).then((response) => {
-      setConsultantsOptionsList(response.data)
-    })
-    fillConsultantsOptions()
-  }
-
   function fillConsultantsOptions() {
-    consultantsOptionsList
-      ? consultantsOptionsList.forEach((consulter) => {
-          consultantsOptions.push({
-            idConsultor: consulter.usuarioid,
-            nomeConsultor: consulter.nome_completo
-          })
-        })
-      : null
-    return consultantsOptions
+    console.log(consultantsOptionsList)
+    consultantsOptionsList.map((consultant) => {
+      setConsultantsOptions((consultantsOptions) => [
+        ...consultantsOptions,
+        {
+          idConsultor: consultant.usuarioid,
+          nomeConsultor: consultant.nome_completo
+        }
+      ])
+    })
   }
 
   useEffect(() => {
-    getConsultants()
-  }, [switchShowExternalConsultant])
+    api.get("/get-consulters", {}).then((response) => {
+      setConsultantsOptionsList(response.data)
+      console.log(consultantsOptionsList)
+    })
+  }, [])
 
   function FormSubmit(e: any) {
     e.preventDefault()
@@ -204,6 +204,7 @@ export default function Form(props: FormProps) {
             id="externalConsultant"
             color="blue"
             defaultChecked={switchShowExternalConsultant}
+            onClick={fillConsultantsOptions}
             onChange={() => (
               setSwitchShowExternalConsultant(!switchShowExternalConsultant),
               setExternalConsultant("")
