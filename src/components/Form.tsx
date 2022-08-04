@@ -115,7 +115,6 @@ export default function Form(props: FormProps) {
   }
 
   function fillConsultantsOptions() {
-    console.log(consultantsOptionsList)
     consultantsOptionsList.map((consultant) => {
       setConsultantsOptions((consultantsOptions) => [
         ...consultantsOptions,
@@ -130,7 +129,6 @@ export default function Form(props: FormProps) {
   useEffect(() => {
     api.get("/get-consulters", {}).then((response) => {
       setConsultantsOptionsList(response.data)
-      console.log(consultantsOptionsList)
     })
   }, [])
 
