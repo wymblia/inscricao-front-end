@@ -50,9 +50,7 @@ export default function Form(props: FormProps) {
     setConsultantsOptionsList
   } = useContext(RegistrationContext)
 
-  // const [consultantsOptions, setConsultantsOptions] = useState([])
-  const [consultantsOptions, setConsultantsOptions] = React.useState<any[]>([])
-
+  const [consultantsOptions, setConsultantsOptions] = useState([])
 
   const router = useRouter()
   //Somente se tiver completeName na rota, setar com o que vem da rota
