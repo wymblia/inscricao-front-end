@@ -2,13 +2,13 @@ import React, { useContext, useState } from "react"
 import { RegistrationContext } from "../contexts/RegistrationContext"
 import PersonalData from "../core/PersonalData"
 import Input from "./Input"
-import Select from "./Select"
 import Textarea from "./TextArea"
 import ButtonNext from "./ButtonNext"
 import ButtonBack from "./ButtonBack"
 import Swal from "sweetalert2"
 import { cpf } from "cpf-cnpj-validator"
 import { Switch } from "@material-tailwind/react"
+import Select from "./Select"
 interface PersonalDataProps {
   personalData: PersonalData
   personalDataChange?: (personalData: PersonalData) => void
@@ -26,8 +26,19 @@ export default function FormPersonalData(props: PersonalDataProps) {
     disabilityRelief,
     setDisabilityRelief,
     gender,
-    setGender
+    setGender,
   } = useContext(RegistrationContext)
+
+  const genderOptions = [
+    {
+      label: "Feminino",
+      value: "F",
+    },
+    {
+      label: "Masculino",
+      value: "M",
+    },
+  ]
 
   function handleIncompleteAndInvalidCpf() {
     if (CPF.includes("_")) {
@@ -35,7 +46,7 @@ export default function FormPersonalData(props: PersonalDataProps) {
         title: "CPF incompleto",
         text: "Digite o CPF completo!",
         confirmButtonText: "Ok",
-        icon: "warning"
+        icon: "warning",
       })
       return true
     } else {
@@ -44,7 +55,7 @@ export default function FormPersonalData(props: PersonalDataProps) {
           title: "CPF inválido",
           text: "Digite seu CPF!",
           confirmButtonText: "Ok",
-          icon: "warning"
+          icon: "warning",
         })
         setCPF("")
         return true
@@ -52,11 +63,25 @@ export default function FormPersonalData(props: PersonalDataProps) {
     }
   }
 
+  function hanldeNotFilledSelect() {
+    if (gender === null || gender === "") {
+      Swal.fire({
+        title: "Gênero não preenchido",
+        text: "Selecione o gênero!",
+        confirmButtonText: "Ok",
+        icon: "warning",
+      })
+      return true
+    }
+  }
+
   function FormSubmit(e: any) {
     e.preventDefault()
-    handleIncompleteAndInvalidCpf()
+    handleIncompleteAndInvalidCpf() || hanldeNotFilledSelect()
       ? null
-      : props.personalDataChange?.(new PersonalData(CPF, new Date(birthDate), disabilityRelief))
+      : props.personalDataChange?.(
+          new PersonalData(CPF, new Date(birthDate), disabilityRelief)
+        )
   }
 
   return (
@@ -83,18 +108,18 @@ export default function FormPersonalData(props: PersonalDataProps) {
         />
 
         <Select
-          textLabel="Gênero"
-          idSelect="gender"
-          value={gender}
-          onChange={(e) => setGender(e.target.value)}
-          required
-        >
-          <option disabled value="">
-            Selecione
-          </option>
-          <option value="M">Masculino</option>
-          <option value="F">Feminino</option>
-        </Select>
+          textLabel={"Gênero"}
+          name={gender?.value}
+          id={gender?.value}
+          key={gender?.value}
+          placeholder={gender ? gender.label : "Selecione"}
+          options={genderOptions}
+          noOptionsMessage={
+            "Desculpe! Não encontramos o que estava procurando ☹️"
+          }
+          onChange={(e) => setGender(e)}
+          isLoading={!genderOptions ? true : false}
+        />
 
         <div className="flex justify-start text-sm mb-2 ml-2">
           <div className="flex w-max gap-4">
@@ -102,10 +127,14 @@ export default function FormPersonalData(props: PersonalDataProps) {
               id="socialName"
               color="blue"
               label="Sou portador de necessidades especiais"
-              labelProps={ {className:"dark:text-grey-50 font-light, select-none, cursor-pointer, mt-px, ml-3"} }
+              labelProps={{
+                className:
+                  "dark:text-grey-50 font-light, select-none, cursor-pointer, mt-px, ml-3",
+              }}
               defaultChecked={switchShowDeficiency}
               onChange={() => (
-                setSwitchShowDeficiency(!switchShowDeficiency), setDisabilityRelief("")
+                setSwitchShowDeficiency(!switchShowDeficiency),
+                setDisabilityRelief("")
               )}
             />
           </div>
