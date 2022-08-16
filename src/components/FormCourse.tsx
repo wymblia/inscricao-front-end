@@ -9,8 +9,8 @@ import ButtonBack from "./ButtonBack"
 import ButtonModality from "./ButtonModality"
 import Input from "./Input"
 import InputFile from "./InputFile"
-import Select from "./Select"
 import ButtonNotice from "./ButtonNotice"
+import Select from "./Select"
 
 interface CourseProps {
   course: Course
@@ -48,7 +48,7 @@ export default function FormCourse(props: CourseProps) {
     setCourseIdShift,
     setCourseMatrix,
     setCourseModality,
-    setEntryFormId
+    setEntryFormId,
   } = useContext(RegistrationContext)
 
   const { offerList } = useCourse()
@@ -59,33 +59,34 @@ export default function FormCourse(props: CourseProps) {
   const [unityOptions, setUnityOptions] = useState([])
   const [listVestibular, setListVestibular] = useState([])
   const [notice, setNotice] = useState([])
+  const [entranceExamOptions, setEntranceExamOptions] = useState([])
 
   const entryFormsOptions = [
     {
       label: "Vestibular",
       value: "vestibular",
-      idFormFtec: 1
+      idFormFtec: 1,
     },
     {
       label: "Enem/Encceja",
       value: "enem-encceja",
-      idFormFtec: 2
+      idFormFtec: 2,
     },
     {
       label: "Transferência",
       value: "transferencia",
-      idFormFtec: 1
+      idFormFtec: 1,
     },
     {
       label: "Reingresso",
       value: "reingresso",
-      idFormFtec: 1
+      idFormFtec: 1,
     },
     {
       label: "Segunda Graduação",
       value: "segunda-graduacao",
-      idFormFtec: 1
-    }
+      idFormFtec: 1,
+    },
   ]
 
   function handleModality(e: any) {
@@ -105,7 +106,7 @@ export default function FormCourse(props: CourseProps) {
         ? !unityList.find((value) => value.label === unity.UNIDADE)
           ? unityList.push({
               label: unity["UNIDADE"],
-              value: unity["UNIDADE"]
+              value: unity["UNIDADE"],
             })
           : null
         : null
@@ -119,11 +120,11 @@ export default function FormCourse(props: CourseProps) {
 
   function fillCourseByModalityAndUnity() {
     offerList.forEach((course) => {
-      course.MODALIDADE === modality && course.UNIDADE === unity
+      course.MODALIDADE === modality && course.UNIDADE === unity?.value
         ? !coursesList.find((value) => value.label === course.CURSO)
           ? coursesList.push({
               label: course["CURSO"],
-              value: course["CURSO_ID"]
+              value: course["CURSO_ID"],
             })
           : null
         : null
@@ -133,68 +134,87 @@ export default function FormCourse(props: CourseProps) {
 
   useEffect(() => {
     fillCourseByModalityAndUnity()
+    setSelectedCourse("")
   }, [unity])
 
-  function handleUnity(e) {
-    setSelectedCourse("")
-    setUnity(e.target.value)
+  function fillEntranceExamByModalityAndUnity() {
+    if (entryForm?.value === "vestibular") {
+      setEntranceExamOptions(listVestibular)
+    }
+    if (
+      entryForm?.value === "transferencia" ||
+      entryForm?.value === "reingresso"
+    ) {
+      setEntranceExamOptions([])
+      listVestibular?.map((vestibular) => {
+        setListVestibular((vestibularesOptions) => [
+          ...vestibularesOptions,
+          {
+            value: vestibular.id,
+            label: vestibular.descricao,
+          },
+        ])
+      })
+      setEntranceExamOptions(
+        listVestibular.filter((value) =>
+          value.label
+            ?.normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .toLowerCase()
+            .includes("transferencia")
+        )
+      )
+    }
+    if (entryForm?.value === "enem-encceja") {
+      setEntranceExamOptions([])
+      setEntranceExamOptions(
+        listVestibular?.filter((value) => value.permitir_nota_enem === "1")
+      )
+    }
   }
+
+  useEffect(() => {
+    fillEntranceExamByModalityAndUnity()
+  }, [entryForm])
 
   function handleEntryForms(e: any) {
     setSelectedEntranceExam("")
-    setEntryForm(e.target.value)
-
-    if (e.target.value === "enem-encceja") {
-      setEntryFormId("2"),
-        setListVestibular(listVestibular.filter((value) => value.permitir_nota_enem === "1"))
+    setEntryForm(e)
+    if (entryForm.value === "enem-encceja") {
+      setEntryFormId("2")
     } else {
       setEntryFormId("1")
       setYearEnem("")
       setCodeEnemAndEncceja("")
       setObjectiveTestGrade("")
       setRedactionTestGrade("")
-      if (e.target.value === "transferencia" || e.target.value === "reingresso") {
-        setListVestibular(
-          listVestibular.filter((value) =>
-            value.descricao
-              .normalize("NFD")
-              .replace(/[\u0300-\u036f]/g, "")
-              .toLowerCase()
-              .includes("transferencia")
-          )
-        )
-      } else handleVestibular()
     }
   }
 
   function handleCourses(e: any) {
     setEntryForm("")
     setSelectedEntranceExam("")
-    setSelectedCourse(e.target.value)
-    let selectedCourse = offerList.find((value) => value.CURSO_ID === e.target.value)
-    setCourseModality(selectedCourse.MODALIDADE_DESCRICAO)
-    setFilialCourse(selectedCourse.FILIAL)
-    setCourseShift(selectedCourse.TURNO)
-    setCourseIdShift(selectedCourse.TURNO_ID)
-    setCourseMatrix(selectedCourse.MATRIZ_APLICADA)
-    setShowCourseName(selectedCourse.DESCRICAO_INSCRICAO)
+    setSelectedCourse(e)
+    let selectedCourse = offerList.find((value) => value.CURSO_ID === e?.value)
+    setCourseModality(selectedCourse?.MODALIDADE_DESCRICAO)
+    setFilialCourse(selectedCourse?.FILIAL)
+    setCourseShift(selectedCourse?.TURNO)
+    setCourseIdShift(selectedCourse?.TURNO_ID)
+    setCourseMatrix(selectedCourse?.MATRIZ_APLICADA)
+    setShowCourseName(selectedCourse?.DESCRICAO_INSCRICAO)
   }
 
   useEffect(() => {
-    handleVestibular()
+    setListVestibular([])
+    setListVestibular(
+      offerList.find((value) => value.CURSO_ID === selectedCourse?.value)
+        ?.VESTIBULARES
+    )
   }, [selectedCourse])
-
-  let vestibulares = offerList.find((value) => value.CURSO_ID === selectedCourse)
-
-  function handleVestibular() {
-    if (vestibulares) {
-      setListVestibular(vestibulares.VESTIBULARES)
-    }
-  }
 
   function setSelectedEntranceExamEnemFunction() {
     if (courseModality === "Presencial" || courseModality === "EAD") {
-      switch (unity) {
+      switch (unity.label) {
         case "Caxias do Sul":
           setSelectedEntranceExam("1448")
           break
@@ -299,7 +319,7 @@ export default function FormCourse(props: CourseProps) {
           break
       }
     } else if (courseModality === "Semi Presencial") {
-      switch (unity) {
+      switch (unity.label) {
         case "FTEC Ibgen":
           setSelectedEntranceExam("1497")
           break
@@ -336,15 +356,20 @@ export default function FormCourse(props: CourseProps) {
   }
 
   function handleSelectedEntranceExam(e: any) {
-    setNotice(vestibulares.edital)
-    entryForm != "enem-encceja"
-      ? setSelectedEntranceExam(e.target.value)
+    entryForm?.value != "enem-encceja"
+      ? setSelectedEntranceExam(e)
       : setSelectedEntranceExamEnemFunction()
+    setNotice(
+      offerList.find((value) => value.CURSO_ID === selectedCourse?.value)
+        ?.edital
+    )
   }
 
   function FormSubmit(e: any) {
     e.preventDefault()
-    props.courseChange?.(new Course(modality, unity, entryForm, yearEnem, nameCourse))
+    props.courseChange?.(
+      new Course(modality, unity, entryForm, yearEnem, nameCourse)
+    )
   }
 
   async function fileValidation(e: any) {
@@ -358,14 +383,14 @@ export default function FormCourse(props: CourseProps) {
           "Caso precise converter o seu documento, " +
           '<a target="_blank" href="//smallpdf.com/pt/conversor-de-pdf"><b>CLIQUE AQUI</b></a> ',
         confirmButtonText: "Ok",
-        icon: "info"
+        icon: "info",
       })
     } else {
       if (!e.target.files[0]) {
         Swal.fire({
           title: "Escolha um arquivo!",
           confirmButtonText: "Ok",
-          icon: "info"
+          icon: "info",
         })
       } else if (e.target.files[0].size / 1024 / 1024 <= 2) {
         const formData = new FormData()
@@ -374,8 +399,8 @@ export default function FormCourse(props: CourseProps) {
 
         await api.post("/upload-enem", formData, {
           headers: {
-            "Content-Type": "multipart/form-data"
-          }
+            "Content-Type": "multipart/form-data",
+          },
         })
       } else if (e.target.files[0].size / 1024 / 1024 > 2) {
         e.target.value = null
@@ -383,7 +408,7 @@ export default function FormCourse(props: CourseProps) {
           title: "Arquivo muito grande!",
           text: "Limite máximo de 2MB",
           confirmButtonText: "Ok",
-          icon: "info"
+          icon: "info",
         })
       }
     }
@@ -427,63 +452,73 @@ export default function FormCourse(props: CourseProps) {
           </div>
         </div>
 
-        <Select textLabel="Unidade/Polo" onChange={handleUnity} value={unity} required={true}>
-          <option disabled value="">
-            Selecione
-          </option>
-          {unityOptions.map((option, index) => (
-            <option key={index} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </Select>
-
-        <Select textLabel="Curso" onChange={handleCourses} value={selectedCourse} required={true}>
-          <option disabled value="">
-            Selecione
-          </option>
-          {coursesOptions.map((option, index) => (
-            <option key={index} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </Select>
+        <Select
+          textLabel={"Unidade/Polo"}
+          name={unity?.value}
+          id={unity?.value}
+          key={unity?.value}
+          placeholder={unity ? unity.label : "Selecione"}
+          options={unityOptions}
+          noOptionsMessage={
+            "Desculpe! Não encontramos o que estava procurando ☹️"
+          }
+          onChange={(e) => setUnity(e)}
+          isLoading={unityOptions.length === 0 ? true : false}
+          loadingMessage={"Selecione a modalidade para ver as unidades"}
+        />
 
         <Select
-          textLabel="Forma de Ingresso"
-          onChange={handleEntryForms}
-          value={entryForm}
-          required={true}
-        >
-          <option disabled value="">
-            Selecione
-          </option>
-          {entryFormsOptions.map((option, index) => (
-            <option key={index} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </Select>
+          textLabel={"Curso"}
+          name={selectedCourse?.value}
+          id={selectedCourse?.value}
+          key={selectedCourse?.value}
+          placeholder={selectedCourse ? selectedCourse?.label : "Selecione"}
+          options={unity ? coursesOptions : []}
+          noOptionsMessage={
+            "Desculpe! Não encontramos o que estava procurando ☹️"
+          }
+          onChange={handleCourses}
+          isLoading={coursesOptions.length === 0 ? true : false}
+          loadingMessage={"Selecione a unidade ou o polo para ver os cursos"}
+        />
 
-        <div hidden={entryForm === "enem-encceja"}>
+        <Select
+          textLabel={"Forma de Ingresso"}
+          name={entryForm?.value}
+          id={entryForm?.value}
+          key={entryForm?.value}
+          placeholder={entryForm ? entryForm.label : "Selecione"}
+          options={selectedCourse ? entryFormsOptions : []}
+          noOptionsMessage={
+            "Desculpe! Não encontramos o que estava procurando ☹️"
+          }
+          onChange={handleEntryForms}
+          isLoading={selectedCourse?.length === 0 ? true : false}
+          loadingMessage={"Selecione o curso para ver as formas de ingresso"}
+        />
+
+        <div hidden={entryForm?.value === "enem-encceja"}>
           <Select
-            textLabel="Processo seletivo"
+            textLabel={"Processo Seletivo"}
+            name={selectedEntranceExam?.label}
+            id={selectedEntranceExam?.value}
+            key={selectedEntranceExam?.value}
+            placeholder={
+              selectedEntranceExam ? selectedEntranceExam.label : "Selecione"
+            }
+            options={entryForm ? entranceExamOptions : []}
+            noOptionsMessage={
+              "Desculpe! Não encontramos o que estava procurando ☹️"
+            }
             onChange={handleSelectedEntranceExam}
-            value={selectedEntranceExam}
-            required={entryForm != "enem-encceja"}
-          >
-            <option disabled value="">
-              Selecione
-            </option>
-            {listVestibular.map((option, index) => (
-              <option key={index} value={option.id}>
-                {option.descricao}
-              </option>
-            ))}
-          </Select>
+            isLoading={entryForm?.length === 0 ? true : false}
+            loadingMessage={
+              "Selecione a forma de ingresso para ver os processos seletivos"
+            }
+          />
         </div>
 
-        <div hidden={entryForm != "enem-encceja"}>
+        <div hidden={entryForm?.value != "enem-encceja"}>
           <div className="mb-2 font-light text-sm ">
             <Input
               valueInput={yearEnem || ""}
@@ -492,6 +527,7 @@ export default function FormCourse(props: CourseProps) {
               onChange={setYearEnem}
               required={entryForm === "enem-encceja"}
             />
+
             <Input
               valueInput={codeEnemAndEncceja || ""}
               textLabel="Informe o código da inscrição do Enem/Encceja"
@@ -499,6 +535,7 @@ export default function FormCourse(props: CourseProps) {
               onChange={setCodeEnemAndEncceja}
               required={entryForm === "enem-encceja"}
             />
+
             <Input
               valueInput={objectiveTestGrade || ""}
               textLabel="Informe a nota da prova objetiva"
@@ -506,6 +543,7 @@ export default function FormCourse(props: CourseProps) {
               onChange={setObjectiveTestGrade}
               required={entryForm === "enem-encceja"}
             />
+
             <Input
               valueInput={redactionTestGrade || ""}
               textLabel="Informe a nota da redação"
@@ -513,6 +551,7 @@ export default function FormCourse(props: CourseProps) {
               onChange={setRedactionTestGrade}
               required={entryForm === "enem-encceja"}
             />
+
             <InputFile
               typeInput="file"
               textLabel="Selecione o comprovante do Enem"

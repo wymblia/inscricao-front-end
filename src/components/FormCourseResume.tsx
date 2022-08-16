@@ -40,6 +40,7 @@ export default function FormCourseResume(props: CourseResumeProps) {
     courseIdShift,
     gender,
     selectedEntranceExam,
+    entryForm,
     entryFormId,
     externalConsultant,
     switchShowExternalConsultant,
@@ -47,7 +48,7 @@ export default function FormCourseResume(props: CourseResumeProps) {
     unity,
     modality,
     showModalityName,
-    showCourseName
+    showCourseName,
   } = useContext(RegistrationContext)
 
   const firstName = name.split(" ")[0]
@@ -67,7 +68,7 @@ export default function FormCourseResume(props: CourseResumeProps) {
       icon: "success",
       title: "Aguarde, estamos confirmando sua inscrição",
       showConfirmButton: false,
-      timer: 6800
+      timer: 6800,
     })
     const ufId = await getUfIdBaseFtec()
     try {
@@ -80,7 +81,10 @@ export default function FormCourseResume(props: CourseResumeProps) {
         como_chegou: null,
         filial_id: filialCourse,
         forma_ingresso: entryFormId,
-        vestibular_id: selectedEntranceExam,
+        vestibular_id:
+          entryForm.value === "enem-encceja"
+            ? selectedEntranceExam
+            : selectedEntranceExam.value,
         filial_old: null,
         local_prova_id: null,
         enem_ano: yearEnem,
@@ -92,21 +96,33 @@ export default function FormCourseResume(props: CourseResumeProps) {
         opcao_curso: null,
         turno: courseShift,
         selected_opcao1:
-          selectedCourse + "#" + courseIdShift + "#" + courseMatrix + "#" + showCourseName,
+          selectedCourse.value +
+          "#" +
+          courseIdShift +
+          "#" +
+          courseMatrix +
+          "#" +
+          showCourseName,
         selected_opcao2:
-          selectedCourse + "#" + courseIdShift + "#" + courseMatrix + "#" + showCourseName,
+          selectedCourse.value +
+          "#" +
+          courseIdShift +
+          "#" +
+          courseMatrix +
+          "#" +
+          showCourseName,
         hidden_curso_id: null,
         hidden_turno_id: null,
         hidden_matriz: null,
         hidden_curso: null,
-        opcao1: selectedCourse,
-        opcao2: selectedCourse,
+        opcao1: selectedCourse.value,
+        opcao2: selectedCourse.value,
         cpf: CPF,
         documento_estrangeiro: null,
         pais: 1,
         nome: firstName,
         sobrenome: lastName,
-        sexo: gender,
+        sexo: gender.value,
         data_nascimento: birthDateFormatBr,
         email: email,
         fone1: phone,
@@ -120,8 +136,8 @@ export default function FormCourseResume(props: CourseResumeProps) {
         complemento: complement,
         cidade_escola: null,
         atendimento_consultor: switchShowExternalConsultant,
-        consultor_usuarioid: externalConsultant,
-        providencia: disabilityRelief
+        consultor_usuarioid: externalConsultant.value,
+        providencia: disabilityRelief,
       })
       props.courseResumeChange()
     } catch (err) {
@@ -129,7 +145,7 @@ export default function FormCourseResume(props: CourseResumeProps) {
         title: "Candidato já inscrito",
         text: "O candidato já está inscrito neste processo seletivo. Escolha outro!",
         confirmButtonText: "Ok",
-        icon: "warning"
+        icon: "warning",
       })
     }
 
@@ -142,7 +158,10 @@ export default function FormCourseResume(props: CourseResumeProps) {
     //   como_chegou: null,
     //   filial_id: filialCourse,
     //   forma_ingresso: entryFormId,
-    //   vestibular_id: selectedEntranceExam,
+    //   vestibular_id:
+    //     entryForm.value === "enem-encceja"
+    //       ? selectedEntranceExam
+    //       : selectedEntranceExam.value,
     //   filial_old: null,
     //   local_prova_id: null,
     //   enem_ano: yearEnem,
@@ -154,21 +173,33 @@ export default function FormCourseResume(props: CourseResumeProps) {
     //   opcao_curso: null,
     //   turno: courseShift,
     //   selected_opcao1:
-    //     selectedCourse + "#" + courseIdShift + "#" + courseMatrix + "#" + showCourseName,
+    //     selectedCourse.value +
+    //     "#" +
+    //     courseIdShift +
+    //     "#" +
+    //     courseMatrix +
+    //     "#" +
+    //     showCourseName,
     //   selected_opcao2:
-    //     selectedCourse + "#" + courseIdShift + "#" + courseMatrix + "#" + showCourseName,
+    //     selectedCourse.value +
+    //     "#" +
+    //     courseIdShift +
+    //     "#" +
+    //     courseMatrix +
+    //     "#" +
+    //     showCourseName,
     //   hidden_curso_id: null,
     //   hidden_turno_id: null,
     //   hidden_matriz: null,
     //   hidden_curso: null,
-    //   opcao1: selectedCourse,
-    //   opcao2: selectedCourse,
+    //   opcao1: selectedCourse.value,
+    //   opcao2: selectedCourse.value,
     //   cpf: CPF,
     //   documento_estrangeiro: null,
     //   pais: 1,
     //   nome: firstName,
     //   sobrenome: lastName,
-    //   sexo: gender,
+    //   sexo: gender.value,
     //   data_nascimento: birthDateFormatBr,
     //   email: email,
     //   fone1: phone,
@@ -179,12 +210,12 @@ export default function FormCourseResume(props: CourseResumeProps) {
     //   bairro: district,
     //   logradouro: street,
     //   numero: number,
+    //   complemento: complement,
     //   cidade_escola: null,
     //   atendimento_consultor: switchShowExternalConsultant,
-    //   consultor_usuarioid: externalConsultant,
-    //   providencia: disabilityRelief
+    //   consultor_usuarioid: externalConsultant.value,
+    //   providencia: disabilityRelief,
     // }
-
     // console.log(retorno)
   }
 
@@ -195,19 +226,19 @@ export default function FormCourseResume(props: CourseResumeProps) {
           <div className="flex justify-center font-light text-lg text-center border-2 border-grey-300 dark:border-grey-500 rounded-xl p-6 bg-grey-100 dark:bg-grey-700 text-grey-700 dark:text-grey-50">
             <p>
               <FiMonitor className="m-auto text-4xl mb-3" />
-              {selectedCourse ? showCourseName : "Volte e selecione um curso!"}
+              {showCourseName}
             </p>
           </div>
           <div className="flex justify-center font-light text-lg text-center border-2 border-grey-300 dark:border-grey-500 rounded-xl p-6 bg-grey-100 dark:bg-grey-700 text-grey-700 dark:text-grey-50">
             <p>
               <BsCalendarWeek className="m-auto text-4xl mb-3" />
-              {modality ? showModalityName : "Volte e selecione a modalidade!"}
+              {showModalityName}
             </p>
           </div>
           <div className="flex justify-center font-light text-lg text-center border-2 border-grey-300 dark:border-grey-500 rounded-xl p-6 bg-grey-100 dark:bg-grey-700 text-grey-700 dark:text-grey-50">
             <p>
               <FiClock className="m-auto text-4xl mb-3" />
-              {unity ? unity : "Volte e selecione a unidade!"}
+              {unity.label}
             </p>
           </div>
         </div>

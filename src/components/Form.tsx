@@ -4,13 +4,12 @@ import { RegistrationContext } from "../contexts/RegistrationContext"
 import Lead from "../core/Lead"
 import Input from "./Input"
 import { useRouter } from "next/router"
-import Select from "./Select"
 import { api } from "../services/api"
 import { Switch } from "@material-tailwind/react"
 import validator from "validator"
 import ButtonNext from "./ButtonNext"
-import { propTypesClassName } from "@material-tailwind/react/types/components/accordion"
 import React from "react"
+import Select from "./Select"
 
 interface FormProps {
   lead: Lead
@@ -47,7 +46,7 @@ export default function Form(props: FormProps) {
     externalConsultant,
     setExternalConsultant,
     consultantsOptionsList,
-    setConsultantsOptionsList
+    setConsultantsOptionsList,
   } = useContext(RegistrationContext)
 
   const [consultantsOptions, setConsultantsOptions] = useState([])
@@ -82,7 +81,7 @@ export default function Form(props: FormProps) {
       Swal.fire({
         title: "Nome incompleto",
         text: "Informe nome e sobrenome!",
-        icon: "warning"
+        icon: "warning",
       })
       return true
     }
@@ -94,7 +93,7 @@ export default function Form(props: FormProps) {
         title: "E-mail inválido",
         text: "Digite seu e-mail!",
         confirmButtonText: "Ok",
-        icon: "warning"
+        icon: "warning",
       })
       return true
     }
@@ -106,9 +105,23 @@ export default function Form(props: FormProps) {
         title: "Celular incompleto",
         text: "Digite seu celular completo!",
         confirmButtonText: "Ok",
-        icon: "warning"
+        icon: "warning",
       })
       return true
+    }
+  }
+
+  function hanldeNotFilledSelect() {
+    if (switchShowExternalConsultant) {
+      if (externalConsultant === null || externalConsultant === "") {
+        Swal.fire({
+          title: "Consultor não preenchido",
+          text: "Selecione o consultor!",
+          confirmButtonText: "Ok",
+          icon: "warning",
+        })
+        return true
+      }
     }
   }
 
@@ -117,29 +130,32 @@ export default function Form(props: FormProps) {
       setConsultantsOptions((consultantsOptions) => [
         ...consultantsOptions,
         {
-          idConsultor: consultant.usuarioid,
-          nomeConsultor: consultant.nome_completo
-        }
+          value: consultant.usuarioid,
+          label: consultant.nome_completo,
+        },
       ])
     })
   }
 
   useEffect(() => {
-    api.get("/get-consulters", {}).then((response) => {
+    api.get("/get-consulters").then((response) => {
       setConsultantsOptionsList(response.data)
     })
   }, [])
 
   function FormSubmit(e: any) {
     e.preventDefault()
-    handleIncompleteName() || handleInvalidEmail() || handleIncompletePhone()
+    handleIncompleteName() ||
+    handleInvalidEmail() ||
+    handleIncompletePhone() ||
+    hanldeNotFilledSelect()
       ? null
       : props.leadChange?.(new Lead(name, email, phone))
   }
 
   return (
     <Fragment>
-      <form onSubmit={FormSubmit} autoComplete="off" className="  mx-auto">
+      <form onSubmit={FormSubmit} autoComplete="off" className=" mx-auto">
         <div className="flex flex-col mb-2">
           <Input
             textLabel="Nome completo"
@@ -174,11 +190,16 @@ export default function Form(props: FormProps) {
         <div className="flex justify-start text-sm mb-2 ml-2 w-max gap-4">
           <Switch
             label="Utilizar um nome social"
-            labelProps={ {className:"dark:text-grey-50 font-light, select-none, cursor-pointer, mt-px, ml-3"} }
+            labelProps={{
+              className:
+                "dark:text-grey-50 font-light, select-none, cursor-pointer, mt-px, ml-3",
+            }}
             id="socialName"
             color="blue"
             defaultChecked={switchShowSocialName}
-            onChange={() => (setSwitchShowSocialName(!switchShowSocialName), setSocialName(""))}
+            onChange={() => (
+              setSwitchShowSocialName(!switchShowSocialName), setSocialName("")
+            )}
           />
         </div>
 
@@ -196,7 +217,10 @@ export default function Form(props: FormProps) {
         <div className="flex ustify-start text-sm mb-2 ml-2 w-max gap-4">
           <Switch
             label="Tive ajuda de um consultor externo"
-            labelProps={ {className:"dark:text-grey-50 font-light, select-none, cursor-pointer, mt-px, ml-3"} }
+            labelProps={{
+              className:
+                "dark:text-grey-50 font-light, select-none, cursor-pointer, mt-px, ml-3",
+            }}
             id="externalConsultant"
             color="blue"
             defaultChecked={switchShowExternalConsultant}
@@ -210,22 +234,24 @@ export default function Form(props: FormProps) {
 
         <div hidden={!switchShowExternalConsultant}>
           <Select
-            textLabel="Consultor Comercial"
-            onChange={(e) => setExternalConsultant(e.target.value)}
-            value={externalConsultant}
-            required={switchShowExternalConsultant}
-          >
-            <option value="">Selecione</option>
-            {consultantsOptions.map((option, index) => (
-              <option key={index} value={option.idConsultor}>
-                {option.nomeConsultor}
-              </option>
-            ))}
-          </Select>
+            textLabel={"Consultor"}
+            name={externalConsultant?.value}
+            id={externalConsultant?.value}
+            placeholder={
+              externalConsultant ? externalConsultant.label : "Selecione"
+            }
+            options={consultantsOptions}
+            noOptionsMessage={
+              "Desculpe! Não encontramos o que estava procurando ☹️"
+            }
+            onChange={(e) => setExternalConsultant(e)}
+            isLoading={!consultantsOptions ? true : false}
+            key={externalConsultant.value}
+          />
         </div>
 
         <div className="flex flex-col mt-12">
-          <ButtonNext type="submit">Próximo</ButtonNext> 
+          <ButtonNext type="submit">Próximo</ButtonNext>
         </div>
       </form>
     </Fragment>

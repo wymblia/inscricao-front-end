@@ -25,8 +25,8 @@ type UserContextType = {
   setCPF: (newState: string) => void
   birthDate: Date
   setBirthDate: (newState: Date) => void
-  gender: string
-  setGender: (newState: string) => void
+  gender: any
+  setGender: (newState: any) => void
   switchShowDeficiency: boolean
   setSwitchShowDeficiency: (newState: boolean) => void
   disabilityRelief: string
@@ -49,10 +49,10 @@ type UserContextType = {
 
   modality: string
   setModality: (newState: string) => void
-  unity: string
-  setUnity: (newState: string) => void
-  entryForm: string
-  setEntryForm: (newState: string) => void
+  unity: any
+  setUnity: (newState: any) => void
+  entryForm: any
+  setEntryForm: (newState: any) => void
   yearEnem: string
   setYearEnem: (newState: string) => void
   codeEnemAndEncceja: string
@@ -65,8 +65,8 @@ type UserContextType = {
   setEnemFile: (newState: any) => void
   nameCourse: string
   setNameCourse: (newState: string) => void
-  selectedCourse: string
-  setSelectedCourse: (newState: string) => void
+  selectedCourse: any
+  setSelectedCourse: (newState: any) => void
   showModalityName: string
   setShowModalityName: (newState: string) => void
   showUnityName: string
@@ -83,12 +83,12 @@ type UserContextType = {
   setCourseMatrix: (newState: string) => void
   courseModality: string
   setCourseModality: (newState: string) => void
-  selectedEntranceExam: string
-  setSelectedEntranceExam: (newState: string) => void
+  selectedEntranceExam: any
+  setSelectedEntranceExam: (newState: any) => void
   entryFormId: string
   setEntryFormId: (newState: string) => void
-  externalConsultant: string
-  setExternalConsultant: (newState: string) => void
+  externalConsultant: any
+  setExternalConsultant: (newState: any) => void
   switchShowExternalConsultant: boolean
   setSwitchShowExternalConsultant: (newState: boolean) => void
 
@@ -109,9 +109,13 @@ type UserContextType = {
   stepSevenVisible: boolean
 }
 
-export const RegistrationContext = createContext<UserContextType>({} as UserContextType)
+export const RegistrationContext = createContext<UserContextType>(
+  {} as UserContextType
+)
 
-export const RegistrationContextProvider = ({ children }: RegistrationContextProps) => {
+export const RegistrationContextProvider = ({
+  children,
+}: RegistrationContextProps) => {
   const [offerList, setOfferList] = useState("")
   const [consultantsOptionsList, setConsultantsOptionsList] = useState("")
 
@@ -156,7 +160,8 @@ export const RegistrationContextProvider = ({ children }: RegistrationContextPro
   const [selectedEntranceExam, setSelectedEntranceExam] = useState("")
   const [entryFormId, setEntryFormId] = useState("")
   const [externalConsultant, setExternalConsultant] = useState("")
-  const [switchShowExternalConsultant, setSwitchShowExternalConsultant] = useState(false)
+  const [switchShowExternalConsultant, setSwitchShowExternalConsultant] =
+    useState(false)
 
   const [visible, setVisible] = useState<
     "step1" | "step2" | "step3" | "step4" | "step5" | "step6" | "step7"
@@ -274,7 +279,7 @@ export const RegistrationContextProvider = ({ children }: RegistrationContextPro
         stepFourVisible: visible === "step4",
         stepFiveVisible: visible === "step5",
         stepSixVisible: visible === "step6",
-        stepSevenVisible: visible === "step7"
+        stepSevenVisible: visible === "step7",
       }}
     >
       {children}
