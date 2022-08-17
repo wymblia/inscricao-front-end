@@ -269,7 +269,7 @@ export default function FormCourse(props: CourseProps) {
         case "Polo Question Flores da Cunha RS":
           setSelectedEntranceExam("1480")
           break
-        case "Polo Petrópolis Ensino Cartesiano":
+        case "Polo Petrópolis Porto Alegre":
           setSelectedEntranceExam("1507")
           break
         case "Polo Porto Alegre":
