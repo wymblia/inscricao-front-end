@@ -1,14 +1,15 @@
-import { useContext, useEffect, useLayoutEffect, useState } from "react";
-import Swal from "sweetalert2";
-import { RegistrationContext } from "../contexts/RegistrationContext";
-import Lead from "../core/Lead";
-import Button from "./Button";
-import Input from "./Input";
-import { useRouter } from 'next/router';
-import InputMask from "react-input-mask"
-import Select from "./Select";
+import { Fragment, useContext, useEffect, useState } from "react"
+import Swal from "sweetalert2"
+import { RegistrationContext } from "../contexts/RegistrationContext"
+import Lead from "../core/Lead"
+import Input from "./Input"
+import { useRouter } from "next/router"
 import { api } from "../services/api"
-import useCourse from "../hooks/useCourseResume";
+import { Switch } from "@material-tailwind/react"
+import validator from "validator"
+import ButtonNext from "./ButtonNext"
+import React from "react"
+import Select from "./Select"
 
 interface FormProps {
   lead: Lead
@@ -16,149 +17,243 @@ interface FormProps {
 }
 
 export default function Form(props: FormProps) {
+  const {
+    socialName,
+    setSocialName,
+    name,
+    setName,
+    email,
+    setEmail,
+    phone,
+    setPhone,
+    switchShowSocialName,
+    setSwitchShowSocialName,
+    switchShowExternalConsultant,
+    setSwitchShowExternalConsultant,
+    setModality,
+    setUnity,
+    setSelectedCourse,
+    setEntryForm,
+    setSelectedEntranceExam,
+    setShowCourseName,
+    setShowModalityName,
+    setFilialCourse,
+    setEntryFormId,
+    setCourseModality,
+    setCourseShift,
+    setCourseIdShift,
+    setCourseMatrix,
+    externalConsultant,
+    setExternalConsultant,
+    consultantsOptionsList,
+    setConsultantsOptionsList,
+  } = useContext(RegistrationContext)
 
-  const { socialName, name, email, phone, setSocialName, setName, setemail, setphone, appearanceSocialName, setAppearanceSocialName, setModality, setUnity, setSelectedCourse, setEntryForm, setSelectedEnrollment, setShowCourseName, setShowModalityName, setFilialCourse, setIdEntryForm, setModalidadeCourse, setTurnoCourse, setTurnoIdCourse, setMatrizCourse, externConsultant, setExternConsultant, appearanceExternConsultant, setAppearanceExternConsultant, listConsulters, setListConsulters, existsExternConsultant, setExistsExternConsultant } = useContext(RegistrationContext)
-  const [listConsultersOptions, setListConsultersOptions] = useState([])
+  const [consultantsOptions, setConsultantsOptions] = useState([])
+
   const router = useRouter()
-
-  let listConsultersArray = []
-
-  if (router.query.completeName != undefined) {
-    setMatrizCourse(String(router.query.matrizCourse))
-    setTurnoCourse(String(router.query.turnoCourse))
-    setTurnoIdCourse(String(router.query.idTurnoCourse))
-    setModalidadeCourse(String(router.query.modalidadeDescricao))
-    setFilialCourse(String(router.query.courseFilial))
+  //Somente se tiver completeName na rota, setar com o que vem da rota
+  if (router.query.completeName) {
     setName(String(router.query.completeName))
-    setemail(String(router.query.email))
-    setphone(String(router.query.phone))
+    setEmail(String(router.query.email))
+    setPhone(String(router.query.phone))
+  }
+
+  //Somente se tiver entryForm na rota, setar com o que vem da rota
+  if (router.query.entryForm) {
+    setCourseMatrix(String(router.query.courseMatrix))
+    setCourseShift(String(router.query.courseShift))
+    setCourseIdShift(String(router.query.idCourseShift))
+    setCourseModality(String(router.query.modalidadeDescricao))
+    setFilialCourse(String(router.query.courseFilial))
     setModality(String(router.query.modality))
     setUnity(String(router.query.unity))
     setSelectedCourse(String(router.query.course))
     setEntryForm(String(router.query.entryForm))
-    setIdEntryForm(String(router.query.idEntryForm))
-    setSelectedEnrollment(String(router.query.selectedEnrollment))
+    setEntryFormId(String(router.query.entryFormId))
+    setSelectedEntranceExam(String(router.query.selectedEnrollment))
     setShowCourseName(String(router.query.showCourseName))
     setShowModalityName(String(router.query.showModalityName))
   }
 
-  function setAppearanceSocialNameFunction() {
-    appearanceSocialName ? setAppearanceSocialName(false) : setAppearanceSocialName(true)
-  }
-
-  function FormSubmit(e: any) {
-    e.preventDefault();
-    props.leadChange?.(new Lead(name, email, phone))
-  }
-
-  function ValidateFirstAndLastName(e: any) {
-    if (!e.target.value.split(' ')[1])
+  function handleIncompleteName() {
+    if (!name.split(" ")[1]) {
       Swal.fire({
-        icon: 'error',
-        text: 'Informe nome e sobrenome!'
+        title: "Nome incompleto",
+        text: "Informe nome e sobrenome!",
+        icon: "warning",
       })
-  }
-
-
-  function functionSetAppearanceExternConsultant(e: any) {
-    appearanceExternConsultant ? setAppearanceExternConsultant(false) : setAppearanceExternConsultant(true)
-    existsExternConsultant ? setExistsExternConsultant(false) : setExistsExternConsultant(true)
-    setExternConsultant("")
-  }
-
-  useEffect(() => {
-    getConsulters()
-  },
-  [appearanceExternConsultant])
-
-  function getConsulters() {
-    api.get('/get-consulters', {
-    })
-    .then (response => {
-      setListConsulters(response.data)
-    })
-    setListConsultersOptionsFunction()
-  }
-
-  function setListConsultersOptionsFunction() {
-
-    listConsulters ? (
-      listConsulters.forEach(consulter => {
-        listConsultersArray.push({
-          idConsultor: consulter.usuarioid,
-          nomeConsultor: consulter.nome_completo
-        })
-      }),
-
-      setListConsultersOptions(listConsultersArray)
-
-      ) : null
-  }
-
-  function setExternConsultantFunction(e: any) {
-    if (existsExternConsultant) {
-      setExternConsultant(e.target.value)
-    } else {
-      setExternConsultant("")
+      return true
     }
   }
 
+  function handleInvalidEmail() {
+    if (!validator.isEmail(email)) {
+      Swal.fire({
+        title: "E-mail inválido",
+        text: "Digite seu e-mail!",
+        confirmButtonText: "Ok",
+        icon: "warning",
+      })
+      return true
+    }
+  }
+
+  function handleIncompletePhone() {
+    if (phone.includes("_")) {
+      Swal.fire({
+        title: "Celular incompleto",
+        text: "Digite seu celular completo!",
+        confirmButtonText: "Ok",
+        icon: "warning",
+      })
+      return true
+    }
+  }
+
+  function hanldeNotFilledSelect() {
+    if (switchShowExternalConsultant) {
+      if (externalConsultant === null || externalConsultant === "") {
+        Swal.fire({
+          title: "Consultor não preenchido",
+          text: "Selecione o consultor!",
+          confirmButtonText: "Ok",
+          icon: "warning",
+        })
+        return true
+      }
+    }
+  }
+
+  function fillConsultantsOptions() {
+    consultantsOptionsList.map((consultant) => {
+      setConsultantsOptions((consultantsOptions) => [
+        ...consultantsOptions,
+        {
+          value: consultant.usuarioid,
+          label: consultant.nome_completo,
+        },
+      ])
+    })
+  }
+
+  useEffect(() => {
+    api.get("/get-consulters").then((response) => {
+      setConsultantsOptionsList(response.data)
+    })
+  }, [])
+
+  function FormSubmit(e: any) {
+    e.preventDefault()
+    handleIncompleteName() ||
+    handleInvalidEmail() ||
+    handleIncompletePhone() ||
+    hanldeNotFilledSelect()
+      ? null
+      : props.leadChange?.(new Lead(name, email, phone))
+  }
+
   return (
-    <div>
-      <form onSubmit={FormSubmit} autoComplete="off" className="  mx-auto">
-        <div className="flex justify-end -mb-4z text-sm">
-          <div className="form-check form-switch">
-            <input defaultChecked={appearanceSocialName} className="form-check-input appearance-none w-9 -ml-10 rounded-full float-left h-5 align-top bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm" type="checkbox" role="switch" id="flexSwitchCheckDefault" onClick={setAppearanceSocialNameFunction} />
-            <label className="form-check-label inline-block text-gray-800" htmlFor="flexSwitchCheckDefault">Utilizar um Nome Social</label>
-          </div>
-        </div>
-        <div hidden={!appearanceSocialName}>
-          <Input textLabel="Nome Social" typeInput="text" idInput="socialName" defaultValue={socialName} onChange={setSocialName} />
-        </div>
-
+    <Fragment>
+      <form onSubmit={FormSubmit} autoComplete="off" className=" mx-auto">
         <div className="flex flex-col mb-2">
-          <label className={`mb-2 font-light text-sm `} htmlFor="name">
-            <p className="text-gray-700">Nome completo</p>
-          </label>
-          <input type="text" id="name" defaultValue={name} onChange={(e) => setName(e.target.value)} onBlur={ValidateFirstAndLastName} required={true} className='w-[480px] h-10 mb-2 border border-gray-300 rounded-2xl focus:outline-none bg-gray-50 px-4 py-2 focus:bg-white text-gray-700' />
+          <Input
+            textLabel="Nome completo"
+            idInput="name"
+            typeInput="text"
+            valueInput={name}
+            onChange={setName}
+            required
+          />
+
+          <Input
+            textLabel="E-mail"
+            idInput="email"
+            typeInput="email"
+            valueInput={email}
+            onChange={setEmail}
+            required
+          />
+
+          <Input
+            textLabel="Celular"
+            idInput="phone"
+            typeInput="text"
+            valueInput={phone}
+            onChange={setPhone}
+            existsMask={true}
+            mask={"(99) 99999-9999"}
+            required
+          />
         </div>
 
-        <div className="flex flex-col mb-2">
-          <label className={`mb-2 font-light text-sm`} htmlFor="email">
-            <p className="text-gray-700">E-mail</p>
-          </label>
-          <input type="email" id="email" defaultValue={email} onChange={(e) => setemail(e.target.value)} required={true} className='w-[480px] h-10 mb-2 border border-gray-300 rounded-2xl focus:outline-none bg-gray-50 px-4 py-2 focus:bg-white text-gray-700' />
+        <div className="flex justify-start text-sm mb-2 ml-2 w-max gap-4">
+          <Switch
+            label="Utilizar um nome social"
+            labelProps={{
+              className:
+                "dark:text-grey-50 font-light, select-none, cursor-pointer, mt-px, ml-3",
+            }}
+            id="socialName"
+            color="blue"
+            defaultChecked={switchShowSocialName}
+            onChange={() => (
+              setSwitchShowSocialName(!switchShowSocialName), setSocialName("")
+            )}
+          />
         </div>
 
-        <div className="flex flex-col mb-2">
-          <label className={`mb-2 font-light text-sm`} htmlFor='phone'>
-            <p className="text-gray-700">Celular</p>
-          </label>
-          {router.query.phone ?
-            <input type="text" id="phone" defaultValue={phone} onChange={(e) => setphone(e.target.value)} required={true} className='xl:w-[480px] h-10 mb-2 border border-gray-300 rounded-2xl focus:outline-none bg-gray-50 px-4 py-2 focus:bg-white text-gray-700' />
-            :
-            <InputMask mask="(99) 99999-9999" type="text" id="phone" defaultValue={phone} onChange={(e) => setphone(e.target.value)} required={true} className='w-[480px] h-10 mb-2 border border-gray-300 rounded-2xl focus:outline-none bg-gray-50 px-4 py-2 focus:bg-white text-gray-700' />
-          }
+        <div hidden={!switchShowSocialName}>
+          <Input
+            textLabel="Nome Social"
+            idInput="socialName"
+            typeInput="text"
+            valueInput={socialName}
+            onChange={setSocialName}
+            required={switchShowSocialName}
+          />
         </div>
 
-        <div className="form-check form-switch">
-          <input className="form-check-input appearance-none w-9 -ml-10 rounded-full float-left h-5 align-top bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm" type="checkbox" role="switch" id="flexSwitchCheckDefault2" onClick={functionSetAppearanceExternConsultant} defaultChecked={appearanceExternConsultant} />
-          <label className="form-check-label inline-block text-gray-800" htmlFor="flexSwitchCheckDefault2" defaultChecked={appearanceExternConsultant}>Teve ajuda de consultor externo?</label>
+        <div className="flex ustify-start text-sm mb-2 ml-2 w-max gap-4">
+          <Switch
+            label="Tive ajuda de um consultor externo"
+            labelProps={{
+              className:
+                "dark:text-grey-50 font-light, select-none, cursor-pointer, mt-px, ml-3",
+            }}
+            id="externalConsultant"
+            color="blue"
+            defaultChecked={switchShowExternalConsultant}
+            onClick={fillConsultantsOptions}
+            onChange={() => (
+              setSwitchShowExternalConsultant(!switchShowExternalConsultant),
+              setExternalConsultant("")
+            )}
+          />
         </div>
 
-        <div hidden={!appearanceExternConsultant}>
-          <Select textLabel="Consultor Comercial" onChange={setExternConsultantFunction} value={externConsultant} required={appearanceExternConsultant}>
-            <option value="">Selecione</option>
-            {listConsultersOptions.map((option, index) => (
-              <option key={index} value={option.idConsultor}>{option.nomeConsultor}</option>
-            ))}
-          </Select>
+        <div hidden={!switchShowExternalConsultant}>
+          <Select
+            textLabel={"Consultor"}
+            name={externalConsultant?.value}
+            id={externalConsultant?.value}
+            placeholder={
+              externalConsultant ? externalConsultant.label : "Selecione"
+            }
+            options={consultantsOptions}
+            noOptionsMessage={
+              "Desculpe! Não encontramos o que estava procurando ☹️"
+            }
+            onChange={(e) => setExternalConsultant(e)}
+            isLoading={!consultantsOptions ? true : false}
+            key={externalConsultant.value}
+          />
         </div>
 
         <div className="flex flex-col mt-12">
-          <Button type="submit">Próximo</Button>
+          <ButtonNext type="submit">Próximo</ButtonNext>
         </div>
       </form>
-    </div>
+    </Fragment>
   )
 }
