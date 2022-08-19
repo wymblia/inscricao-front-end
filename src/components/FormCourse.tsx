@@ -48,7 +48,7 @@ export default function FormCourse(props: CourseProps) {
     setCourseIdShift,
     setCourseMatrix,
     setCourseModality,
-    setEntryFormId,
+    setEntryFormId
   } = useContext(RegistrationContext)
 
   const { offerList } = useCourse()
@@ -65,28 +65,28 @@ export default function FormCourse(props: CourseProps) {
     {
       label: "Vestibular",
       value: "vestibular",
-      idFormFtec: 1,
+      idFormFtec: 1
     },
     {
       label: "Enem/Encceja",
       value: "enem-encceja",
-      idFormFtec: 2,
+      idFormFtec: 2
     },
     {
       label: "Transferência",
       value: "transferencia",
-      idFormFtec: 1,
+      idFormFtec: 1
     },
     {
       label: "Reingresso",
       value: "reingresso",
-      idFormFtec: 1,
+      idFormFtec: 1
     },
     {
       label: "Segunda Graduação",
       value: "segunda-graduacao",
-      idFormFtec: 1,
-    },
+      idFormFtec: 1
+    }
   ]
 
   function handleModality(e: any) {
@@ -106,7 +106,7 @@ export default function FormCourse(props: CourseProps) {
         ? !unityList.find((value) => value.label === unity.UNIDADE)
           ? unityList.push({
               label: unity["UNIDADE"],
-              value: unity["UNIDADE"],
+              value: unity["UNIDADE"]
             })
           : null
         : null
@@ -124,7 +124,7 @@ export default function FormCourse(props: CourseProps) {
         ? !coursesList.find((value) => value.label === course.CURSO)
           ? coursesList.push({
               label: course["CURSO"],
-              value: course["CURSO_ID"],
+              value: course["CURSO_ID"]
             })
           : null
         : null
@@ -134,25 +134,21 @@ export default function FormCourse(props: CourseProps) {
 
   useEffect(() => {
     fillCourseByModalityAndUnity()
-    setSelectedCourse("")
   }, [unity])
 
   function fillEntranceExamByModalityAndUnity() {
     if (entryForm?.value === "vestibular") {
       setEntranceExamOptions(listVestibular)
     }
-    if (
-      entryForm?.value === "transferencia" ||
-      entryForm?.value === "reingresso"
-    ) {
+    if (entryForm?.value === "transferencia" || entryForm?.value === "reingresso") {
       setEntranceExamOptions([])
       listVestibular?.map((vestibular) => {
         setListVestibular((vestibularesOptions) => [
           ...vestibularesOptions,
           {
             value: vestibular.id,
-            label: vestibular.descricao,
-          },
+            label: vestibular.descricao
+          }
         ])
       })
       setEntranceExamOptions(
@@ -167,9 +163,7 @@ export default function FormCourse(props: CourseProps) {
     }
     if (entryForm?.value === "enem-encceja") {
       setEntranceExamOptions([])
-      setEntranceExamOptions(
-        listVestibular?.filter((value) => value.permitir_nota_enem === "1")
-      )
+      setEntranceExamOptions(listVestibular?.filter((value) => value.permitir_nota_enem === "1"))
     }
   }
 
@@ -207,8 +201,7 @@ export default function FormCourse(props: CourseProps) {
   useEffect(() => {
     setListVestibular([])
     setListVestibular(
-      offerList.find((value) => value.CURSO_ID === selectedCourse?.value)
-        ?.VESTIBULARES
+      offerList.find((value) => value.CURSO_ID === selectedCourse?.value)?.VESTIBULARES
     )
   }, [selectedCourse])
 
@@ -359,17 +352,35 @@ export default function FormCourse(props: CourseProps) {
     entryForm?.value != "enem-encceja"
       ? setSelectedEntranceExam(e)
       : setSelectedEntranceExamEnemFunction()
-    setNotice(
-      offerList.find((value) => value.CURSO_ID === selectedCourse?.value)
-        ?.edital
-    )
+    setNotice(offerList.find((value) => value.CURSO_ID === selectedCourse?.value)?.edital)
+  }
+
+  function hanldeNotFilledSelect() {
+    if (
+      unity === null ||
+      unity === "" ||
+      selectedCourse === null ||
+      selectedCourse === "" ||
+      entryForm === null ||
+      entryForm === "" ||
+      selectedEntranceExam === null ||
+      selectedEntranceExam === ""
+    ) {
+      Swal.fire({
+        title: "Opção não preenchida",
+        text: "Selecine todas as opções!",
+        confirmButtonText: "Ok",
+        icon: "warning"
+      })
+      return true
+    }
   }
 
   function FormSubmit(e: any) {
     e.preventDefault()
-    props.courseChange?.(
-      new Course(modality, unity, entryForm, yearEnem, nameCourse)
-    )
+    hanldeNotFilledSelect()
+      ? null
+      : props.courseChange?.(new Course(modality, unity, entryForm, yearEnem, nameCourse))
   }
 
   async function fileValidation(e: any) {
@@ -383,14 +394,14 @@ export default function FormCourse(props: CourseProps) {
           "Caso precise converter o seu documento, " +
           '<a target="_blank" href="//smallpdf.com/pt/conversor-de-pdf"><b>CLIQUE AQUI</b></a> ',
         confirmButtonText: "Ok",
-        icon: "info",
+        icon: "info"
       })
     } else {
       if (!e.target.files[0]) {
         Swal.fire({
           title: "Escolha um arquivo!",
           confirmButtonText: "Ok",
-          icon: "info",
+          icon: "info"
         })
       } else if (e.target.files[0].size / 1024 / 1024 <= 2) {
         const formData = new FormData()
@@ -399,8 +410,8 @@ export default function FormCourse(props: CourseProps) {
 
         await api.post("/upload-enem", formData, {
           headers: {
-            "Content-Type": "multipart/form-data",
-          },
+            "Content-Type": "multipart/form-data"
+          }
         })
       } else if (e.target.files[0].size / 1024 / 1024 > 2) {
         e.target.value = null
@@ -408,7 +419,7 @@ export default function FormCourse(props: CourseProps) {
           title: "Arquivo muito grande!",
           text: "Limite máximo de 2MB",
           confirmButtonText: "Ok",
-          icon: "info",
+          icon: "info"
         })
       }
     }
@@ -459,9 +470,7 @@ export default function FormCourse(props: CourseProps) {
           key={unity?.value}
           placeholder={unity ? unity.label : "Selecione"}
           options={unityOptions}
-          noOptionsMessage={
-            "Desculpe! Não encontramos o que estava procurando ☹️"
-          }
+          noOptionsMessage={"Desculpe! Não encontramos o que estava procurando ☹️"}
           onChange={(e) => setUnity(e)}
           isLoading={unityOptions.length === 0 ? true : false}
           loadingMessage={"Selecione a modalidade para ver as unidades"}
@@ -474,9 +483,7 @@ export default function FormCourse(props: CourseProps) {
           key={selectedCourse?.value}
           placeholder={selectedCourse ? selectedCourse?.label : "Selecione"}
           options={unity ? coursesOptions : []}
-          noOptionsMessage={
-            "Desculpe! Não encontramos o que estava procurando ☹️"
-          }
+          noOptionsMessage={"Desculpe! Não encontramos o que estava procurando ☹️"}
           onChange={handleCourses}
           isLoading={coursesOptions.length === 0 ? true : false}
           loadingMessage={"Selecione a unidade ou o polo para ver os cursos"}
@@ -489,9 +496,7 @@ export default function FormCourse(props: CourseProps) {
           key={entryForm?.value}
           placeholder={entryForm ? entryForm.label : "Selecione"}
           options={selectedCourse ? entryFormsOptions : []}
-          noOptionsMessage={
-            "Desculpe! Não encontramos o que estava procurando ☹️"
-          }
+          noOptionsMessage={"Desculpe! Não encontramos o que estava procurando ☹️"}
           onChange={handleEntryForms}
           isLoading={selectedCourse?.length === 0 ? true : false}
           loadingMessage={"Selecione o curso para ver as formas de ingresso"}
@@ -503,18 +508,12 @@ export default function FormCourse(props: CourseProps) {
             name={selectedEntranceExam?.label}
             id={selectedEntranceExam?.value}
             key={selectedEntranceExam?.value}
-            placeholder={
-              selectedEntranceExam ? selectedEntranceExam.label : "Selecione"
-            }
+            placeholder={selectedEntranceExam ? selectedEntranceExam.label : "Selecione"}
             options={entryForm ? entranceExamOptions : []}
-            noOptionsMessage={
-              "Desculpe! Não encontramos o que estava procurando ☹️"
-            }
+            noOptionsMessage={"Desculpe! Não encontramos o que estava procurando ☹️"}
             onChange={handleSelectedEntranceExam}
             isLoading={entryForm?.length === 0 ? true : false}
-            loadingMessage={
-              "Selecione a forma de ingresso para ver os processos seletivos"
-            }
+            loadingMessage={"Selecione a forma de ingresso para ver os processos seletivos"}
           />
         </div>
 
@@ -575,6 +574,3 @@ export default function FormCourse(props: CourseProps) {
     </div>
   )
 }
-
-
-
