@@ -7,11 +7,11 @@ export default function useCourse() {
   const { displayStep3, displayStep5, offerList, setOfferList } = useContext(RegistrationContext)
   const [course] = useState<Course>(Course.createVoid())
 
-  function getCourse() {
-    api.get("/process", {}).then((response) => {
-      setOfferList(JSON.parse(response.data))
-    })
-  }
+    // function getCourse() {
+    //   api.get("/process", {}).then((response) => {
+    //     setOfferList(JSON.parse(response.data))
+    //   })
+    // }
 
   function nextStepFive() {
     displayStep5()
@@ -22,7 +22,7 @@ export default function useCourse() {
   }
 
   return {
-    getCourse,
+    // getCourse,
     nextStepFive,
     offerList,
     course,
