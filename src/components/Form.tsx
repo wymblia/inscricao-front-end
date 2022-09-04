@@ -138,7 +138,7 @@ export default function Form(props: FormProps) {
   }
 
   useEffect(() => {
-    api.get("/get-consulters").then((response) => {
+    api.get("/person/get-consulters").then((response) => {
       setConsultantsOptionsList(response.data)
     })
   }, [])
@@ -163,6 +163,7 @@ export default function Form(props: FormProps) {
             typeInput="text"
             valueInput={name}
             onChange={setName}
+            onBlur={() => setName(name.trim())}
             required
           />
 
