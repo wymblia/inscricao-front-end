@@ -6,7 +6,7 @@ import useCourse from "../hooks/useCourse"
 
 export default function useLeads() {
   const { displayStep2, socialName } = useContext(RegistrationContext)
-  // const { getCourse } = useCourse()
+  const { getCourse } = useCourse()
   const [lead] = useState<Lead>(Lead.createVoid())
 
   function saveLead(lead: Lead) {
@@ -16,7 +16,7 @@ export default function useLeads() {
       email: lead.email,
       phone: lead.phone
     })
-    // getCourse()
+    getCourse()
     displayStep2()
   }
 
