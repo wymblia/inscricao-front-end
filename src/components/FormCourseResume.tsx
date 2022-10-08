@@ -48,106 +48,92 @@ export default function FormCourseResume(props: CourseResumeProps) {
     unity,
     modality,
     showModalityName,
-    showCourseName,
+    showCourseName
   } = useContext(RegistrationContext)
 
   const firstName = name.split(" ")[0]
   const lastName = name.split(" ").slice(1, 20).join(" ")
   const birthDateFormatBr = moment.utc(birthDate).format("DD/MM/YYYY")
 
-  async function getUfIdBaseFtec() {
-    const result = await api.get(`/ufid`)
-    let uf = result.data.find((element) => element.SIGLA === state)
-    const ufId = uf.UF_ID
-    return ufId
-  }
+  // async function getUfIdBaseFtec() {
+  //   const result = await api.get(`/ufid`)
+  //   let uf = result.data.find((element) => element.SIGLA === state)
+  //   const ufId = uf.UF_ID
+  //   return ufId
+  // }
 
-  async function newEnrollment() {
+  function newEnrollment() {
     Swal.fire({
       position: "center",
       icon: "success",
       title: "Aguarde, estamos confirmando sua inscrição",
       showConfirmButton: false,
-      timer: 6800,
+      timer: 6800
     })
-    const ufId = await getUfIdBaseFtec()
-    try {
-      await api.post("/new-enrollment", {
-        nome_contato: firstName,
-        sobrenome_contato: lastName,
-        nome_social: socialName,
-        email_contato: email,
-        fone_contato: phone,
-        como_chegou: null,
-        filial_id: filialCourse,
-        forma_ingresso: entryFormId,
-        vestibular_id:
-          entryForm.value === "enem-encceja"
-            ? selectedEntranceExam
-            : selectedEntranceExam.value,
-        filial_old: null,
-        local_prova_id: null,
-        enem_ano: yearEnem,
-        enem_inscricao: codeEnemAndEncceja,
-        enem_nota_objetiva: objectiveTestGrade,
-        enem_nota_redacao: redactionTestGrade,
-        modalidade_ensino: courseModality,
-        modalidade: courseModality,
-        opcao_curso: null,
-        turno: courseShift,
-        selected_opcao1:
-          selectedCourse.value +
-          "#" +
-          courseIdShift +
-          "#" +
-          courseMatrix +
-          "#" +
-          showCourseName,
-        selected_opcao2:
-          selectedCourse.value +
-          "#" +
-          courseIdShift +
-          "#" +
-          courseMatrix +
-          "#" +
-          showCourseName,
-        hidden_curso_id: null,
-        hidden_turno_id: null,
-        hidden_matriz: null,
-        hidden_curso: null,
-        opcao1: selectedCourse.value,
-        opcao2: selectedCourse.value,
-        cpf: CPF,
-        documento_estrangeiro: null,
-        pais: 1,
-        nome: firstName,
-        sobrenome: lastName,
-        sexo: gender.value,
-        data_nascimento: birthDateFormatBr,
-        email: email,
-        fone1: phone,
-        fone2: phone,
-        cep: cep,
-        uf_id: ufId,
-        cidade: city,
-        bairro: district,
-        logradouro: street,
-        numero: number,
-        complemento: complement,
-        cidade_escola: null,
-        atendimento_consultor: switchShowExternalConsultant,
-        consultor_usuarioid: externalConsultant.value,
-        providencia: disabilityRelief,
-      })
-      props.courseResumeChange()
-    } catch (err) {
-      Swal.fire({
-        title: "Candidato já inscrito",
-        text: "O candidato já está inscrito neste processo seletivo. Escolha outro!",
-        confirmButtonText: "Ok",
-        icon: "warning",
-      })
-    }
+    // const ufId = await getUfIdBaseFtec()
+    // try {
+    //   await api.post("/new-enrollment", {
+    //     nome_contato: firstName,
+    //     sobrenome_contato: lastName,
+    //     nome_social: socialName,
+    //     email_contato: email,
+    //     fone_contato: phone,
+    //     como_chegou: null,
+    //     filial_id: filialCourse,
+    //     forma_ingresso: entryFormId,
+    //     vestibular_id:
+    //       entryForm.value === "enem-encceja" ? selectedEntranceExam : selectedEntranceExam.value,
+    //     filial_old: null,
+    //     local_prova_id: null,
+    //     enem_ano: yearEnem,
+    //     enem_inscricao: codeEnemAndEncceja,
+    //     enem_nota_objetiva: objectiveTestGrade,
+    //     enem_nota_redacao: redactionTestGrade,
+    //     modalidade_ensino: courseModality,
+    //     modalidade: courseModality,
+    //     opcao_curso: null,
+    //     turno: courseShift,
+    //     selected_opcao1:
+    //       selectedCourse.value + "#" + courseIdShift + "#" + courseMatrix + "#" + showCourseName,
+    //     selected_opcao2:
+    //       selectedCourse.value + "#" + courseIdShift + "#" + courseMatrix + "#" + showCourseName,
+    //     hidden_curso_id: null,
+    //     hidden_turno_id: null,
+    //     hidden_matriz: null,
+    //     hidden_curso: null,
+    //     opcao1: selectedCourse.value,
+    //     opcao2: selectedCourse.value,
+    //     cpf: CPF,
+    //     documento_estrangeiro: null,
+    //     pais: 1,
+    //     nome: firstName,
+    //     sobrenome: lastName,
+    //     sexo: gender.value,
+    //     data_nascimento: birthDateFormatBr,
+    //     email: email,
+    //     fone1: phone,
+    //     fone2: phone,
+    //     cep: cep,
+    //     uf_id: ufId,
+    //     cidade: city,
+    //     bairro: district,
+    //     logradouro: street,
+    //     numero: number,
+    //     complemento: complement,
+    //     cidade_escola: null,
+    //     atendimento_consultor: switchShowExternalConsultant,
+    //     consultor_usuarioid: externalConsultant.value,
+    //     providencia: disabilityRelief
+    //   })
+    props.courseResumeChange()
+    // } catch (err) {
+    //   Swal.fire({
+    //     title: "Candidato já inscrito",
+    //     text: "O candidato já está inscrito neste processo seletivo. Escolha outro!",
+    //     confirmButtonText: "Ok",
+    //     icon: "warning"
+    //   })
+    // }
 
     // let retorno = {
     //   nome_contato: firstName,
